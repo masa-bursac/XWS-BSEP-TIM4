@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.profileservice.dto.AuthDTO;
+import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.service.IAuthService;
 
 @RestController
@@ -26,7 +27,16 @@ public class AuthController {
         	System.out.println(authDTO.getPassword());
             return new ResponseEntity(authService.login(authDTO), HttpStatus.OK);
         }catch(Exception e){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
+    @PostMapping("/registration")
+    public ResponseEntity registration(@RequestBody RegistrationDTO registrationDTO){
+        try{
+            return new ResponseEntity(authService.registration(registrationDTO), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

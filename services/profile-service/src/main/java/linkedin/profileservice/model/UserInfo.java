@@ -1,16 +1,23 @@
 package linkedin.profileservice.model;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import linkedin.profileservice.dto.RegistrationDTO;
+
 
 @Document(collection = "userinfo")
 public class UserInfo {
+	
+	@Transient
+    public static final String SEQUENCE_NAME = "users_sequence";
 	@Id
     private int id;
 	
@@ -40,6 +47,26 @@ public class UserInfo {
 
 	public UserInfo() {
 		super();
+	}
+
+	public UserInfo(RegistrationDTO registrationDTO) {
+		// TODO Auto-generated constructor stub
+		this.username = registrationDTO.getUsername();
+		this.password = registrationDTO.getPassword();
+		this.name = registrationDTO.getName();
+		this.surname = registrationDTO.getSurname();
+		this.email = registrationDTO.getEmail();
+        this.phone = registrationDTO.getPhone();
+        String[] array = registrationDTO.getDateOfBirth().split("T");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(array[0],formatter);
+        this.dateOfBirth = dateTime;
+        if(registrationDTO.getGender().toLowerCase().equals(Gender.Male.toString().toLowerCase(Locale.ROOT)))
+            this.gender = Gender.Male;
+        else if(registrationDTO.getGender().toLowerCase().equals(Gender.Female.toString().toLowerCase(Locale.ROOT)))
+            this.gender = Gender.Female;
+        else
+            this.gender = Gender.NonBinary;
 	}
 
 	public int getId() {

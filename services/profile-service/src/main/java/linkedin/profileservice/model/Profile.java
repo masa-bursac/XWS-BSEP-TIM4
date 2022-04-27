@@ -3,12 +3,16 @@ package linkedin.profileservice.model;
 import java.util.List;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "profiles")
 public class Profile {
+	
+	@Transient
+    public static final String SEQUENCE_NAME = "profile_sequence";
 	@Id
     private int id;
 	
@@ -44,6 +48,10 @@ public class Profile {
 
 	public Profile() {
 		super();
+	}
+
+	public Profile(int idUser) {
+		this.userInfoId = idUser;
 	}
 
 	public int getId() {
