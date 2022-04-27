@@ -2,80 +2,135 @@ package linkedin.profileservice.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Document(collection = "profiles")
 public class Profile {
 	@Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 	
+	@Field
     private String biography;
+
+	@Field
     private Boolean isPrivate;
     
-    @ElementCollection
-    @CollectionTable(name="Profile_Posts", joinColumns=@JoinColumn(name="Profile_ID"))
-    @Column(name="post")
+    @Field
     private List<Integer> postIds;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserInfo userInfo;
+    @Field
+    private int userInfoId;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Following",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Following_ID") })
+    @Field
     private List<Profile> following;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Followers",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Followers_ID") })
+    @Field
     private List<Profile> followers;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Education",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Education_ID") })
+    @Field
     private List<Institution> education;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Experience",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Experience_ID") })
+    @Field
     private List<Institution> experience;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Interests",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Interests_ID") })
+    @Field
     private List<Skill> interests;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "Profile_Skills",
-            joinColumns = { @JoinColumn(name = "Profile_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "Skills_ID") })
+    @Field
     private List<Skill> skills;
+
+	public Profile() {
+		super();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public Boolean getIsPrivate() {
+		return isPrivate;
+	}
+
+	public void setIsPrivate(Boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public List<Integer> getPostIds() {
+		return postIds;
+	}
+
+	public void setPostIds(List<Integer> postIds) {
+		this.postIds = postIds;
+	}
+
+	public int getUserInfo() {
+		return userInfoId;
+	}
+
+	public void setUserInfo(int userInfo) {
+		this.userInfoId = userInfo;
+	}
+
+	public List<Profile> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<Profile> following) {
+		this.following = following;
+	}
+
+	public List<Profile> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<Profile> followers) {
+		this.followers = followers;
+	}
+
+	public List<Institution> getEducation() {
+		return education;
+	}
+
+	public void setEducation(List<Institution> education) {
+		this.education = education;
+	}
+
+	public List<Institution> getExperience() {
+		return experience;
+	}
+
+	public void setExperience(List<Institution> experience) {
+		this.experience = experience;
+	}
+
+	public List<Skill> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<Skill> interests) {
+		this.interests = interests;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
 }

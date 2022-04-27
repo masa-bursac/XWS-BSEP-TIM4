@@ -1,9 +1,9 @@
 package linkedin.profileservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import linkedin.profileservice.model.Institution;
 
-public interface InstitutionRepository extends JpaRepository<Institution,Integer>{
+public interface InstitutionRepository extends MongoRepository<Institution,Integer>{
 
 }

@@ -1,10 +1,10 @@
 package linkedin.profileservice.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import linkedin.profileservice.model.Profile;
 
-public interface ProfileRepository extends JpaRepository<Profile,Integer>{
+public interface ProfileRepository extends MongoRepository<Profile,Integer>{
 
 	Profile save(Profile profile);
     Profile findOneByUserInfoId(int id);
