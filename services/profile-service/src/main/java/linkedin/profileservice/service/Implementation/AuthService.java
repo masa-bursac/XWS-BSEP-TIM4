@@ -1,12 +1,17 @@
 package linkedin.profileservice.service.Implementation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.dto.UserAccessDTO;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Profile;
+import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.repository.AuthRepository;
 import linkedin.profileservice.repository.ProfileRepository;
@@ -54,6 +59,16 @@ public class AuthService implements IAuthService{
         UserInfo ui = authRepository.findOneByUsername(userInfo.getUsername());
         Profile profile = new Profile(userInfo.getId());
         profile.setId((int) sequenceGeneratorService.generateSequence(Profile.SEQUENCE_NAME));
+        profile.setIsPrivate(false);
+        
+        profile.setEducation(new ArrayList<Institution>());
+        profile.setExperience(new ArrayList<Institution>());
+        profile.setFollowers(new ArrayList<Profile>());
+        profile.setFollowing(new ArrayList<Profile>());
+        profile.setInterests(new ArrayList<Skill>());
+        profile.setSkills(new ArrayList<Skill>());
+        profile.setPostIds(new ArrayList<Integer>());
+        
         profileRepository.save(profile);
         return true;
 	}

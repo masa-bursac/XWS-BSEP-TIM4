@@ -18,6 +18,7 @@ public class UserInfo {
 	
 	@Transient
     public static final String SEQUENCE_NAME = "users_sequence";
+	
 	@Id
     private int id;
 	

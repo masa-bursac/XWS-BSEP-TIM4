@@ -8,8 +8,10 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Profile;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.repository.AuthRepository;
@@ -21,12 +23,14 @@ public class ProfileService implements IProfileService{
 
 	private final ProfileRepository profileRepository;
 	private final AuthRepository authRepository;
+	static SequenceGeneratorService sequenceGeneratorService;
 	
 	@Autowired
-	public ProfileService(ProfileRepository profileRepository, AuthRepository ar)
+	public ProfileService(ProfileRepository profileRepository, AuthRepository ar,SequenceGeneratorService sg)
     {
         this.profileRepository = profileRepository;
         this.authRepository = ar;
+        this.sequenceGeneratorService = sg;
     }
 	
 	@Override
@@ -62,6 +66,17 @@ public class ProfileService implements IProfileService{
         else
             return false;
         
+	}
+
+	@Override
+	public Boolean addExperience(InstitutionDTO institutionDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		System.out.println(profile.getId());
+		Institution institution = new Institution(institutionDTO);
+		institution.setId((int) sequenceGeneratorService.generateSequence(Institution.SEQUENCE_NAME));
+		profile.getExperience().add(institution);
+		profileRepository.save(profile);
+		return true;
 	}
 
 	

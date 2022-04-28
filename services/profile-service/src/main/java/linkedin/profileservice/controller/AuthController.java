@@ -37,7 +37,7 @@ public class AuthController {
     public ResponseEntity registration(@RequestBody RegistrationDTO registrationDTO){
         try{
         	if(authService.registration(registrationDTO))
-        		return new ResponseEntity(authService.registration(registrationDTO), HttpStatus.OK);
+        		return new ResponseEntity(HttpStatus.OK);
         	else
         		return new ResponseEntity(HttpStatus.CONFLICT);
         }catch(Exception e){
