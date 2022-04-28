@@ -263,5 +263,26 @@ public class ProfileService implements IProfileService{
 		return profileDTOs;
 	}
 
+	@Override
+	public List<ProfileDTO> getByUsername(String searchUsername) {
+		
+		List<Profile> profiles =  profileRepository.findAll();
+		List<Integer> userInfoIds = new ArrayList();
+		List<ProfileDTO> profileDTOs = new ArrayList();
+		for(int i=0; i<profiles.size();i++) {
+			if(!profiles.get(i).getIsPrivate()) {
+				userInfoIds.add(profiles.get(i).getUserInfo());
+			}
+		}
+		for(int i=0; i<userInfoIds.size();i++) {
+			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
+			if(profile.getUsername().contains(searchUsername)) {
+				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getName(),profile.getSurname(),profile.getUsername()));
+			}
+		}
+		
+		return profileDTOs;
+	}
+
 	
 }

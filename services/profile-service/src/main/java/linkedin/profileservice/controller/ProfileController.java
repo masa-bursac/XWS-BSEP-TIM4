@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -145,10 +146,20 @@ public class ProfileController {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
     @GetMapping("/getPublicProfiles")
     public ResponseEntity getPublicProfiles() {
         try {
         	return new ResponseEntity(profileService.getPublicProfiles(), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity getByUsername(@PathVariable String username) {
+        try {
+        	return new ResponseEntity(profileService.getByUsername(username), HttpStatus.OK);
         } catch (Exception e) {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

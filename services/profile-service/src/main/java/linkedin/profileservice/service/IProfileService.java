@@ -2,6 +2,8 @@ package linkedin.profileservice.service;
 
 import java.util.List;
 
+import org.springframework.util.MultiValueMap;
+
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
@@ -25,4 +27,5 @@ public interface IProfileService {
 	Boolean deleteSkill(Skill skill);
 	Boolean deleteInterest(Skill skill);
 	List<ProfileDTO> getPublicProfiles();
+	List<ProfileDTO> getByUsername(String searchUsername);
 }
