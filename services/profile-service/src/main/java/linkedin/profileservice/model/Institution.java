@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import linkedin.profileservice.dto.InstitutionDTO;
+import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 
 
@@ -80,6 +81,22 @@ public class Institution {
 	}
 	
 	public Institution(InstitutionDTO institutionDTO) {
+		this.name= institutionDTO.getName();
+		this.position = institutionDTO.getPosition();
+		this.userInfoId = institutionDTO.getUserInfoId();
+     
+        String[] arrayStart = institutionDTO.getStart().split("T");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDateTime = LocalDate.parse(arrayStart[0],formatter);
+        this.start = startDateTime;
+        
+        String[] arrayEnd = institutionDTO.getEnd().split("T");
+        LocalDate endDateTime = LocalDate.parse(arrayEnd[0],formatter);
+        this.end = endDateTime;
+	}
+
+	public Institution(InstitutionUpdateDTO institutionDTO) {
+		this.id = institutionDTO.getId();
 		this.name= institutionDTO.getName();
 		this.position = institutionDTO.getPosition();
 		this.userInfoId = institutionDTO.getUserInfoId();

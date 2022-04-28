@@ -1,8 +1,10 @@
 package linkedin.profileservice.service;
 
 import linkedin.profileservice.dto.InstitutionDTO;
+import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
+import linkedin.profileservice.model.Skill;
 
 public interface IProfileService {
 
@@ -11,4 +13,12 @@ public interface IProfileService {
 	Boolean addEducation(InstitutionDTO institutionDTO);
 	Boolean addSkill(SkillDTO skillDTO);
 	Boolean addInterest(SkillDTO skillDTO);
+	Boolean updateInterest(Skill skill);
+	Boolean updateSkill(Skill skill);
+	Boolean updateExperience(InstitutionUpdateDTO institutionDTO);
+	Boolean updateEducation(InstitutionUpdateDTO institutionDTO);
+	Boolean deleteExperience(InstitutionUpdateDTO institutionDTO);
+	Boolean deleteEducation(InstitutionUpdateDTO institutionDTO);
+	Boolean deleteSkill(Skill skill);
+	Boolean deleteInterest(Skill skill);
 }

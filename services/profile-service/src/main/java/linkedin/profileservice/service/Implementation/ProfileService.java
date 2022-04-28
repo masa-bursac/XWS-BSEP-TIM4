@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.InstitutionDTO;
+import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
@@ -108,6 +109,136 @@ public class ProfileService implements IProfileService{
 		profile.getInterests().add(skill);
 		profileRepository.save(profile);
 		return true;
+	}
+
+	@Override
+	public Boolean updateInterest(Skill skill) {
+		// TODO Auto-generated method stub
+		Profile profile =  profileRepository.findOneByUserInfoId(skill.getUserInfoId());
+		for(int i=0; i<profile.getInterests().size();i++) {
+			if(profile.getInterests().get(i).getId() == skill.getId()) {
+				profile.getInterests().get(i).setName(skill.getName());
+				profile.getInterests().get(i).setOtherInfo(skill.getOtherInfo());
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean updateSkill(Skill skill) {
+		// TODO Auto-generated method stub
+		Profile profile =  profileRepository.findOneByUserInfoId(skill.getUserInfoId());
+		for(int i=0; i<profile.getSkills().size();i++) {
+			if(profile.getSkills().get(i).getId() == skill.getId()) {
+				profile.getSkills().get(i).setName(skill.getName());
+				profile.getSkills().get(i).setOtherInfo(skill.getOtherInfo());
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean updateExperience(InstitutionUpdateDTO institutionDTO) {
+		
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		Institution institution = new Institution(institutionDTO);
+
+		for(int i=0; i<profile.getExperience().size();i++) {
+			if(profile.getExperience().get(i).getId() == institution.getId()) {
+				profile.getExperience().get(i).setName(institution.getName());
+				profile.getExperience().get(i).setPosition(institution.getPosition());
+				profile.getExperience().get(i).setStart(institution.getStart());
+				profile.getExperience().get(i).setEnd(institution.getEnd());
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean updateEducation(InstitutionUpdateDTO institutionDTO) {
+		
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		Institution institution = new Institution(institutionDTO);
+
+		for(int i=0; i<profile.getEducation().size();i++) {
+			if(profile.getEducation().get(i).getId() == institution.getId()) {
+				profile.getEducation().get(i).setName(institution.getName());
+				profile.getEducation().get(i).setPosition(institution.getPosition());
+				profile.getEducation().get(i).setStart(institution.getStart());
+				profile.getEducation().get(i).setEnd(institution.getEnd());
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean deleteExperience(InstitutionUpdateDTO institutionDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		Institution institution = new Institution(institutionDTO);
+		for(int i=0; i<profile.getExperience().size();i++) {
+			if(profile.getExperience().get(i).getId() == institution.getId()) {
+				profile.getExperience().remove(i);
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean deleteEducation(InstitutionUpdateDTO institutionDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		Institution institution = new Institution(institutionDTO);
+		for(int i=0; i<profile.getEducation().size();i++) {
+			if(profile.getEducation().get(i).getId() == institution.getId()) {
+				profile.getEducation().remove(i);
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean deleteSkill(Skill skill) {
+		Profile profile =  profileRepository.findOneByUserInfoId(skill.getUserInfoId());
+		for(int i=0; i<profile.getSkills().size();i++) {
+			if(profile.getSkills().get(i).getId() == skill.getId()) {
+				profile.getSkills().remove(i);
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
+	}
+
+	@Override
+	public Boolean deleteInterest(Skill skill) {
+		Profile profile =  profileRepository.findOneByUserInfoId(skill.getUserInfoId());
+		for(int i=0; i<profile.getInterests().size();i++) {
+			if(profile.getInterests().get(i).getId() == skill.getId()) {
+				profile.getInterests().remove(i);
+			}
+		}
+        if (profileRepository.save(profile) != null)
+            return true;
+        else
+            return false;
 	}
 
 	
