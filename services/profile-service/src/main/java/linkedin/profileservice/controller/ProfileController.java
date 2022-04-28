@@ -23,7 +23,10 @@ public class ProfileController {
     @PutMapping("/update")
     public ResponseEntity edit(@RequestBody UpdateDTO userInfo) {
         try {
-            return new ResponseEntity(profileService.update(userInfo), HttpStatus.OK);
+        	if(profileService.update(userInfo))
+        		return new ResponseEntity(profileService.update(userInfo), HttpStatus.OK);
+        	else
+        		return new ResponseEntity(HttpStatus.CONFLICT);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

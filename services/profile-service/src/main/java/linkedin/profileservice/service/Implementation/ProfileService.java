@@ -47,6 +47,11 @@ public class ProfileService implements IProfileService{
 		userForUpdating.setPhone(userInfo.getPhone());
 		userForUpdating.setSurname(userInfo.getSurname());
 		userForUpdating.setName(userInfo.getName());
+		
+		if(authRepository.findOneByUsername(userInfo.getUsername())!=null) {
+        	if(!userInfo.getUsername().equals(userForUpdating.getUsername()))
+        		return false;
+        };
     	userForUpdating.setUsername(userInfo.getUsername());
 
 		Profile profile = profileRepository.findOneByUserInfoId(userInfo.getId());
