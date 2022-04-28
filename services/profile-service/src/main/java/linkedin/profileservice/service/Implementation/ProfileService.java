@@ -1,6 +1,8 @@
 package linkedin.profileservice.service.Implementation;
 
-import java.awt.List;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
+import linkedin.profileservice.dto.ProfileDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
@@ -239,6 +242,25 @@ public class ProfileService implements IProfileService{
             return true;
         else
             return false;
+	}
+
+	@Override
+	public List<ProfileDTO> getPublicProfiles() {
+		// TODO Auto-generated method stub
+		List<Profile> profiles =  profileRepository.findAll();
+		List<Integer> userInfoIds = new ArrayList();
+		List<ProfileDTO> profileDTOs = new ArrayList();
+		for(int i=0; i<profiles.size();i++) {
+			if(!profiles.get(i).getIsPrivate()) {
+				userInfoIds.add(profiles.get(i).getUserInfo());
+			}
+		}
+		for(int i=0; i<userInfoIds.size();i++) {
+			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
+			profileDTOs.add(new ProfileDTO(profile.getId(),profile.getName(),profile.getSurname(),profile.getUsername()));
+		}
+		
+		return profileDTOs;
 	}
 
 	

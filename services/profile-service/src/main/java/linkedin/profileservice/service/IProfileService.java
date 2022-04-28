@@ -1,8 +1,11 @@
 package linkedin.profileservice.service;
 
+import java.util.List;
+
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
+import linkedin.profileservice.dto.ProfileDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Skill;
 
@@ -21,4 +24,5 @@ public interface IProfileService {
 	Boolean deleteEducation(InstitutionUpdateDTO institutionDTO);
 	Boolean deleteSkill(Skill skill);
 	Boolean deleteInterest(Skill skill);
+	List<ProfileDTO> getPublicProfiles();
 }
