@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.InstitutionDTO;
+import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
 import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Profile;
+import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.repository.AuthRepository;
 import linkedin.profileservice.repository.ProfileRepository;
@@ -71,10 +73,39 @@ public class ProfileService implements IProfileService{
 	@Override
 	public Boolean addExperience(InstitutionDTO institutionDTO) {
 		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
-		System.out.println(profile.getId());
 		Institution institution = new Institution(institutionDTO);
 		institution.setId((int) sequenceGeneratorService.generateSequence(Institution.SEQUENCE_NAME));
 		profile.getExperience().add(institution);
+		profileRepository.save(profile);
+		return true;
+	}
+	
+	@Override
+	public Boolean addEducation(InstitutionDTO institutionDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(institutionDTO.getUserInfoId());
+		Institution institution = new Institution(institutionDTO);
+		institution.setId((int) sequenceGeneratorService.generateSequence(Institution.SEQUENCE_NAME));
+		profile.getEducation().add(institution);
+		profileRepository.save(profile);
+		return true;
+	}
+
+	@Override
+	public Boolean addSkill(SkillDTO skillDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(skillDTO.getUserInfoId());
+		Skill skill = new Skill(skillDTO);
+		skill.setId((int) sequenceGeneratorService.generateSequence(Skill.SEQUENCE_NAME));
+		profile.getSkills().add(skill);
+		profileRepository.save(profile);
+		return true;
+	}
+
+	@Override
+	public Boolean addInterest(SkillDTO skillDTO) {
+		Profile profile =  profileRepository.findOneByUserInfoId(skillDTO.getUserInfoId());
+		Skill skill = new Skill(skillDTO);
+		skill.setId((int) sequenceGeneratorService.generateSequence(Skill.SEQUENCE_NAME));
+		profile.getInterests().add(skill);
 		profileRepository.save(profile);
 		return true;
 	}

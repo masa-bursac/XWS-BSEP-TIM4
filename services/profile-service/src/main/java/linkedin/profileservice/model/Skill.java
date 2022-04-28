@@ -6,6 +6,8 @@ import javax.persistence.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import linkedin.profileservice.dto.SkillDTO;
+
 
 @Document(collection = "skill")
 public class Skill {
@@ -21,11 +23,20 @@ public class Skill {
 	
 	@Field
 	private String otherInfo;
+	
+	@Field
+	private int userInfoId;
 
 	public Skill() {
 		super();
 	}
 	
+	public Skill(SkillDTO skillDTO) {
+		this.name= skillDTO.getName();
+		this.otherInfo = skillDTO.getOtherInfo();
+		this.userInfoId = skillDTO.getUserInfoId();
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -49,5 +60,13 @@ public class Skill {
 
 	public void setOtherInfo(String otherInfo) {
 		this.otherInfo = otherInfo;
+	}
+
+	public int getUserInfoId() {
+		return userInfoId;
+	}
+
+	public void setUserInfoId(int userInfoId) {
+		this.userInfoId = userInfoId;
 	}
 }
