@@ -36,7 +36,10 @@ public class AuthController {
     @PostMapping("/registration")
     public ResponseEntity registration(@RequestBody RegistrationDTO registrationDTO){
         try{
-            return new ResponseEntity(authService.registration(registrationDTO), HttpStatus.OK);
+        	if(authService.registration(registrationDTO))
+        		return new ResponseEntity(authService.registration(registrationDTO), HttpStatus.OK);
+        	else
+        		return new ResponseEntity(HttpStatus.CONFLICT);
         }catch(Exception e){
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
