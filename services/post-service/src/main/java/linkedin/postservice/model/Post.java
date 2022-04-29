@@ -2,50 +2,43 @@ package linkedin.postservice.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Document(collection = "posts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Post {
+	
+	@Transient
+    public static final String SEQUENCE_NAME = "post_sequence";
+	
 	@Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 	
-    @ElementCollection
-    @CollectionTable(name="Post_Likes", joinColumns=@JoinColumn(name="Post_ID"))
-    @Column(name="like")
+	@Field
+	private int idUser;
+	
+    @Field
     private List<Integer> likeIds;
     
-    @ElementCollection
-    @CollectionTable(name="Post_Dislikes", joinColumns=@JoinColumn(name="Post_ID"))
-    @Column(name="dislike")
+    @Field
     private List<Integer> dislikeIds;
-    
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @Field
     private PostInfo postInfo;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Post_ID")
+    @Field
     private List<Comment> comments;
 
 }
