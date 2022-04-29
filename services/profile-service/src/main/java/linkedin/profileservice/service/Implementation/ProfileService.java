@@ -284,5 +284,18 @@ public class ProfileService implements IProfileService{
 		return profileDTOs;
 	}
 
+	@Override
+	public Boolean addPost(int postId, int userInfoId) {
+		Profile profile = profileRepository.findOneByUserInfoId(userInfoId);
+        List<Integer> ids = profile.getPostIds();
+        int old_ids_len = ids.size();
+        ids.add(postId);
+        profile.setPostIds(ids);
+        int new_ids_len = profileRepository.save(profile).getPostIds().size();
+        if(new_ids_len > old_ids_len)
+            return true;
+        else return false;
+	}
+
 	
 }

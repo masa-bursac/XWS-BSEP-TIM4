@@ -164,4 +164,9 @@ public class ProfileController {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @PutMapping("/addPost/{postId}/{userInfoId}")
+    public Boolean addPost(@PathVariable int postId, @PathVariable int userInfoId){
+        return profileService.addPost(postId,userInfoId);
+    }
 }

@@ -21,14 +21,16 @@ import linkedin.postservice.service.IPostService;
 public class PostService implements IPostService{
 
 	private final PostRepository postRepository;
-	//private final ProfileClient profileClient;
-    //private final PictureClient pictureClient;
+	private final ProfileClient profileClient;
+    private final PictureClient pictureClient;
+	static SequenceGeneratorService sequenceGeneratorService;
 	
 	@Autowired
-    public PostService(PostRepository postRepository){
+    public PostService(PostRepository postRepository, ProfileClient profileClient, PictureClient pictureClient, SequenceGeneratorService sequenceGeneratorService){
         this.postRepository = postRepository;
-       // this.profileClient = profileClient;
-       // this.pictureClient = pictureClient;
+        this.profileClient = profileClient;
+        this.pictureClient = pictureClient;
+        this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
 	@Override
@@ -37,11 +39,11 @@ public class PostService implements IPostService{
         List<Integer> ids = new ArrayList<>();
 
         for(MultipartFile file : multipartFile){
-            int contentId = 3;
-            /*if(file.getContentType().contains("image"))
+            int contentId;
+            if(file.getContentType().contains("image"))
                 contentId = pictureClient.uploadImage(new ImageDTO(file.getOriginalFilename(),file.getBytes(), true));
             else
-                contentId = pictureClient.uploadImage(new ImageDTO(file.getOriginalFilename(),file.getBytes(), false));*/
+                contentId = pictureClient.uploadImage(new ImageDTO(file.getOriginalFilename(),file.getBytes(), false));
             ids.add(contentId);
         }
 
@@ -52,9 +54,10 @@ public class PostService implements IPostService{
         p.setPostInfo(postInfo);
         
         p.setIdUser(userInfoId);
+        p.setId((int) sequenceGeneratorService.generateSequence(Post.SEQUENCE_NAME));
         
         Post new_post = postRepository.save(p);
-        //profileClient.addPost(new_post.getId(), userId);
+        profileClient.addPost(new_post.getId(), userInfoId);
         
         return new_post.getId();
 	}

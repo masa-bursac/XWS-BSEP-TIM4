@@ -28,4 +28,5 @@ public interface IProfileService {
 	Boolean deleteInterest(Skill skill);
 	List<ProfileDTO> getPublicProfiles();
 	List<ProfileDTO> getByUsername(String searchUsername);
+	Boolean addPost(int postId, int userInfoId);
 }

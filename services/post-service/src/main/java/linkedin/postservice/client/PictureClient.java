@@ -9,6 +9,6 @@ import linkedin.postservice.dto.ImageDTO;
 @FeignClient(name="picture",url="${app.picture.url}")
 public interface PictureClient {
 	
-	/*@PostMapping("/picture/upload")
-    Integer uploadImage(@RequestBody ImageDTO imageDTO);*/
+	@PostMapping("/picture/upload")
+    Integer uploadImage(@RequestBody ImageDTO imageDTO);
 }

@@ -1,26 +1,29 @@
 package linkedin.pictureservice.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Document(collection = "link")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Link {
+	
+	@Transient
+    public static final String SEQUENCE_NAME = "link_sequence";
+	
 	 @Id
-	 @Column(name = "id")
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private int id;
 	 
-	 private String path;
+	 @Field
+	 private byte[] path;
 }
