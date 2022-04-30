@@ -30,4 +30,9 @@ public class PostController {
     public void like(@PathVariable int userId, @PathVariable int postId){
          postService.like(userId,postId);
     }
+    
+    @PutMapping("/dislike/{userId}/{postId}")
+    public void dislike(@PathVariable int userId, @PathVariable int postId){
+        postService.dislike(userId,postId);
+    }
 }

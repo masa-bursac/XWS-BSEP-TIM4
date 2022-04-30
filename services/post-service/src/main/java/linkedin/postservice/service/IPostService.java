@@ -11,4 +11,6 @@ public interface IPostService {
 
 	void like(int userId, int postId);
 
+	void dislike(int userId, int postId);
+
 }
