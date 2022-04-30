@@ -9,4 +9,6 @@ public interface IPostService {
 	
 	int save(MultipartFile[] multipartFile, String caption, int userInfoId) throws IOException;
 
+	void like(int userId, int postId);
+
 }

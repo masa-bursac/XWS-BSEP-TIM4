@@ -61,6 +61,29 @@ public class PostService implements IPostService{
         
         return new_post.getId();
 	}
+
+	@Override
+	public void like(int userId, int postId) {
+		Post post = postRepository.findOneById(postId);
+		
+		if(post.getDislikeIds() != null) {
+			for(int i= 0; i < post.getDislikeIds().size(); i++)
+	        {
+	            if(post.getDislikeIds().get(i) == userId)
+	                post.getDislikeIds().remove(i);
+	        }
+		}
+        
+		if(post.getLikeIds() != null) {
+			post.getLikeIds().add(userId);
+		}else {
+			List<Integer> likeIds = new ArrayList<>();
+			likeIds.add(userId);
+			post.setLikeIds(likeIds);
+		}
+        
+        postRepository.save(post);
+	}
 	
 	
 }
