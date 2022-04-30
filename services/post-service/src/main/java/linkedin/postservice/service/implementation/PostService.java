@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import linkedin.postservice.client.PictureClient;
 import linkedin.postservice.client.ProfileClient;
+import linkedin.postservice.dto.CommentDTO;
 import linkedin.postservice.dto.ImageDTO;
+import linkedin.postservice.model.Comment;
 import linkedin.postservice.model.Post;
 import linkedin.postservice.model.PostInfo;
 import linkedin.postservice.repository.PostRepository;
@@ -107,6 +109,21 @@ public class PostService implements IPostService{
         
         postRepository.save(post);
 		
+	}
+
+	@Override
+	public Boolean addComment(CommentDTO commentDTO) {
+		Post post = postRepository.findOneById(commentDTO.getPostId());	
+		if(post.getComments() != null) {
+			post.getComments().add(new Comment(commentDTO.getProfileId(),commentDTO.getContent()));
+		}else {
+			List<Comment> comments = new ArrayList<>();
+			comments.add(new Comment(commentDTO.getProfileId(),commentDTO.getContent()));
+			post.setComments(comments);
+		}
+        
+        postRepository.save(post);
+        return true;
 	}
 	
 	

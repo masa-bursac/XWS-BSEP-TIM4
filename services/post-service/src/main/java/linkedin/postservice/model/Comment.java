@@ -26,4 +26,13 @@ public class Comment {
 	 
 	 @Field
 	 private int profileId;	
+	 
+	 @Field
+	 private String content;
+	 
+	 public Comment(int profileId, String content)
+	    {
+	        this.profileId = profileId;
+	        this.content = content;
+	    }
 }
