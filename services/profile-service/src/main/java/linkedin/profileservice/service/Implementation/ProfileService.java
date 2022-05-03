@@ -311,5 +311,41 @@ public class ProfileService implements IProfileService{
 		return publicIds;
 	}
 
+	@Override
+	public void followProfile(int loggedInId, int currentId) {
+		// TODO Auto-generated method stub
+        Profile loggedInProfile = profileRepository.findOneByUserInfoId(loggedInId);
+        Profile currentProfile = profileRepository.findOneByUserInfoId(currentId);
+        if(loggedInProfile.getFollowing()!=null) {
+        	loggedInProfile.getFollowing().add(currentId);
+        }
+        else {
+        	List<Integer> following = new ArrayList<>();
+        	following.add(currentId);
+        	loggedInProfile.setFollowing(following);
+        }
+        if(currentProfile.getFollowers()!=null) {
+            currentProfile.getFollowers().add(loggedInId);
+        }
+        else {
+        	List<Integer> followers = new ArrayList<>();
+        	followers.add(loggedInId);
+        	currentProfile.setFollowers(followers);
+        }
+        profileRepository.save(loggedInProfile);
+        profileRepository.save(currentProfile);
+
+	}
+
+	@Override
+	public List<Integer> getFollowingIds(int loggedInId) {
+		// TODO Auto-generated method stub
+		List<Integer> followingIds = new ArrayList<>();
+		if(profileRepository.findOneByUserInfoId(loggedInId).getFollowing()!= null) {
+			followingIds = profileRepository.findOneByUserInfoId(loggedInId).getFollowing();
+		}
+        return followingIds;
+	}
+
 	
 }

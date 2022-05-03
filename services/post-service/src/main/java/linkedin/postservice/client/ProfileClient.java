@@ -16,4 +16,7 @@ public interface ProfileClient {
 	 @GetMapping("/profile/getAllPublicIds")
 	 List<Integer> getAllPublicIds();
 
+	 @GetMapping("/profile/getFollowingIds/{loggedInId}")
+	 List<Integer> getFollowingIds(@PathVariable int loggedInId);
+
 }

@@ -63,8 +63,8 @@ public class AuthService implements IAuthService{
         
         profile.setEducation(new ArrayList<Institution>());
         profile.setExperience(new ArrayList<Institution>());
-        profile.setFollowers(new ArrayList<Profile>());
-        profile.setFollowing(new ArrayList<Profile>());
+        profile.setFollowers(new ArrayList<Integer>());
+        profile.setFollowing(new ArrayList<Integer>());
         profile.setInterests(new ArrayList<Skill>());
         profile.setSkills(new ArrayList<Skill>());
         profile.setPostIds(new ArrayList<Integer>());

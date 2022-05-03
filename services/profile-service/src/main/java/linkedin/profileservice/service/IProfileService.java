@@ -30,4 +30,6 @@ public interface IProfileService {
 	List<ProfileDTO> getByUsername(String searchUsername);
 	Boolean addPost(int postId, int userInfoId);
 	List<Integer> getAllPublicIds();
+	void followProfile(int loggedInId, int currentId);
+	List<Integer> getFollowingIds(int loggedInId);
 }

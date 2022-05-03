@@ -141,6 +141,23 @@ public class PostService implements IPostService{
 		}
 		return publicPosts;
 	}
+
+	@Override
+	public List<Post> getFollowingProfilesPosts(int loggedInId) {
+		// TODO Auto-generated method stub
+		List<Integer> followingIds = profileClient.getFollowingIds(loggedInId);
+		
+		List<Post> followingPosts = new ArrayList<>();
+		List<Post> posts= postRepository.findAll();
+		for(int i = 0;i < posts.size(); i++) {
+			for(int j=0; j<followingIds.size();j++) {
+				if(posts.get(i).getIdUser() == followingIds.get(j)) {
+					followingPosts.add(posts.get(i));
+				}
+			}
+		}
+		return followingPosts;
+	}
 	
 	
 }

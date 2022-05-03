@@ -29,10 +29,10 @@ public class Profile {
     private int userInfoId;
     
     @Field
-    private List<Profile> following;
+    private List<Integer> followingUsersIds;
     
     @Field
-    private List<Profile> followers;
+    private List<Integer> followersIds;
     
     @Field
     private List<Institution> education;
@@ -94,20 +94,20 @@ public class Profile {
 		this.userInfoId = userInfo;
 	}
 
-	public List<Profile> getFollowing() {
-		return following;
+	public List<Integer> getFollowing() {
+		return followingUsersIds;
 	}
 
-	public void setFollowing(List<Profile> following) {
-		this.following = following;
+	public void setFollowing(List<Integer> following) {
+		this.followingUsersIds = following;
 	}
 
-	public List<Profile> getFollowers() {
-		return followers;
+	public List<Integer> getFollowers() {
+		return followersIds;
 	}
 
-	public void setFollowers(List<Profile> followers) {
-		this.followers = followers;
+	public void setFollowers(List<Integer> followers) {
+		this.followersIds = followers;
 	}
 
 	public List<Institution> getEducation() {

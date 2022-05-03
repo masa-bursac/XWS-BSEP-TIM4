@@ -176,5 +176,17 @@ public class ProfileController {
 	public List<Integer> getAllPublicIds() {
         return profileService.getAllPublicIds();
     }
+	
+	@PutMapping("/follow/{loggedInId}/{currentId}")
+    public void follow(@PathVariable int loggedInId, @PathVariable int currentId){
+         profileService.followProfile(loggedInId, currentId);
+    }
+	
+	@GetMapping("/getFollowingIds/{loggedInId}")
+	List<Integer> getFollowingIds(@PathVariable int loggedInId){
+        return profileService.getFollowingIds(loggedInId);
+	}
+
+
 
 }

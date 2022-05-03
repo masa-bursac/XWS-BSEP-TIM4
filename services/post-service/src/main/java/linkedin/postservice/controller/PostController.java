@@ -55,5 +55,10 @@ public class PostController {
     public List<Post> getAllPublic() {
         return postService.getAllPublic();
     }
+    
+    @GetMapping("/getFollowingProfilesPosts/{loggedInId}")
+    public List<Post> getFollowingProfilesPosts(@PathVariable int loggedInId) {
+        return postService.getFollowingProfilesPosts(loggedInId);
+    }
 
 }

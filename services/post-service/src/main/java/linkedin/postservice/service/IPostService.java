@@ -21,4 +21,6 @@ public interface IPostService {
 
 	List<Post> getAllPublic();
 
+	List<Post> getFollowingProfilesPosts(int loggedInId);
+
 }
