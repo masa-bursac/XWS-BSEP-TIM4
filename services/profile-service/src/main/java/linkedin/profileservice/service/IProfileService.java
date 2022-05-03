@@ -29,4 +29,5 @@ public interface IProfileService {
 	List<ProfileDTO> getPublicProfiles();
 	List<ProfileDTO> getByUsername(String searchUsername);
 	Boolean addPost(int postId, int userInfoId);
+	List<Integer> getAllPublicIds();
 }

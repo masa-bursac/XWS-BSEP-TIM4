@@ -125,6 +125,22 @@ public class PostService implements IPostService{
         postRepository.save(post);
         return true;
 	}
+
+	@Override
+	public List<Post> getAllPublic() {
+		// TODO Auto-generated method stub
+		List<Integer> publicProfileIds = profileClient.getAllPublicIds();
+		List<Post> publicPosts = new ArrayList<>();
+		List<Post> posts= postRepository.findAll();
+		for(int i = 0;i < posts.size(); i++) {
+			for(int j=0; j<publicProfileIds.size();j++) {
+				if(posts.get(i).getIdUser() == publicProfileIds.get(j)) {
+					publicPosts.add(posts.get(i));
+				}
+			}
+		}
+		return publicPosts;
+	}
 	
 	
 }

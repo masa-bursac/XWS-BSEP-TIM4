@@ -297,5 +297,19 @@ public class ProfileService implements IProfileService{
         else return false;
 	}
 
+	@Override
+	public List<Integer> getAllPublicIds() {
+		// TODO Auto-generated method stub
+		List<Integer> publicIds = new ArrayList<>();
+		List<Profile> profiles = profileRepository.findAll();
+		for(int i=0; i<profiles.size();i++) {
+			if(!profiles.get(i).getIsPrivate()) {
+				publicIds.add(profiles.get(i).getId());
+			}
+		}
+
+		return publicIds;
+	}
+
 	
 }

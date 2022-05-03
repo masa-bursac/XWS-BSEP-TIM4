@@ -1,5 +1,7 @@
 package linkedin.profileservice.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -169,4 +171,10 @@ public class ProfileController {
     public Boolean addPost(@PathVariable int postId, @PathVariable int userInfoId){
         return profileService.addPost(postId,userInfoId);
     }
+    
+	@GetMapping("/getAllPublicIds")
+	public List<Integer> getAllPublicIds() {
+        return profileService.getAllPublicIds();
+    }
+
 }
