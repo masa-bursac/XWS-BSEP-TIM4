@@ -72,6 +72,12 @@ public class AuthService implements IAuthService{
         profileRepository.save(profile);
         return true;
 	}
+	@Override
+	public String getUsername(int id) {
+		 
+	    UserInfo ui = authRepository.findOneById(id);
+	    return ui.getUsername();
+	}
 
 	
 }

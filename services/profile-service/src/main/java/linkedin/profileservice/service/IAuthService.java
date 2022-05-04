@@ -10,5 +10,7 @@ public interface IAuthService {
 	UserAccessDTO login(AuthDTO authDTO);
 
 	Boolean registration(RegistrationDTO registrationDTO);
+	
+	String getUsername(int id);
 
 }
