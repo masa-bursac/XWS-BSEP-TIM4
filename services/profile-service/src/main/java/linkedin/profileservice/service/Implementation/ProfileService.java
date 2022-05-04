@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import linkedin.profileservice.client.RequestClient;
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.ProfileDTO;
@@ -30,13 +31,15 @@ public class ProfileService implements IProfileService{
 	private final ProfileRepository profileRepository;
 	private final AuthRepository authRepository;
 	static SequenceGeneratorService sequenceGeneratorService;
+	private final RequestClient requestClient;
 	
 	@Autowired
-	public ProfileService(ProfileRepository profileRepository, AuthRepository ar,SequenceGeneratorService sg)
+	public ProfileService(ProfileRepository profileRepository, AuthRepository ar,SequenceGeneratorService sg,RequestClient requestClient)
     {
         this.profileRepository = profileRepository;
         this.authRepository = ar;
         this.sequenceGeneratorService = sg;
+        this.requestClient = requestClient;
     }
 	
 	@Override
@@ -347,5 +350,59 @@ public class ProfileService implements IProfileService{
         return followingIds;
 	}
 
-	
+	 @Override
+	 public void acceptFollowRequest(int to, int from) {
+        Profile toProfile = profileRepository.findOneByUserInfoId(to);
+        Profile fromProfile = profileRepository.findOneByUserInfoId(from);
+        
+        if(fromProfile.getFollowing()!=null)
+        	fromProfile.getFollowing().add(toProfile.getId());
+        else
+        	{
+        		List<Integer> following = new ArrayList<>();
+        		following.add(toProfile.getId());
+        		fromProfile.setFollowing(following);
+        	}
+        
+        if(toProfile.getFollowers()!=null)
+        	toProfile.getFollowers().add(fromProfile.getId());
+        else
+        {
+        	List<Integer> followers = new ArrayList<>();
+    		followers.add(fromProfile.getId());
+    		toProfile.setFollowers(followers);
+    		
+        }
+
+
+        if(fromProfile.getFollowers()!=null)
+        	fromProfile.getFollowers().add(toProfile.getId());
+        else
+        {
+        	List<Integer> followers = new ArrayList<>();
+    		followers.add(toProfile.getId());
+    		fromProfile.setFollowers(followers);
+    		
+        }
+        
+        if(toProfile.getFollowing()!=null)
+        	toProfile.getFollowing().add(fromProfile.getId());
+        else
+        {
+        	List<Integer> following = new ArrayList<>();
+    		following.add(fromProfile.getId());
+    		toProfile.setFollowing(following);
+        }
+        
+        profileRepository.save(toProfile);
+        profileRepository.save(fromProfile);
+        requestClient.delete(to,from);
+
+    }
+
+    @Override
+    public void denyFollowRequest(int to, int from) {
+    	requestClient.delete(to, from);
+    }
+
 }

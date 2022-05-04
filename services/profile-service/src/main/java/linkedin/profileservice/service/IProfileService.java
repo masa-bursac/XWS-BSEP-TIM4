@@ -32,4 +32,6 @@ public interface IProfileService {
 	List<Integer> getAllPublicIds();
 	void followProfile(int loggedInId, int currentId);
 	List<Integer> getFollowingIds(int loggedInId);
+	void acceptFollowRequest(int to, int from);
+	void denyFollowRequest(int to, int from);
 }

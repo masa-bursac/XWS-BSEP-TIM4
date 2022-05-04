@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,11 @@ public class FollowRequestController {
     public List<FollowRequestDTO> getAllForProfile(@PathVariable int loggedInId)
     {
         return followRequestService.getAllForProfile(loggedInId);
+    }
+    
+    @PutMapping("/delete/{to}/{from}")
+    public void delete(@PathVariable int to, @PathVariable int from)
+    {
+         followRequestService.delete(to, from);
     }
 }

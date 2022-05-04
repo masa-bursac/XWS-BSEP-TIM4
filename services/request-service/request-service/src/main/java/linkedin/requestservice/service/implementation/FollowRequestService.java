@@ -51,4 +51,23 @@ public class FollowRequestService implements IFollowRequestService {
     	}
     	return returnRequests;
     }
+    
+    @Override
+    public void delete(int to, int from) {
+        FollowRequest followRequest = findOneByToAndFrom(to, from);
+        followRequestRepository.delete(followRequest);
+        
+    }
+    
+    public FollowRequest findOneByToAndFrom(int to, int from){
+    	List<FollowRequest> followRequests = followRequestRepository.findAll();
+    	FollowRequest returnRequest = new FollowRequest();
+    	for(int i=0;i<followRequests.size(); i++) {
+    		if((followRequests.get(i).getToProfileId()==to)&&(followRequests.get(i).getFromProfileId()==from) ) {
+    			returnRequest = followRequests.get(i);
+    		}
+    	}
+    	return returnRequest;
+    }
+
 }

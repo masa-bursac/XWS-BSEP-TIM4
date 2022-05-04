@@ -187,6 +187,14 @@ public class ProfileController {
         return profileService.getFollowingIds(loggedInId);
 	}
 
+	@PutMapping("/acceptFollowRequest/{to}/{from}")
+	public void acceptFollowRequest(@PathVariable int to, @PathVariable int from){
+	      profileService.acceptFollowRequest(to, from);
+	}
 
+	@PutMapping("/denyFollowRequest/{to}/{from}")
+	public void denyFollowRequest(@PathVariable int to, @PathVariable int from){
+	      profileService.denyFollowRequest(to, from);
+	}
 
 }

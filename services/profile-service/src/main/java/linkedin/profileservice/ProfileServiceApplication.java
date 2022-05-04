@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import linkedin.profileservice.model.Profile;
 import linkedin.profileservice.model.UserInfo;
@@ -14,6 +15,7 @@ import linkedin.profileservice.service.Implementation.ProfileService;
 import linkedin.profileservice.service.Implementation.SequenceGeneratorService;
 
 @SpringBootApplication
+@EnableFeignClients
 public class ProfileServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProfileServiceApplication.class, args);

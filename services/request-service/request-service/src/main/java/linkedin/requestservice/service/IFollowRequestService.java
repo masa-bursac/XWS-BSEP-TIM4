@@ -8,4 +8,5 @@ import linkedin.requestservice.model.FollowRequest;
 public interface IFollowRequestService {
 	FollowRequest newRequest(FollowRequest request);
 	List<FollowRequestDTO> getAllForProfile(int loggedIn);
+	void delete(int to, int from);
 }
