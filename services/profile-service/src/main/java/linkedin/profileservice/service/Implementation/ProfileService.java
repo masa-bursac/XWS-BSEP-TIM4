@@ -70,7 +70,7 @@ public class ProfileService implements IProfileService{
 		Profile profile = profileRepository.findOneByUserInfoId(userInfo.getId());
 		profile.setBiography(userInfo.getBiography());
 		
-        if (authRepository.save(userForUpdating) != null || profileRepository.save(profile) != null)
+        if (authRepository.save(userForUpdating) != null && profileRepository.save(profile) != null)
             return true;
         else
             return false;
