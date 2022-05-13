@@ -19,6 +19,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
     LoginComponent,
     RegistrationComponent,
     LandingPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
