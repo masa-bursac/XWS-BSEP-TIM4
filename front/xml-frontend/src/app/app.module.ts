@@ -15,13 +15,19 @@ import { RegistrationComponent } from './pages/registration/registration.compone
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LandingPageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     MatSelectModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
