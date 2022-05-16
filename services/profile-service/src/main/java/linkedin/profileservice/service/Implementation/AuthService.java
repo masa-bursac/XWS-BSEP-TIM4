@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.AuthDTO;
@@ -25,13 +26,17 @@ public class AuthService implements IAuthService{
 	private final ProfileRepository profileRepository;
 	static SequenceGeneratorService sequenceGeneratorService;
     private final Token token;
+    private final PasswordEncoder passwordEncoder;
+
 
 	@Autowired
-    public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg, Token token) {
+    public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg,
+    		 Token token, PasswordEncoder passwordEncoder) {
         this.authRepository = authRepository;
         this.profileRepository = profileRepository;
         this.sequenceGeneratorService = sg;
         this.token = token;
+        this.passwordEncoder = passwordEncoder;
     }
 
 	@Override
@@ -48,7 +53,10 @@ public class AuthService implements IAuthService{
         UserAccessDTO userResponse = new UserAccessDTO(user,jwt);
         userResponse.setTokenExpiresIn(expiresIn);
         
-        if(authDTO.getPassword().equals(user.getPassword())) {
+       // if(authDTO.getPassword().equals(user.getPassword())) {
+       //     return userResponse;
+        //}
+        if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
             return userResponse;
         }
         else{
@@ -59,6 +67,7 @@ public class AuthService implements IAuthService{
 	@Override
 	public Boolean registration(RegistrationDTO registrationDTO) {
 		
+        registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         UserInfo userInfo = new UserInfo(registrationDTO);
         if(authRepository.findOneByUsername(userInfo.getUsername())!=null) {
         	return false;

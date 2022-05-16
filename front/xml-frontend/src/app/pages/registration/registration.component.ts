@@ -90,6 +90,16 @@ export class RegistrationComponent implements OnInit {
     }
     console.log(body);
 
+    if(this.validateForm.valid){
+      this.authService.registration(body).subscribe(data => { console.log(data) 
+          console.log(body);
+          //this.authService.getId(this.username).subscribe(data => {
+          //})
+          alert("Registration successfull");
+          this.router.navigate(['login']);
+      })
+    }
+/*
     this.attackService.name(this.name).subscribe(data => {
       this.nameBoolean = data.bool;
       if(!this.nameBoolean)
@@ -149,7 +159,7 @@ export class RegistrationComponent implements OnInit {
           });
       });
   
-    });
+    });*/
 
   }
 
