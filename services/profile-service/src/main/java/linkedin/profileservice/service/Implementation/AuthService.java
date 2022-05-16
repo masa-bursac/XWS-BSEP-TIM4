@@ -12,6 +12,7 @@ import linkedin.profileservice.dto.UserAccessDTO;
 import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Profile;
 import linkedin.profileservice.model.Skill;
+import linkedin.profileservice.model.Token;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.repository.AuthRepository;
 import linkedin.profileservice.repository.ProfileRepository;
@@ -23,12 +24,14 @@ public class AuthService implements IAuthService{
 	private final AuthRepository authRepository;
 	private final ProfileRepository profileRepository;
 	static SequenceGeneratorService sequenceGeneratorService;
+    private final Token token;
 
 	@Autowired
-    public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg) {
+    public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg, Token token) {
         this.authRepository = authRepository;
         this.profileRepository = profileRepository;
         this.sequenceGeneratorService = sg;
+        this.token = token;
     }
 
 	@Override
@@ -36,9 +39,15 @@ public class AuthService implements IAuthService{
 		
 		UserInfo user = authRepository.findOneByUsername(authDTO.getUsername());
         if (user == null) {
+        	System.out.println("Ovde");
             return null;
         }
-        UserAccessDTO userResponse = new UserAccessDTO(user);
+        String jwt = token.generateToken(user);
+        int expiresIn = token.getEXPIRES_IN();
+
+        UserAccessDTO userResponse = new UserAccessDTO(user,jwt);
+        userResponse.setTokenExpiresIn(expiresIn);
+        
         if(authDTO.getPassword().equals(user.getPassword())) {
             return userResponse;
         }

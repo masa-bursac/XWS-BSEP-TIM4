@@ -17,6 +17,15 @@ public class UserAccessDTO {
 		this.username = user.getUsername();
 		this.id = user.getId();
 	}
+	public UserAccessDTO(UserInfo user, String jwt) {
+		// TODO Auto-generated constructor stub
+		this.username = user.getUsername();
+		this.id = user.getId();
+		this.name = user.getName();
+        this.surname = user.getSurname();
+        this.email = user.getEmail();
+		this.token = jwt;
+	}
 	public int getId() {
 		return id;
 	}

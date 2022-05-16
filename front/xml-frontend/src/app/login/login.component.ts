@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
 
       console.log(body);
       this.authService.login(body).subscribe( data => {
+        console.log(data);
         if (data === null){
           this.ngOnInit();
         }else{
