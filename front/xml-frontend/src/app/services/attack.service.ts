@@ -26,4 +26,8 @@ export class AttackService {
   public phoneNumber(body: any) : Observable<any>{ 
     return this.http.post(attack_url + `/phoneNumber`, body);
   }
+
+  public username(body: any) : Observable<any>{ 
+    return this.http.post(attack_url + `/username`, body);
+  }
 }

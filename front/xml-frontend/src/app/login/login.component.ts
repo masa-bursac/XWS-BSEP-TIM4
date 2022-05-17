@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { AttackService } from '../services/attack.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +12,20 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  token: any;
+  errorLogin: boolean = false;
   validateForm!: FormGroup;
+  username: any;
+  password: any;
+  usernameBool: boolean = true;
 
-  constructor(private fb: FormBuilder, private authService : AuthService) { }
+  constructor(private fb: FormBuilder, private router: Router, private authService : AuthService, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       username: [null, [Validators.required]],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required]],
+      remember: [true]
     });
   }
 
@@ -26,9 +34,48 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
+
+    this.username = this.validateForm.value.username;
+    this.password = this.validateForm.value.password;
+
+    this.attackService.username(this.username).subscribe(data => {
+      this.usernameBool = data.bool
+      console.log(this.username, this.password, this.usernameBool);
+      if (this.usernameBool) {
+        const body = {
+          username: this.username,
+          password: this.password
+        }
+        this.authService.login(body).subscribe(data => {
+          const user = data;
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', JSON.stringify(user.token));
+          console.log(this.getDecodedAccessToken(data.token));
+          this.router.navigate(['landingPage']);
+        }, error => {
+          this.errorLogin = true;
+        })
+      }
+      else {
+        alert("Greska");
+      }
+    });
   }
 
-  login(){
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    }
+    catch (Error) {
+      return null;
+    }
+  }
+
+  forgotPassword(): void {
+   // this.router.navigate(['frontpage/forgot-password']);
+  }
+
+ /* login(){
     if(this.validateForm.valid){
       const body = {
         username : this.validateForm.get('username')?.value,
@@ -52,7 +99,7 @@ export class LoginComponent implements OnInit {
       
       });    
     }
-  }
+  }*/
 
   
 }
