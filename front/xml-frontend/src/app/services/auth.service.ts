@@ -19,6 +19,10 @@ export class AuthService {
     return this.http.post(auth_url + `/registration`, body);
   }
 
+  public forgotPassword(body: any): Observable<any> {
+    return this.http.post(auth_url + `/forgot-password`, body);
+  }
+
   public getDataFromToken() : any
   {
     let token : any;

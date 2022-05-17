@@ -71,9 +71,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  forgotPassword(): void {
-   // this.router.navigate(['frontpage/forgot-password']);
-  }
 
  /* login(){
     if(this.validateForm.valid){

@@ -21,6 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { JwtInterceptorComponent } from './_helpers/jwt-interceptor/jwt-interceptor.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 
 
@@ -32,7 +33,8 @@ import { JwtInterceptorComponent } from './_helpers/jwt-interceptor/jwt-intercep
     RegistrationComponent,
     LandingPageComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
