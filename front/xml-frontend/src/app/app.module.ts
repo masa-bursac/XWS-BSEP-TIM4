@@ -10,7 +10,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -20,6 +20,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { JwtInterceptorComponent } from './_helpers/jwt-interceptor/jwt-interceptor.component';
+
+
 
 
 @NgModule({
@@ -47,7 +50,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
     MatToolbarModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorComponent, multi: true },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

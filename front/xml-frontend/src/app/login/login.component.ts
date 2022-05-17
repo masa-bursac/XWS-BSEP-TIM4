@@ -44,6 +44,10 @@ export class LoginComponent implements OnInit {
           const user = data;
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('token', JSON.stringify(user.token));
+
+          sessionStorage.setItem('username', user.username);
+          let authString = 'Basic ' + btoa(user.username + ':' + user.password);
+          sessionStorage.setItem('basicauth', authString);
         }
       
       });    

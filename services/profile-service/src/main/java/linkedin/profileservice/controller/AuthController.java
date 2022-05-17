@@ -28,7 +28,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthDTO authDTO){
         try{
-        	System.out.println(authDTO.getPassword());
             return new ResponseEntity(authService.login(authDTO), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
