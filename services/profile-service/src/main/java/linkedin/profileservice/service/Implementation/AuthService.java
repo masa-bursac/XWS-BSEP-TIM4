@@ -1,7 +1,6 @@
 package linkedin.profileservice.service.Implementation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,14 +8,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.AuthDTO;
+import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.dto.UserAccessDTO;
 import linkedin.profileservice.model.Institution;
+import linkedin.profileservice.model.PasswordToken;
 import linkedin.profileservice.model.Profile;
 import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.model.Token;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.repository.AuthRepository;
+import linkedin.profileservice.repository.PasswordTokenRepository;
 import linkedin.profileservice.repository.ProfileRepository;
 import linkedin.profileservice.service.IAuthService;
 
@@ -28,16 +30,20 @@ public class AuthService implements IAuthService{
 	static SequenceGeneratorService sequenceGeneratorService;
     private final Token token;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final PasswordTokenRepository passwordTokenRepository;
 
 
 	@Autowired
     public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg,
-    		 Token token, PasswordEncoder passwordEncoder) {
+    		 Token token, PasswordEncoder passwordEncoder, EmailService emailService, PasswordTokenRepository passwordTokenRepository) {
         this.authRepository = authRepository;
         this.profileRepository = profileRepository;
         this.sequenceGeneratorService = sg;
         this.token = token;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+        this.passwordTokenRepository = passwordTokenRepository;
     }
 
 	@Override
@@ -104,6 +110,25 @@ public class AuthService implements IAuthService{
         return (UserDetails) userInfo;
 	}
 
+	@Override
+	public void forgotPassword(String username) {
+		emailService.forgotPassword(username);		
+	}
 
+	@Override
+	public Boolean changePassword(ChangePasswordDTO request) {
+		
+		if(!request.getPassword().equals(request.getRePassword())){
+            return false;
+        }
+		
+        PasswordToken passwordToken = passwordTokenRepository.findOneByToken(request.getUsername());
+        UserInfo user = authRepository.findOneByUsername(passwordToken.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        authRepository.save(user);
+        passwordTokenRepository.delete(passwordToken);
+        return true;
+		
+	}
 	
 }

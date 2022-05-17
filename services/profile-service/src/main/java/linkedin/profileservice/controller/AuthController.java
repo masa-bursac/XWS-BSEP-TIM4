@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.profileservice.dto.AuthDTO;
+import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.service.IAuthService;
@@ -51,4 +52,13 @@ public class AuthController {
         return authService.getUsername(id);
     }
     
+    @PostMapping("/forgot-password")
+    public void forgotPassword(@RequestBody String username){
+         authService.forgotPassword(username);
+    }
+    
+    @PutMapping("/change-password")
+    public Boolean changePassword(@RequestBody ChangePasswordDTO request){
+    	 return authService.changePassword(request);
+    }
 }

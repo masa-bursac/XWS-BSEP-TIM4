@@ -22,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { JwtInterceptorComponent } from './_helpers/jwt-interceptor/jwt-interceptor.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 
 
@@ -34,7 +35,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     LandingPageComponent,
     NavbarComponent,
     ProfileComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ export class ForgotPasswordComponent implements OnInit {
   validateForm!: FormGroup;
   error: boolean = false;
   success: boolean = false;
+  username: string = "";
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
@@ -26,11 +27,10 @@ export class ForgotPasswordComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    const body = {
-        username: this.validateForm.value.username
+
+    this.username = this.validateForm.value.username;
     
-    }
-    this.authService.forgotPassword(body).subscribe(data => {
+    this.authService.forgotPassword(this.username).subscribe(data => {
       this.success = true;
       this.error = false;
     }, error => { 
