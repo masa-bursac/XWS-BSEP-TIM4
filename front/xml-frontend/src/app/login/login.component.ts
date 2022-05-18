@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
           }
         }, error => {
           this.errorLogin = true;
+          alert(error.error);
         })
       }
       else {

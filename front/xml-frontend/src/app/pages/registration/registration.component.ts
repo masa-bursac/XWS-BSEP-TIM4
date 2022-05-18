@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
   surname : string = "";
   email : string = "";
   password : string = "";
+  checkPassword : string = "";
   phone : string = "";
   dateOfBirth : Date = new Date();
   selectedValueGender = "Male";
@@ -120,6 +121,7 @@ export class RegistrationComponent implements OnInit {
                           surname: this.surname,
                           email : this.email,
                           password : this.password,
+                          repeatPassword: this.checkPassword,
                           phone : this.phone,
                           dateOfBirth: this.dateOfBirth,
                           gender: this.selectedValueGender,   

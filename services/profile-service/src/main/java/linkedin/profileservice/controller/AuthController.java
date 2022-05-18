@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
@@ -30,8 +31,8 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthDTO authDTO){
         try{
             return new ResponseEntity(authService.login(authDTO), HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
         }
     }
     
@@ -42,8 +43,8 @@ public class AuthController {
         		return new ResponseEntity(HttpStatus.OK);
         	else
         		return new ResponseEntity(HttpStatus.CONFLICT);
-        }catch(Exception e){
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
         }
     }
     

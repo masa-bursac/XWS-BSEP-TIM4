@@ -48,6 +48,9 @@ public class UserInfo {
     
     @Field
     private Roles role;
+    
+    @Field
+    private AccountStatus accountStatus;
 
 	public UserInfo() {
 		super();
@@ -151,6 +154,14 @@ public class UserInfo {
 
 	public void setRole(Roles role) {
 		this.role = role;
+	}
+
+	public AccountStatus getAccountStatus() {
+		return accountStatus;
+	}
+
+	public void setAccountStatus(AccountStatus accountStatus) {
+		this.accountStatus = accountStatus;
 	}
 	
 }

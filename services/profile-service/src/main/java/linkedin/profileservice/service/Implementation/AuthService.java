@@ -3,14 +3,17 @@ package linkedin.profileservice.service.Implementation;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.dto.UserAccessDTO;
+import linkedin.profileservice.model.AccountStatus;
 import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.PasswordToken;
 import linkedin.profileservice.model.Profile;
@@ -52,18 +55,28 @@ public class AuthService implements IAuthService{
 		
 		UserInfo user = authRepository.findOneByUsername(authDTO.getUsername());
         if (user == null) {
-        	System.out.println("Ovde");
             return null;
         }
+        
+        if(user == null || !passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
+            throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
+        }
+        if(user != null && user.getAccountStatus().equals(AccountStatus.PENDING)){
+            throw new GeneralException("Your registration hasn't been approved yet.", HttpStatus.BAD_REQUEST);
+        }
+        if(user != null && user.getAccountStatus().equals(AccountStatus.DENIED)){
+            throw new GeneralException("Your registration has been denied.", HttpStatus.BAD_REQUEST);
+        }
+        if(user != null && user.getAccountStatus().equals(AccountStatus.APPROVED)){
+            throw new GeneralException("Your registration has been approved by admin. Please activate your account.", HttpStatus.BAD_REQUEST);
+        }
+        
         String jwt = token.generateToken(user);
         int expiresIn = token.getEXPIRES_IN();
 
         UserAccessDTO userResponse = new UserAccessDTO(user,jwt);
         userResponse.setTokenExpiresIn(expiresIn);
-        
-       // if(authDTO.getPassword().equals(user.getPassword())) {
-       //     return userResponse;
-        //}
+
         if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
             return userResponse;
         }
@@ -75,6 +88,10 @@ public class AuthService implements IAuthService{
 	@Override
 	public Boolean registration(RegistrationDTO registrationDTO) {
 		
+		if(!registrationDTO.getPassword().equals(registrationDTO.getRepeatPassword())){
+            throw new GeneralException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+        }
+		
         registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         UserInfo userInfo = new UserInfo(registrationDTO);
         if(authRepository.findOneByUsername(userInfo.getUsername())!=null) {
@@ -82,6 +99,7 @@ public class AuthService implements IAuthService{
         };
         
         userInfo.setRole(Roles.USER);
+        userInfo.setAccountStatus(AccountStatus.PENDING);
         userInfo.setId((int) sequenceGeneratorService.generateSequence(UserInfo.SEQUENCE_NAME));
         authRepository.save(userInfo);
 
