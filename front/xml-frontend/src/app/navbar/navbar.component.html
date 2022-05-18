@@ -9,6 +9,7 @@
       </mat-form-field>
     </form>
     <div class="spacer"></div>
-      <a mat-button routerLink="/login">Login</a>
-      <a mat-button routerLink="/registration">Registration</a>
+      <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/login">Login</a>
+      <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/registration">Registration</a>
+      <a *ngIf="role == 'USER' || role == 'ADMIN'" mat-button (click)="Logout()">Logout</a>
 </mat-toolbar>

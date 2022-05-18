@@ -14,6 +14,7 @@ import linkedin.profileservice.dto.UserAccessDTO;
 import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.PasswordToken;
 import linkedin.profileservice.model.Profile;
+import linkedin.profileservice.model.Roles;
 import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.model.Token;
 import linkedin.profileservice.model.UserInfo;
@@ -79,9 +80,11 @@ public class AuthService implements IAuthService{
         if(authRepository.findOneByUsername(userInfo.getUsername())!=null) {
         	return false;
         };
+        
+        userInfo.setRole(Roles.USER);
         userInfo.setId((int) sequenceGeneratorService.generateSequence(UserInfo.SEQUENCE_NAME));
         authRepository.save(userInfo);
-        UserInfo ui = authRepository.findOneByUsername(userInfo.getUsername());
+
         Profile profile = new Profile(userInfo.getId());
         profile.setId((int) sequenceGeneratorService.generateSequence(Profile.SEQUENCE_NAME));
         profile.setIsPrivate(false);

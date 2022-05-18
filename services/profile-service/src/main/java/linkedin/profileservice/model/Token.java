@@ -56,6 +56,7 @@ public class Token {
             //    .claim("agent",user.isAgent())
                 .claim("id", user.getId())
                 .claim("username", user.getUsername())//moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+                .claim("user_role", user.getRole())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 

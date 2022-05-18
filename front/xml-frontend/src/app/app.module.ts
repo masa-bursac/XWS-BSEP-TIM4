@@ -23,6 +23,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { JwtInterceptorComponent } from './_helpers/jwt-interceptor/jwt-interceptor.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 
 
 
@@ -36,7 +38,9 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     NavbarComponent,
     ProfileComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    HomePageComponent,
+    AdminHomePageComponent
   ],
   imports: [
     BrowserModule,

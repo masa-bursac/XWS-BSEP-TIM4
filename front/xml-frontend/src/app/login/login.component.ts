@@ -51,7 +51,13 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('token', JSON.stringify(user.token));
           console.log(this.getDecodedAccessToken(data.token));
-          this.router.navigate(['landingPage']);
+          console.log(user);
+          if(this.getDecodedAccessToken(data.token).user_role === 'USER'){
+            this.router.navigate(['homePage']);
+          }
+          else if(this.getDecodedAccessToken(data.token).user_role === 'ADMIN'){
+            this.router.navigate(['adminHomePage']);
+          }
         }, error => {
           this.errorLogin = true;
         })

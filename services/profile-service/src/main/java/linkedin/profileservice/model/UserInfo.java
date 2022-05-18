@@ -45,6 +45,9 @@ public class UserInfo {
     
     @Field
     private LocalDate dateOfBirth;
+    
+    @Field
+    private Roles role;
 
 	public UserInfo() {
 		super();
@@ -141,4 +144,13 @@ public class UserInfo {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
+	public Roles getRole() {
+		return role;
+	}
+
+	public void setRole(Roles role) {
+		this.role = role;
+	}
+	
 }
