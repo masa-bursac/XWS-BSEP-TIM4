@@ -19,8 +19,27 @@ public class AttackController {
     AttackService attackService;
 	
 	@PostMapping("/username")
-    //@PreAuthorize("hasAuthority('REGISTER')")
-    public ResponseEntity<?> validateEmail(@RequestBody String input){
+    public ResponseEntity<?> validateUsername(@RequestBody String input){
         return new ResponseEntity<>(attackService.usernameValidation(input), HttpStatus.OK);
+    }
+	
+	@PostMapping("/name")
+    public ResponseEntity<?> validateName(@RequestBody String input){
+        return new ResponseEntity<>(attackService.nameValidation(input), HttpStatus.OK);
+    }
+	
+	@PostMapping("/email")
+    public ResponseEntity<?> validateEmail(@RequestBody String input){
+        return new ResponseEntity<>(attackService.emailValidation(input), HttpStatus.OK);
+    }
+	
+	@PostMapping("/password")
+    public ResponseEntity<?> validatePassword(@RequestBody String input){
+        return new ResponseEntity<>(attackService.passwordValidation(input), HttpStatus.OK) ;
+    }
+	
+	@PostMapping("/phoneNumber")
+    public ResponseEntity<?> validatePhoneNumber(@RequestBody String input){
+        return new ResponseEntity<>(attackService.phoneNumberValidation(input), HttpStatus.OK) ;
     }
 }

@@ -28,6 +28,7 @@ export class RegistrationComponent implements OnInit {
   today = new Date();
   errorRegister: boolean = false;
   emailBoolean: boolean = false;
+  usernameBoolean: boolean = false;
   nameBoolean: boolean = false;
   surnameNameBoolean: boolean = false;
   passwordBoolean: boolean = false;
@@ -81,86 +82,70 @@ export class RegistrationComponent implements OnInit {
     this.phone = this.validateForm.value.phone;
     this.dateOfBirth = this.validateForm.value.dateOfBirth;
 
-    const body = {
-      username: this.username,
-      name: this.name,
-      surname: this.surname,
-      email : this.email,
-      password : this.password,
-      phone : this.phone,
-      dateOfBirth: this.dateOfBirth,
-      gender: this.selectedValueGender 
-    }
-    console.log(body);
+    this.attackService.username(this.username).subscribe(data => {
+      this.usernameBoolean = data.bool;
+      if(!this.usernameBoolean)
+      alert("Format for username is not right, it needs to have at least 5 characters, the dot (.), underscore (_), or hyphen (-) are allowed and must not be the first or last character or appear consecutively");
 
+      this.attackService.name(this.name).subscribe(data => {
+        this.nameBoolean = data.bool;
+        if(!this.nameBoolean)
+        alert("Format for name is not right");
+
+        this.attackService.name(this.surname).subscribe(data => {
+          this.surnameNameBoolean = data.bool;
+          if(!this.surnameNameBoolean)
+          alert("Format for surname is not right");
+
+          this.attackService.email(this.email).subscribe(data => {
+            this.emailBoolean = data.bool;
+            if(!this.emailBoolean)
+              alert("Format for email is not right");
+
+                this.attackService.password(this.password).subscribe(data => {
+                  this.passwordBoolean = data.bool;
+                  if(!this.passwordBoolean)
+                  alert("Format for password is not right, it needs to have at least 8 characters, one small letter, one big letter, one number and one special charachter");
+
+                    this.attackService.phoneNumber(this.phone).subscribe(data => {
+                      this.phoneBoolean = data.bool;
+                      if(!this.phoneBoolean)
+                      alert("Format for phone number is not right");
+                      
+                      if(this.usernameBoolean && this.nameBoolean && this.surnameNameBoolean && this.emailBoolean && this.passwordBoolean && this.phoneBoolean)
+                      {
+                        const body = {
+                          username: this.username,
+                          name: this.name,
+                          surname: this.surname,
+                          email : this.email,
+                          password : this.password,
+                          phone : this.phone,
+                          dateOfBirth: this.dateOfBirth,
+                          gender: this.selectedValueGender,   
+                        }
+
+                        if(this.validateForm.valid){
+                          this.authService.registration(body).subscribe(data => { 
+                              alert("Registration successfull");
+                              this.router.navigate(['login']);
+                          }, error => {
+                            console.log(error.status);
+                            if(error.status == 409){
+                              alert("Username already exists");
+                            }
+                          });
+                        }
+                      }
+                    });
+                });
+
+            });
+        });
     
-    if(this.validateForm.valid){
-      this.authService.registration(body).subscribe(data => {  
-          alert("Registration successfull");
-          this.router.navigate(['login']);
-      })
-    }
-/*
-    this.attackService.name(this.name).subscribe(data => {
-      this.nameBoolean = data.bool;
-      if(!this.nameBoolean)
-      alert("Format for name is not right");
-
-      this.attackService.name(this.surname).subscribe(data => {
-        this.surnameNameBoolean = data.bool;
-        if(!this.surnameNameBoolean)
-        alert("Format for surname is not right");
-
-        this.attackService.email(this.email).subscribe(data => {
-          this.emailBoolean = data.bool;
-          if(!this.emailBoolean)
-            alert("Format for email is not right");
-
-              this.attackService.password(this.password).subscribe(data => {
-                this.passwordBoolean = data.bool;
-                if(!this.passwordBoolean)
-                alert("Format for password is not right, it needs to have at least 8 characters, one small letter, one big letter, one number and one special charachter");
-
-                  this.attackService.phoneNumber(this.phone).subscribe(data => {
-                    this.phoneBoolean = data.bool;
-                    if(!this.phoneBoolean)
-                    alert("Format for phone number is not right");
-                    
-                    if(this.nameBoolean && this.surnameNameBoolean && this.emailBoolean && this.passwordBoolean && this.phoneBoolean)
-                    {
-                      const body = {
-                        username: this.username,
-                        name: this.name,
-                        surname: this.surname,
-                        email : this.email,
-                        password : this.password,
-                        phone : this.phone,
-                        dateOfBirth: this.dateOfBirth,
-                        gender: this.selectedValueGender,   
-                      }
-
-                      if(this.validateForm.valid){
-                        this.authService.registration(body).subscribe(data => { console.log(data) 
-                          if(data == true){
-                            console.log(body);
-                            //this.authService.getId(this.username).subscribe(data => {
-                            //})
-                            alert("Registration successfull");
-                            this.router.navigate(['login']);
-                          }
-                          else{
-                            alert("Username is not valid");
-                          }
-                        })
-                      }
-                    }
-                  });
-              });
-
-          });
       });
-  
-    });*/
+    
+    });
 
   }
 
