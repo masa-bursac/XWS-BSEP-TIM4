@@ -1,6 +1,8 @@
 package linkedin.profileservice.service.Implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
+import linkedin.profileservice.dto.RegistrationRequestDTO;
 import linkedin.profileservice.dto.UserAccessDTO;
 import linkedin.profileservice.model.AccountStatus;
 import linkedin.profileservice.model.Institution;
@@ -36,11 +39,12 @@ public class AuthService implements IAuthService{
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final PasswordTokenRepository passwordTokenRepository;
+    private final PasswordTokenService passwordTokenService;
 
 
 	@Autowired
     public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg,
-    		 Token token, PasswordEncoder passwordEncoder, EmailService emailService, PasswordTokenRepository passwordTokenRepository) {
+    		 Token token, PasswordEncoder passwordEncoder, EmailService emailService, PasswordTokenRepository passwordTokenRepository, PasswordTokenService passwordTokenService) {
         this.authRepository = authRepository;
         this.profileRepository = profileRepository;
         this.sequenceGeneratorService = sg;
@@ -48,6 +52,7 @@ public class AuthService implements IAuthService{
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.passwordTokenRepository = passwordTokenRepository;
+        this.passwordTokenService = passwordTokenService;
     }
 
 	@Override
@@ -89,6 +94,8 @@ public class AuthService implements IAuthService{
 	public Boolean registration(RegistrationDTO registrationDTO) {
 		
 		if(!registrationDTO.getPassword().equals(registrationDTO.getRepeatPassword())){
+			System.out.println(registrationDTO.getPassword() + "ovde");
+			System.out.println(registrationDTO.getRepeatPassword() + "ovde2");
             throw new GeneralException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         }
 		
@@ -150,6 +157,61 @@ public class AuthService implements IAuthService{
         passwordTokenRepository.delete(passwordToken);
         return true;
 		
+	}
+
+	@Override
+	public List<RegistrationRequestDTO> getRegistrationRequests() {
+		List<UserInfo> users = authRepository.findAllByAccountStatus(AccountStatus.PENDING);
+        List<RegistrationRequestDTO> regResponses = new ArrayList<>();
+        for (UserInfo user: users) {
+        	RegistrationRequestDTO registrationRequestDTO = new RegistrationRequestDTO();
+        	registrationRequestDTO.setId(user.getId());
+        	registrationRequestDTO.setName(user.getName());
+        	registrationRequestDTO.setSurname(user.getSurname());
+        	registrationRequestDTO.setUsername(user.getUsername());
+        	registrationRequestDTO.setEmail(user.getEmail());
+        	regResponses.add(registrationRequestDTO);
+        }
+        return regResponses;
+	}
+
+	@Override
+	public void approveRegistrationRequest(int id) {
+		UserInfo user = authRepository.findOneById(id);
+        user.setAccountStatus(AccountStatus.APPROVED);
+        UserInfo savedUser = authRepository.save(user);
+        passwordTokenService.createToken(user.getUsername());
+        emailService.approveRegistrationMail(savedUser);		
+	}
+
+	@Override
+	public void denyRegistrationRequest(int id) {
+		UserInfo user = authRepository.findOneById(id);
+        user.setAccountStatus(AccountStatus.DENIED);
+        UserInfo savedUser = authRepository.save(user);
+        emailService.denyRegistrationMail(savedUser);		
+	}
+
+	@Override
+	public boolean confirmRegistrationRequest(String token) {
+		System.out.println(passwordTokenRepository.findOneByToken(token));
+        String username = passwordTokenRepository.findOneByToken(token).getUsername();
+
+        if(username == null){
+            return false;
+        }
+        
+        UserInfo user = authRepository.findOneByUsername(username);
+        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
+        Date now = new Date();
+        if(passwordToken.getExpiryDate().before(now)){
+            return false;
+        }else {
+            user.setAccountStatus(AccountStatus.ACTIVATED);
+            authRepository.save(user);
+            passwordTokenRepository.delete(passwordToken);
+            return true;
+        }
 	}
 	
 }

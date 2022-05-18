@@ -1,5 +1,7 @@
 package linkedin.profileservice.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
+import linkedin.profileservice.dto.RegistrationRequestDTO;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.service.IAuthService;
 
@@ -61,5 +64,25 @@ public class AuthController {
     @PutMapping("/change-password")
     public Boolean changePassword(@RequestBody ChangePasswordDTO request){
     	 return authService.changePassword(request);
+    }
+    
+    @GetMapping("/registration-requests")
+    public List<RegistrationRequestDTO> getRegistrationRequests(){
+        return authService.getRegistrationRequests();
+    }
+    
+    @PutMapping("/approve")
+    public void approveRegistrationRequest(@RequestBody int id){
+        authService.approveRegistrationRequest(id);
+    }
+
+    @PutMapping("/deny")
+    public void denyRegistrationRequest(@RequestBody int id){
+        authService.denyRegistrationRequest(id);
+    }
+    
+    @PutMapping("/confirm")
+    public boolean confirmRegistrationRequest(@RequestBody String token){
+        return authService.confirmRegistrationRequest(token);
     }
 }

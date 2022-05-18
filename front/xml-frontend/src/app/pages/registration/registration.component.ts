@@ -82,6 +82,7 @@ export class RegistrationComponent implements OnInit {
     this.password = this.validateForm.value.password;
     this.phone = this.validateForm.value.phone;
     this.dateOfBirth = this.validateForm.value.dateOfBirth;
+    this.checkPassword = this.validateForm.value.checkPassword;
 
     this.attackService.username(this.username).subscribe(data => {
       this.usernameBoolean = data.bool;

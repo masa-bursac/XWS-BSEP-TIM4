@@ -14,8 +14,9 @@ public class PasswordTokenService {
 	 private final PasswordTokenRepository passwordTokenRepository;
 	 static SequenceGeneratorService sequenceGeneratorService;
 
-	 public PasswordTokenService(PasswordTokenRepository passwordTokenRepository) {
+	 public PasswordTokenService(PasswordTokenRepository passwordTokenRepository, SequenceGeneratorService sequenceGeneratorService) {
 		 this.passwordTokenRepository = passwordTokenRepository;
+		 this.sequenceGeneratorService = sequenceGeneratorService;
 	 }
 
 	 public PasswordToken createToken(String username){

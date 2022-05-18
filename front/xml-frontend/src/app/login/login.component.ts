@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AttackService } from '../services/attack.service';
 import jwt_decode from 'jwt-decode';
+import { RegistrationRequestService } from '../services/registration-request.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService : AuthService, private attackService: AttackService) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private authService : AuthService, private attackService: AttackService, private rrService: RegistrationRequestService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -29,6 +30,15 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
+
+    const token = this.route.snapshot.params.token;
+    if (token != undefined) {
+      this.rrService.confirmRegistrationRequest(token).subscribe(() => {
+        this.router.navigateByUrl(`/login`);
+      },
+        error => {
+        });
+    }
   }
 
   submitForm(): void {

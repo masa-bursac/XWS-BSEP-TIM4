@@ -56,4 +56,26 @@ public class EmailService implements IEmailService {
         emailContext.send("firma4validation@gmail.com", title, "forgotPassword", context);
 	}
 
+
+	public void approveRegistrationMail(UserInfo savedUser) {
+
+        String title = "Your registration has been approved.";
+        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(savedUser.getUsername());
+
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", savedUser.getName(), savedUser.getSurname()));
+        context.setVariable("link", String.format("http://localhost:4200/login/%s", passwordToken.getToken()));
+        emailContext.send("firma4validation@gmail.com", title, "approveRegistration", context);
+		
+	}
+
+
+	public void denyRegistrationMail(UserInfo savedUser) {
+
+        String title = "Your registration has been denied.";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", savedUser.getName(), savedUser.getSurname()));
+        emailContext.send("firma4validation@gmail.com", title, "denyRegistration", context);		
+	}
+
 }

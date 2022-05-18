@@ -25,6 +25,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
+import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 
 
 
@@ -40,7 +41,8 @@ import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.
     ForgotPasswordComponent,
     ChangePasswordComponent,
     HomePageComponent,
-    AdminHomePageComponent
+    AdminHomePageComponent,
+    RegistrationRequestComponent
   ],
   imports: [
     BrowserModule,
