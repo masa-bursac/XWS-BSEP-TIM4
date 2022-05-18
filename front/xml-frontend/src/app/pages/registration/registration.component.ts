@@ -34,6 +34,9 @@ export class RegistrationComponent implements OnInit {
   phoneBoolean: boolean = false;
   dateBoolean: boolean = false;
 
+  hide: boolean = true;
+  hideRp: boolean = true; 
+
   constructor(private fb: FormBuilder,private authService : AuthService, private attackService : AttackService, private router: Router) { }
 
   ngOnInit(): void {
@@ -86,15 +89,13 @@ export class RegistrationComponent implements OnInit {
       password : this.password,
       phone : this.phone,
       dateOfBirth: this.dateOfBirth,
-      gender: this.selectedValueGender,   
+      gender: this.selectedValueGender 
     }
     console.log(body);
 
+    
     if(this.validateForm.valid){
-      this.authService.registration(body).subscribe(data => { console.log(data) 
-          console.log(body);
-          //this.authService.getId(this.username).subscribe(data => {
-          //})
+      this.authService.registration(body).subscribe(data => {  
           alert("Registration successfull");
           this.router.navigate(['login']);
       })

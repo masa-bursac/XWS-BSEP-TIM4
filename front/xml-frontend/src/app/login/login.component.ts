@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   password: any;
   usernameBool: boolean = true;
 
+  hide: boolean = true;
+
   constructor(private fb: FormBuilder, private router: Router, private authService : AuthService, private attackService: AttackService) { }
 
   ngOnInit(): void {
