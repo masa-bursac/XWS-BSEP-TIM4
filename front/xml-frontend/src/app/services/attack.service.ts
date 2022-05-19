@@ -30,4 +30,12 @@ export class AttackService {
   public username(body: any) : Observable<any>{ 
     return this.http.post(attack_url + `/username`, body);
   }
+
+  public escaping(body: any) : Observable<any>{ 
+    return this.http.post(attack_url + `/escape`, body);
+  }
+
+  public date(body: any) : Observable<any>{ 
+    return this.http.post(attack_url + `/date`, body);
+  }
 }

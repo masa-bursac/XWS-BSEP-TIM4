@@ -113,8 +113,14 @@ export class RegistrationComponent implements OnInit {
                       this.phoneBoolean = data.bool;
                       if(!this.phoneBoolean)
                       alert("Format for phone number is not right");
+
+                      this.attackService.date(this.dateOfBirth).subscribe(data => {
+                        this.dateBoolean = data.bool;
+                        if(!this.dateBoolean)
+                        alert("Format for date of birth is not right");
+                        
                       
-                      if(this.usernameBoolean && this.nameBoolean && this.surnameNameBoolean && this.emailBoolean && this.passwordBoolean && this.phoneBoolean)
+                      if(this.usernameBoolean && this.nameBoolean && this.surnameNameBoolean && this.emailBoolean && this.passwordBoolean && this.phoneBoolean && this.dateBoolean)
                       {
                         const body = {
                           username: this.username,
@@ -140,6 +146,7 @@ export class RegistrationComponent implements OnInit {
                           });
                         }
                       }
+                    });
                     });
                 });
 

@@ -40,11 +40,12 @@ public class AuthService implements IAuthService{
     private final EmailService emailService;
     private final PasswordTokenRepository passwordTokenRepository;
     private final PasswordTokenService passwordTokenService;
+    private final AttackService attackService;
 
 
 	@Autowired
     public AuthService(AuthRepository authRepository, ProfileRepository profileRepository, SequenceGeneratorService sg,
-    		 Token token, PasswordEncoder passwordEncoder, EmailService emailService, PasswordTokenRepository passwordTokenRepository, PasswordTokenService passwordTokenService) {
+    		 Token token, PasswordEncoder passwordEncoder, EmailService emailService, PasswordTokenRepository passwordTokenRepository, PasswordTokenService passwordTokenService, AttackService attackService) {
         this.authRepository = authRepository;
         this.profileRepository = profileRepository;
         this.sequenceGeneratorService = sg;
@@ -53,6 +54,7 @@ public class AuthService implements IAuthService{
         this.emailService = emailService;
         this.passwordTokenRepository = passwordTokenRepository;
         this.passwordTokenService = passwordTokenService;
+        this.attackService = attackService;
     }
 
 	@Override
@@ -92,10 +94,9 @@ public class AuthService implements IAuthService{
 
 	@Override
 	public Boolean registration(RegistrationDTO registrationDTO) {
-		
+		if(!attackService.validateRegistration(registrationDTO))
+			throw new GeneralException("Form input is not valid.", HttpStatus.BAD_REQUEST);
 		if(!registrationDTO.getPassword().equals(registrationDTO.getRepeatPassword())){
-			System.out.println(registrationDTO.getPassword() + "ovde");
-			System.out.println(registrationDTO.getRepeatPassword() + "ovde2");
             throw new GeneralException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         }
 		

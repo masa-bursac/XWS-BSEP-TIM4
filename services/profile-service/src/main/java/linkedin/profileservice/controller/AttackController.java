@@ -42,4 +42,15 @@ public class AttackController {
     public ResponseEntity<?> validatePhoneNumber(@RequestBody String input){
         return new ResponseEntity<>(attackService.phoneNumberValidation(input), HttpStatus.OK) ;
     }
+	
+	@PostMapping("/escape")
+    public ResponseEntity<?> charachterEscaping(@RequestBody String input){
+        return new ResponseEntity<>(attackService.escaping(input), HttpStatus.OK);
+    }
+	
+	@PostMapping("/date")
+	public ResponseEntity<?> validateDate(@RequestBody String input){
+        return new ResponseEntity<>(attackService.dateValidation(input), HttpStatus.OK);
+    }
+
 }

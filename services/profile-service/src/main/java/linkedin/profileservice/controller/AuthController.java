@@ -41,6 +41,7 @@ public class AuthController {
     
     @PostMapping("/registration")
     public ResponseEntity registration(@RequestBody RegistrationDTO registrationDTO){
+    	
         try{
         	if(authService.registration(registrationDTO))
         		return new ResponseEntity(HttpStatus.OK);
