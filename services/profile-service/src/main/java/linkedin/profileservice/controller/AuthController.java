@@ -2,8 +2,13 @@ package linkedin.profileservice.controller;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +22,12 @@ import linkedin.profileservice.dto.AuthDTO;
 import linkedin.profileservice.dto.ChangePasswordDTO;
 import linkedin.profileservice.dto.RegistrationDTO;
 import linkedin.profileservice.dto.RegistrationRequestDTO;
+import linkedin.profileservice.model.Roles;
 import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.service.IAuthService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -66,7 +73,7 @@ public class AuthController {
     public Boolean changePassword(@RequestBody ChangePasswordDTO request){
     	 return authService.changePassword(request);
     }
-    
+
     @GetMapping("/registration-requests")
     public List<RegistrationRequestDTO> getRegistrationRequests(){
         return authService.getRegistrationRequests();
