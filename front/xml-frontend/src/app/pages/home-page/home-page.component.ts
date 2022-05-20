@@ -19,18 +19,22 @@ export class HomePageComponent implements OnInit {
   }
 
   private getToken(): void {
-    this.token = this.route.snapshot.params.token;
-    this.token = JSON.parse(localStorage.getItem('token') || '{}');
+    if(this.route.snapshot.params.token === undefined){
+      this.token = JSON.parse(localStorage.getItem('token') || '{}');
+    }else{
+      this.token = this.route.snapshot.params.token;
+    }
     this.decodedToken = this.getDecodedAccessToken(this.token);
-    console.log(this.decodedToken);
     if (this.decodedToken === null || this.decodedToken === undefined) {
-      alert("Nije dozvoljen pristup");
+      alert("Nije dozvoljen pristup ovde");
       this.router.navigate(['landingPage']);
     }else {
+      localStorage.setItem('token', JSON.stringify(this.token));
       if(this.decodedToken.user_role === 'ADMIN'){
         alert("Nije dozvoljen pristup");
         this.router.navigate(['adminHomePage']);
       }
+      this.router.navigate(['homePage']);
     }
   }
 

@@ -23,14 +23,16 @@ public class EmailService implements IEmailService {
 	private final PasswordTokenRepository passwordTokenRepository;
 	private final PasswordTokenService passwordTokenService;
 	private final EmailContext emailContext;
+	private final Token token;
 	
 	@Autowired
     public EmailService(AuthRepository authRepository, PasswordTokenRepository passwordTokenRepository, PasswordTokenService passwordTokenService,
-    		EmailContext emailContext) {
+    		EmailContext emailContext, Token token) {
         this.authRepository = authRepository;
         this.passwordTokenRepository = passwordTokenRepository;
         this.passwordTokenService = passwordTokenService;
         this.emailContext = emailContext;
+        this.token = token;
     }
 
 
@@ -82,6 +84,7 @@ public class EmailService implements IEmailService {
 	public void passwordlessLogin(String username) {
 		
 		UserInfo user = authRepository.findOneByUsername(username);
+		/*
         Date now = new Date();
         PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
         if(passwordToken == null){
@@ -91,12 +94,14 @@ public class EmailService implements IEmailService {
             	passwordTokenRepository.delete(passwordToken);
                 passwordToken = passwordTokenService.createToken(username);
             }
-        }
+        }*/
+		
+		String jwt = token.generateToken(user);
 
         String title = "Passwordless login";
         Context context = new Context();
         context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
-        context.setVariable("link", String.format("http://localhost:4200/homePage/%s", passwordToken.getToken()));
+        context.setVariable("link", String.format("http://localhost:4200/homePage/%s", jwt));
         emailContext.send("firma4validation@gmail.com", title, "passwordlessLogin", context);
 	}
 
