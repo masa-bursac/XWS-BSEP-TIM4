@@ -78,4 +78,26 @@ public class EmailService implements IEmailService {
         emailContext.send("firma4validation@gmail.com", title, "denyRegistration", context);		
 	}
 
+
+	public void passwordlessLogin(String username) {
+		
+		UserInfo user = authRepository.findOneByUsername(username);
+        Date now = new Date();
+        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
+        if(passwordToken == null){
+            passwordToken = passwordTokenService.createToken(username);
+        }else{
+            if(passwordToken.getExpiryDate().before(now)){
+            	passwordTokenRepository.delete(passwordToken);
+                passwordToken = passwordTokenService.createToken(username);
+            }
+        }
+
+        String title = "Passwordless login";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
+        context.setVariable("link", String.format("http://localhost:4200/homePage/%s", passwordToken.getToken()));
+        emailContext.send("firma4validation@gmail.com", title, "passwordlessLogin", context);
+	}
+
 }

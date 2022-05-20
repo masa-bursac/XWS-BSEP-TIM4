@@ -26,6 +26,7 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
+import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
 
 
 
@@ -42,7 +43,8 @@ import { RegistrationRequestComponent } from './pages/registration-request/regis
     ChangePasswordComponent,
     HomePageComponent,
     AdminHomePageComponent,
-    RegistrationRequestComponent
+    RegistrationRequestComponent,
+    PasswordlessLoginComponent
   ],
   imports: [
     BrowserModule,

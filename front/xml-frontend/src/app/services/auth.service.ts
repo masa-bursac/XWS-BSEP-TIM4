@@ -27,6 +27,10 @@ export class AuthService {
     return this.http.put(auth_url + `/change-password`, body);
   }
 
+  public passwordlessLogin(body: any): Observable<any> {
+    return this.http.post(auth_url + `/passwordless-login`, body);
+  }
+
   public getDataFromToken() : any
   {
     let token : any;

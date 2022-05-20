@@ -29,4 +29,6 @@ public interface IAuthService {
 
 	boolean confirmRegistrationRequest(String token);
 
+	void passwordlessLogin(String username);
+
 }

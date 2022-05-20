@@ -93,4 +93,9 @@ public class AuthController {
     public boolean confirmRegistrationRequest(@RequestBody String token){
         return authService.confirmRegistrationRequest(token);
     }
+
+    @PostMapping("/passwordless-login")
+    public void passwordlessLogin(@RequestBody String username){
+         authService.passwordlessLogin(username);
+    }
 }

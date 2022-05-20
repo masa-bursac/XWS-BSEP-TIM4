@@ -236,5 +236,10 @@ public class AuthService implements IAuthService{
             return true;
         }
 	}
+
+	@Override
+	public void passwordlessLogin(String username) {
+		emailService.passwordlessLogin(username);
+	}
 	
 }

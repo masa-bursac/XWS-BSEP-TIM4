@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -12,13 +12,14 @@ export class HomePageComponent implements OnInit {
   public decodedToken: any;
   public token: any;
 
-  constructor(private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.getToken();
   }
 
   private getToken(): void {
+    this.token = this.route.snapshot.params.token;
     this.token = JSON.parse(localStorage.getItem('token') || '{}');
     this.decodedToken = this.getDecodedAccessToken(this.token);
     console.log(this.decodedToken);
