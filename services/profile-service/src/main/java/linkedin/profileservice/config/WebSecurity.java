@@ -21,7 +21,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //http
+        http
                /* // komunikacija izmedju klijenta i servera je stateless
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 // za neautorizovane zahteve posalji 401 gresku
@@ -31,10 +31,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 //.cors().and()
                 ;*/
-        http.cors()
+      /*  http.cors()
         .and().authorizeRequests()
         .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-        .and().csrf().disable();
+        .and()*/.csrf().disable();
 		// Add a filter to validate the tokens with every request
 		//http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

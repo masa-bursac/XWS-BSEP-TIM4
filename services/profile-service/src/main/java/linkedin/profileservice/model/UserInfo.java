@@ -2,6 +2,7 @@ package linkedin.profileservice.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.Id;
@@ -51,6 +52,12 @@ public class UserInfo {
     
     @Field
     private AccountStatus accountStatus;
+    
+    @Field
+    private int loginCounter;
+    
+    @Field 
+    private Date blockDate;
 
 	public UserInfo() {
 		super();
@@ -163,5 +170,22 @@ public class UserInfo {
 	public void setAccountStatus(AccountStatus accountStatus) {
 		this.accountStatus = accountStatus;
 	}
+
+	public int getLoginCounter() {
+		return loginCounter;
+	}
+
+	public void setLoginCounter(int loginCounter) {
+		this.loginCounter = loginCounter;
+	}
+
+	public Date getBlockDate() {
+		return blockDate;
+	}
+
+	public void setBlockDate(Date blockDate) {
+		this.blockDate = blockDate;
+	}
+	
 	
 }

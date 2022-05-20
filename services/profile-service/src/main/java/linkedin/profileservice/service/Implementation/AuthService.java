@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.DateUtils;
 
 import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
@@ -65,7 +66,7 @@ public class AuthService implements IAuthService{
             return null;
         }
         
-        if(user == null || !passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
+        if(user == null) {
             throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
         }
         if(user != null && user.getAccountStatus().equals(AccountStatus.PENDING)){
@@ -83,12 +84,31 @@ public class AuthService implements IAuthService{
 
         UserAccessDTO userResponse = new UserAccessDTO(user,jwt);
         userResponse.setTokenExpiresIn(expiresIn);
+        Date now = new Date();
+        Date dayAfter = new Date(user.getBlockDate().getTime() + (1000 * 60 * 60 * 24));
+        
 
         if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
-            return userResponse;
+        	if(dayAfter.before(now)) {
+        	user.setLoginCounter(0);
+            authRepository.save(user);
+        	return userResponse;
+        	}else 
+        	{
+        		 throw new GeneralException("You are blocked!", HttpStatus.BAD_REQUEST);
+        	}
         }
         else{
-            return null;
+        	user.setLoginCounter(user.getLoginCounter()+1);
+            authRepository.save(user);
+            if(user.getLoginCounter() > 4)
+            {
+            	user.setBlockDate(now);
+            	authRepository.save(user);
+            	throw new GeneralException("You have tried to login more then 3 times!", HttpStatus.BAD_REQUEST);
+            }
+
+            throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
         }
 	}
 
@@ -108,6 +128,8 @@ public class AuthService implements IAuthService{
         
         userInfo.setRole(Roles.USER);
         userInfo.setAccountStatus(AccountStatus.PENDING);
+        userInfo.setBlockDate(new Date(1001-01-01));
+        userInfo.setLoginCounter(0);
         userInfo.setId((int) sequenceGeneratorService.generateSequence(UserInfo.SEQUENCE_NAME));
         authRepository.save(userInfo);
 

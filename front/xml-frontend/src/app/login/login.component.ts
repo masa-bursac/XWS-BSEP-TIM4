@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
 
     this.attackService.username(this.username).subscribe(data => {
       this.usernameBool = data.bool
-      console.log(this.username, this.password, this.usernameBool);
       if (this.usernameBool) {
         const body = {
           username: this.username,
@@ -62,8 +61,8 @@ export class LoginComponent implements OnInit {
           const user = data;
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('token', JSON.stringify(user.token));
-          console.log(this.getDecodedAccessToken(data.token));
-          console.log(user);
+          //console.log(this.getDecodedAccessToken(data.token));
+          //console.log(user);
           if(this.getDecodedAccessToken(data.token).user_role === 'USER'){
             this.router.navigate(['homePage']);
           }
