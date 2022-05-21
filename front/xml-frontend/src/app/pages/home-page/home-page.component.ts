@@ -33,8 +33,9 @@ export class HomePageComponent implements OnInit {
       if(this.decodedToken.user_role === 'ADMIN'){
         alert("Nije dozvoljen pristup");
         this.router.navigate(['adminHomePage']);
+      }else {
+        this.router.navigate(['homePage']);
       }
-      this.router.navigate(['homePage']);
     }
   }
 

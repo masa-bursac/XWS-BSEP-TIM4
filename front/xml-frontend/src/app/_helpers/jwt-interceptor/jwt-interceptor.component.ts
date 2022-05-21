@@ -16,6 +16,7 @@ export class JwtInterceptorComponent implements HttpInterceptor {
         const isLoggedIn = currentUser && localStorage.getItem('token');
        // const isApiUrl = request.url.startsWith(config.apiUrl);
         if (isLoggedIn/* && isApiUrl*/) {
+            console.log(localStorage.getItem('token'));
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -102,7 +101,7 @@ public class Token {
 
     // Funkcija za validaciju JWT tokena
     public Boolean validateToken(String token, UserDetails userDetails) {
-        UserInfo user = (UserInfo) userDetails;
+        //UserInfo user = (UserInfo) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 
@@ -118,6 +117,18 @@ public class Token {
             username = null;
         }
         return username;
+    }
+    
+    public String getRoleFromToken(String token) {
+        String role;
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            role = claims.get("user_role").toString();
+            System.out.println(role);
+        } catch (Exception e) {
+        	role = null;
+        }
+        return role;
     }
 
     public Date getIssuedAtDateFromToken(String token) {
@@ -197,6 +208,7 @@ public class Token {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
+        	System.out.println(e);
             claims = null;
         }
         return claims;

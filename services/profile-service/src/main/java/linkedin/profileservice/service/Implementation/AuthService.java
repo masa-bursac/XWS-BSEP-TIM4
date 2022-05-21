@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.DateUtils;
 
 import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.dto.AuthDTO;
@@ -155,10 +154,11 @@ public class AuthService implements IAuthService{
 	    return ui.getUsername();
 	}
 
+	
 	public UserDetails loadUserByUsername(String username) {
 		// TODO Auto-generated method stub
         UserInfo userInfo = authRepository.findOneByUsername(username);
-        return (UserDetails) userInfo;
+        return userInfo;
 	}
 
 	@Override

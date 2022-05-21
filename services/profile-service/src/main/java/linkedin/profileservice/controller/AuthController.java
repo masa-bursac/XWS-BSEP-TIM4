@@ -8,6 +8,7 @@ import javax.annotation.security.RolesAllowed;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,16 +76,19 @@ public class AuthController {
     }
 
     @GetMapping("/registration-requests")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<RegistrationRequestDTO> getRegistrationRequests(){
         return authService.getRegistrationRequests();
     }
     
     @PutMapping("/approve")
+    @PreAuthorize("hasRole('ADMIN')")
     public void approveRegistrationRequest(@RequestBody int id){
         authService.approveRegistrationRequest(id);
     }
 
     @PutMapping("/deny")
+    @PreAuthorize("hasRole('ADMIN')")
     public void denyRegistrationRequest(@RequestBody int id){
         authService.denyRegistrationRequest(id);
     }

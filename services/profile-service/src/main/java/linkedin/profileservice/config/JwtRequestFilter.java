@@ -15,25 +15,33 @@ import org.springframework.web.filter.OncePerRequestFilter;
 //import com.javainuse.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import linkedin.profileservice.model.Token;
+import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.service.Implementation.AuthService;
 
+@Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private AuthService authService;
 	@Autowired
 	private Token jwtTokenUtil;
+	
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		final String requestTokenHeader = request.getHeader("Authorization");
 		String username = null;
 		String jwtToken = null;
+		String token = "";
+		String role = "";
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get
 		// only the Token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
+			token = jwtToken.substring(1, jwtToken.length() - 1);
 			try {
-				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				username = jwtTokenUtil.getUsernameFromToken(token);
+				role = jwtTokenUtil.getRoleFromToken(token);
 			} catch (IllegalArgumentException e) {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
@@ -44,12 +52,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.authService.loadUserByUsername(username);
+			UserDetails userDetails = authService.loadUserByUsername(username);
 			// if token is valid configure Spring Security to manually set
 			// authentication
-			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+			if (jwtTokenUtil.validateToken(token, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
+				System.out.println(usernamePasswordAuthenticationToken + "neki token");
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				// After setting the Authentication in the context, we specify
@@ -60,4 +69,5 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(request, response);
 	}
+
 }
