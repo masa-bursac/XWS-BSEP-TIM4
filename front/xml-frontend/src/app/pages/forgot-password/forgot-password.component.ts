@@ -1,6 +1,7 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AttackService } from 'src/app/services/attack.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,8 +14,9 @@ export class ForgotPasswordComponent implements OnInit {
   error: boolean = false;
   success: boolean = false;
   username: string = "";
+  usernameBool: boolean = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -29,15 +31,25 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     this.username = this.validateForm.value.username;
-    
-    this.authService.forgotPassword(this.username).subscribe(data => {
-      this.success = true;
-      this.error = false;
-    }, error => { 
-      this.error = true;
-      this.success = false;
-    })
-    alert("Check your email");
+
+    this.attackService.username(this.username).subscribe(data => {
+      this.usernameBool = data.bool
+
+      if (this.usernameBool) {   
+        this.authService.forgotPassword(this.username).subscribe(data => {
+          this.success = true;
+          this.error = false;
+          alert("Check your email");
+        }, error => { 
+          this.error = true;
+          this.success = false;
+          alert(error.error);
+        })
+      }
+      else {
+        alert("Invalid username!");
+      }
+    });
   }
 
 

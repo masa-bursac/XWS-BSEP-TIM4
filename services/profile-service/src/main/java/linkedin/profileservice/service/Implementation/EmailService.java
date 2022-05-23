@@ -3,10 +3,12 @@ package linkedin.profileservice.service.Implementation;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.config.EmailContext;
+import linkedin.profileservice.config.GeneralException;
 import linkedin.profileservice.model.PasswordToken;
 import linkedin.profileservice.model.Token;
 import linkedin.profileservice.model.UserInfo;
@@ -40,6 +42,9 @@ public class EmailService implements IEmailService {
 	public void forgotPassword(String username) {
 		
         UserInfo user = authRepository.findOneByUsername(username);
+        if(user == null) {
+        	throw new GeneralException("Invalid username", HttpStatus.BAD_REQUEST);
+        }
         Date now = new Date();
         PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
         if(passwordToken == null){
@@ -84,17 +89,9 @@ public class EmailService implements IEmailService {
 	public void passwordlessLogin(String username) {
 		
 		UserInfo user = authRepository.findOneByUsername(username);
-		/*
-        Date now = new Date();
-        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
-        if(passwordToken == null){
-            passwordToken = passwordTokenService.createToken(username);
-        }else{
-            if(passwordToken.getExpiryDate().before(now)){
-            	passwordTokenRepository.delete(passwordToken);
-                passwordToken = passwordTokenService.createToken(username);
-            }
-        }*/
+		if(user == null) {
+        	throw new GeneralException("Invalid username", HttpStatus.BAD_REQUEST);
+        }
 		
 		String jwt = token.generateToken(user);
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -13,8 +14,10 @@ export class ChangePasswordComponent implements OnInit {
   validateForm!: FormGroup;
   public username: any;
   hide: boolean = true;
+  hideRp: boolean = true;
+  passwordBoolean: boolean = false;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router, private attackService : AttackService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -35,19 +38,25 @@ export class ChangePasswordComponent implements OnInit {
 
   submitForm(): void {
     this.username = this.route.snapshot.params.token;
-    console.log(this.username);
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    const body = {
-      username: this.username,
-      password: this.validateForm.value.password,
-      rePassword: this.validateForm.value.rePassword
-    }
-    this.authService.changePassword(body).subscribe(data => {
-      this.router.navigate(['/login']);
-    })
+    this.attackService.password(this.validateForm.value.password).subscribe(data => {
+      this.passwordBoolean = data.bool;
+      if(!this.passwordBoolean)
+          alert("Format for password is not right, it needs to have at least 8 characters, one small letter, one big letter, one number and one special charachter");
+      else{
+        const body = {
+          username: this.username,
+          password: this.validateForm.value.password,
+          rePassword: this.validateForm.value.rePassword
+        }
+        this.authService.changePassword(body).subscribe(data => {
+          this.router.navigate(['/login']);
+        })
+      }
+    });
   }
 
 }

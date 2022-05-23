@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
         })
       }
       else {
-        alert("Greska");
+        alert("Greska u username-u!");
       }
     });
   }

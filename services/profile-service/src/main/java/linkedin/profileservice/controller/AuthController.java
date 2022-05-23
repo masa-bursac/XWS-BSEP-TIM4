@@ -66,8 +66,13 @@ public class AuthController {
     }
     
     @PostMapping("/forgot-password")
-    public void forgotPassword(@RequestBody String username){
-         authService.forgotPassword(username);
+    public ResponseEntity forgotPassword(@RequestBody String username){
+    	try{
+    		authService.forgotPassword(username);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
+        }
     }
     
     @PutMapping("/change-password")
@@ -99,7 +104,12 @@ public class AuthController {
     }
 
     @PostMapping("/passwordless-login")
-    public void passwordlessLogin(@RequestBody String username){
-         authService.passwordlessLogin(username);
+    public ResponseEntity passwordlessLogin(@RequestBody String username){
+    	try{
+    		authService.passwordlessLogin(username);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
+        }
     }
 }

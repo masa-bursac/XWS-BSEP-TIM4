@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,8 +15,9 @@ export class PasswordlessLoginComponent implements OnInit {
   error: boolean = false;
   success: boolean = false;
   username: string = "";
+  usernameBool: boolean = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -30,15 +32,25 @@ export class PasswordlessLoginComponent implements OnInit {
     }
 
     this.username = this.validateForm.value.username;
-    
-    this.authService.passwordlessLogin(this.username).subscribe(data => {
-      this.success = true;
-      this.error = false;
-    }, error => { 
-      this.error = true;
-      this.success = false;
-    })
-    alert("Check your email to login");
+
+    this.attackService.username(this.username).subscribe(data => {
+      this.usernameBool = data.bool
+      
+      if (this.usernameBool) {
+      this.authService.passwordlessLogin(this.username).subscribe(data => {
+        this.success = true;
+        this.error = false;
+        alert("Check your email to login");
+      }, error => { 
+        this.error = true;
+        this.success = false;
+        alert(error.error);
+      })
+    }
+    else {
+      alert("Invalid username!");
+    }
+    });
   }
 
 }
