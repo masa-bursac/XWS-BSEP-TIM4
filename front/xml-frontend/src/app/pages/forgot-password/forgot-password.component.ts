@@ -37,6 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.error = true;
       this.success = false;
     })
+    alert("Check your email");
   }
 
 

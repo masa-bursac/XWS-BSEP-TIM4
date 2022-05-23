@@ -12,6 +12,7 @@ export class ChangePasswordComponent implements OnInit {
 
   validateForm!: FormGroup;
   public username: any;
+  hide: boolean = true;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
@@ -44,7 +45,6 @@ export class ChangePasswordComponent implements OnInit {
       password: this.validateForm.value.password,
       rePassword: this.validateForm.value.rePassword
     }
-    console.log(body);
     this.authService.changePassword(body).subscribe(data => {
       this.router.navigate(['/login']);
     })

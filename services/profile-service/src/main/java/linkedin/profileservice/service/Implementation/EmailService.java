@@ -54,7 +54,7 @@ public class EmailService implements IEmailService {
         String title = "Change your password";
         Context context = new Context();
         context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
-        context.setVariable("link", String.format("http://localhost:4200/changePassword/%s", passwordToken.getToken()));
+        context.setVariable("link", String.format("https://localhost:4200/changePassword/%s", passwordToken.getToken()));
         emailContext.send("firma4validation@gmail.com", title, "forgotPassword", context);
 	}
 
@@ -66,7 +66,7 @@ public class EmailService implements IEmailService {
 
         Context context = new Context();
         context.setVariable("name", String.format("%s %s", savedUser.getName(), savedUser.getSurname()));
-        context.setVariable("link", String.format("http://localhost:4200/login/%s", passwordToken.getToken()));
+        context.setVariable("link", String.format("https://localhost:4200/login/%s", passwordToken.getToken()));
         emailContext.send("firma4validation@gmail.com", title, "approveRegistration", context);
 		
 	}
@@ -101,7 +101,7 @@ public class EmailService implements IEmailService {
         String title = "Passwordless login";
         Context context = new Context();
         context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
-        context.setVariable("link", String.format("http://localhost:4200/homePage/%s", jwt));
+        context.setVariable("link", String.format("https://localhost:4200/homePage/%s", jwt));
         emailContext.send("firma4validation@gmail.com", title, "passwordlessLogin", context);
 	}
 

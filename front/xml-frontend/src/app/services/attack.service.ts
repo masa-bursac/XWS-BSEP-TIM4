@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const attack_url = 'http://localhost:8140/attack';
+const attack_url = 'https://localhost:8140/attack';
 
 @Injectable({
   providedIn: 'root'

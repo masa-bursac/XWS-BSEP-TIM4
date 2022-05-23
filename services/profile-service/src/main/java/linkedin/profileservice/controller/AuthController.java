@@ -28,7 +28,7 @@ import linkedin.profileservice.model.UserInfo;
 import linkedin.profileservice.service.IAuthService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/auth")
 public class AuthController {
 
