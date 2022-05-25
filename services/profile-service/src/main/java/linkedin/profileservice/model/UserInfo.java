@@ -64,6 +64,9 @@ public class UserInfo implements UserDetails{
     
     @Field 
     private Date blockDate;
+    
+    @Field
+    private List<Permission> permissions;
 
 	public UserInfo() {
 		super();
@@ -225,6 +228,16 @@ public class UserInfo implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 	
 	

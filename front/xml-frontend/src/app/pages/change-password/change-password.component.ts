@@ -53,6 +53,7 @@ export class ChangePasswordComponent implements OnInit {
           rePassword: this.validateForm.value.rePassword
         }
         this.authService.changePassword(body).subscribe(data => {
+          alert("Password changed sucessfully!")
           this.router.navigate(['/login']);
         })
       }
