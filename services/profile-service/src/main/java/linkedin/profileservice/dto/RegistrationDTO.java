@@ -7,6 +7,7 @@ public class RegistrationDTO {
     String surname;
     String email;
     String password;
+    String repeatPassword;
     String phone;
     String dateOfBirth;
     String gender;
@@ -62,4 +63,11 @@ public class RegistrationDTO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	public String getRepeatPassword() {
+		return repeatPassword;
+	}
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
+	}
+	
 }

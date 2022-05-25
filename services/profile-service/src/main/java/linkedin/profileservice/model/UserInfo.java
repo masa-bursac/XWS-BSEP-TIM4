@@ -2,6 +2,10 @@ package linkedin.profileservice.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.Id;
@@ -9,12 +13,15 @@ import javax.persistence.Transient;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import linkedin.profileservice.dto.RegistrationDTO;
 
 
 @Document(collection = "userinfo")
-public class UserInfo {
+public class UserInfo implements UserDetails{
 	
 	@Transient
     public static final String SEQUENCE_NAME = "users_sequence";
@@ -45,10 +52,26 @@ public class UserInfo {
     
     @Field
     private LocalDate dateOfBirth;
+    
+    @Field
+    private Roles role;
+    
+    @Field
+    private AccountStatus accountStatus;
+    
+    @Field
+    private int loginCounter;
+    
+    @Field 
+    private Date blockDate;
+    
+    @Field
+    private List<Permission> permissions;
 
 	public UserInfo() {
 		super();
 	}
+	
 
 	public UserInfo(RegistrationDTO registrationDTO) {
 		// TODO Auto-generated constructor stub
@@ -141,4 +164,81 @@ public class UserInfo {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
+	public Roles getRole() {
+		return role;
+	}
+
+	public void setRole(Roles role) {
+		this.role = role;
+	}
+
+	public AccountStatus getAccountStatus() {
+		return accountStatus;
+	}
+
+	public void setAccountStatus(AccountStatus accountStatus) {
+		this.accountStatus = accountStatus;
+	}
+
+	public int getLoginCounter() {
+		return loginCounter;
+	}
+
+	public void setLoginCounter(int loginCounter) {
+		this.loginCounter = loginCounter;
+	}
+
+	public Date getBlockDate() {
+		return blockDate;
+	}
+
+	public void setBlockDate(Date blockDate) {
+		this.blockDate = blockDate;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+
+        list.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
+
+        return list;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
+	
+	
 }

@@ -36,6 +36,13 @@ public class WebConfig implements WebMvcConfigurer {
 
         return new CorsFilter(source);
     }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("https://localhost:4200")
+		.allowedHeaders("*");
+
+    }
 
 
 }

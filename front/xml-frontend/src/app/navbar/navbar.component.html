@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+    <span>
+      <a mat-button routerLink="/landingPage">Dislinkt</a>
+    </span>
+    <form class="example-form">      
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
+        <button matSuffix mat-button><mat-icon>search</mat-icon></button>
+      </mat-form-field>
+    </form>
+    <div class="spacer"></div>
+      <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/login">Login</a>
+      <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/registration">Registration</a>
+      <a *ngIf="role == 'ADMIN'" mat-button routerLink="/registrationRequest">Registration requests</a>
+      <a *ngIf="role == 'USER' || role == 'ADMIN'" mat-button (click)="Logout()">Logout</a>
+</mat-toolbar>
