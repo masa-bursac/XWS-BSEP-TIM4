@@ -1,2 +1,25 @@
 <app-navbar></app-navbar>
+<div class="div-search">
+    <form class="example-form">      
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="tel" matInput placeholder="Search profiles by username" name= "search" [(ngModel)]= "search">
+          <button matSuffix mat-button (click)="Search()"><mat-icon>search</mat-icon></button>
+        </mat-form-field>
+      </form>
+</div>
+<div *ngFor="let searched of searchedProfiles" class="div-inline">
+    <div class="review-holder">
+    <mat-card class="example-card">
+        <mat-card-content class="mat-card-font">
+          <p><b>Name:</b> {{ searched.name }} {{ searched.surname }}</p>
+          <p><b>Username:</b> {{ searched.username }}</p>
+          <span>
+            <a mat-button>View</a>
+          </span>
+        </mat-card-content>
+    </mat-card>
+    </div>
+    <br>
+    <br>
+</div>
 <p>landing-page works!</p>

@@ -38,4 +38,8 @@ export class ProfileService {
   public addInterest(body: any): Observable<any>{
     return this.http.post(profile_url+`/addInterest`, body);
   }
+
+  public searchPublicProfiles(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getByUsername/${body}`);
+  }
 }

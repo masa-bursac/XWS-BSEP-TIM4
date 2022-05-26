@@ -280,7 +280,7 @@ public class ProfileService implements IProfileService{
 		for(int i=0; i<userInfoIds.size();i++) {
 			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
 			if(profile.getUsername().contains(searchUsername)) {
-				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getName(),profile.getSurname(),profile.getUsername()));
+				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getUsername(),profile.getName(),profile.getSurname()));
 			}
 		}
 		

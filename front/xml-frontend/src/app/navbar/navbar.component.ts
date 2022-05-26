@@ -9,8 +9,6 @@ import jwt_decode from 'jwt-decode';
 })
 export class NavbarComponent implements OnInit {
 
-  search : String ="";
-
   public decodedToken: any;
   public token: any;
   public role: any;
