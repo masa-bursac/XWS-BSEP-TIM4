@@ -11,8 +11,12 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  public getProfile2(body:number): Observable<any>{
+  public getProfile(body:any): Observable<any>{
     return this.http.get(profile_url+`/getProfile/${body}`);
+  }
+
+  public getExperience(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getExperience/${body}`);
   }
 
   public editProfile(body: any): Observable<any>{

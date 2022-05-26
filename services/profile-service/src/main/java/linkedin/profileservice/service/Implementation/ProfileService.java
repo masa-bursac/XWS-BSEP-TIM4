@@ -44,7 +44,7 @@ public class ProfileService implements IProfileService{
 	
 	@Override
 	public Boolean update(UpdateDTO userInfo) {
-		UserInfo userForUpdating = authRepository.findOneById(userInfo.getId());
+		UserInfo userForUpdating = authRepository.findOneByUsername(userInfo.getUsername());
 		userForUpdating.setEmail(userInfo.getEmail());
 		if(userInfo.getGender().toLowerCase().equals(Gender.Male.toString().toLowerCase(Locale.ROOT)))
 			userForUpdating.setGender(Gender.Male);
@@ -67,7 +67,7 @@ public class ProfileService implements IProfileService{
         };
     	userForUpdating.setUsername(userInfo.getUsername());
 
-		Profile profile = profileRepository.findOneByUserInfoId(userInfo.getId());
+		Profile profile = profileRepository.findOneByUserInfoId(userForUpdating.getId());
 		profile.setBiography(userInfo.getBiography());
 		
         if (authRepository.save(userForUpdating) != null && profileRepository.save(profile) != null)
@@ -404,5 +404,32 @@ public class ProfileService implements IProfileService{
     public void denyFollowRequest(int to, int from) {
     	requestClient.delete(to, from);
     }
+
+	@Override
+	public UpdateDTO getProfile(String username) {
+		UpdateDTO getUser = new UpdateDTO();
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		getUser.setId(user.getId());
+		getUser.setUsername(user.getUsername());
+		getUser.setName(user.getName());
+		getUser.setSurname(user.getSurname());
+		getUser.setEmail(user.getEmail());
+		getUser.setPhone(user.getPhone());
+		getUser.setDateOfBirth(user.getDateOfBirth().toString());
+		getUser.setGender(user.getGender().toString());
+		getUser.setBiography(profile.getBiography());
+		
+		return getUser;
+
+	}
+
+	@Override
+	public List<Institution> getExperience(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getExperience();
+		
+	}
 
 }

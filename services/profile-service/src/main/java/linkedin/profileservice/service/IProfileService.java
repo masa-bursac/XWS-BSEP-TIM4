@@ -9,6 +9,7 @@ import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.ProfileDTO;
 import linkedin.profileservice.dto.UpdateDTO;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Skill;
 
 public interface IProfileService {
@@ -34,4 +35,6 @@ public interface IProfileService {
 	List<Integer> getFollowingIds(int loggedInId);
 	void acceptFollowRequest(int to, int from);
 	void denyFollowRequest(int to, int from);
+	UpdateDTO getProfile(String username);
+	List<Institution> getExperience(String username);
 }

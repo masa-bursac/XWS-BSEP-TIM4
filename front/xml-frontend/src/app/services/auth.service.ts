@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
 const auth_url = 'https://localhost:8140/auth';
 
@@ -43,7 +44,7 @@ export class AuthService {
 
   getDecodedAccessToken(token: string): any {
     try {
-      //return jwt_decode(token);
+      return jwt_decode(token);
     }
     catch (Error) {
       return null;

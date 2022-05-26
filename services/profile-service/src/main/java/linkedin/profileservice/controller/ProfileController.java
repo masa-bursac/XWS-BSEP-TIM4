@@ -17,6 +17,7 @@ import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.service.IProfileService;
 
@@ -196,5 +197,15 @@ public class ProfileController {
 	public void denyFollowRequest(@PathVariable int to, @PathVariable int from){
 	      profileService.denyFollowRequest(to, from);
 	}
+	
+	@GetMapping("/getProfile/{username}")
+    public UpdateDTO getProfile(@PathVariable String username){
+        return profileService.getProfile(username);
+    }
+	
+	@GetMapping("/getExperience/{username}")
+    public List<Institution> getExperience(@PathVariable String username){
+        return profileService.getExperience(username);
+    }
 
 }

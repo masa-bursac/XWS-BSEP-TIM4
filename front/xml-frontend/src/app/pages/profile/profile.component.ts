@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit {
     name: new FormControl(),
     surname: new FormControl(),
     email: new FormControl(),
-    password: new FormControl(),
     phone : new FormControl(),
     dateOfBirth: new FormControl(),
     gender: new FormControl(),
@@ -27,12 +26,19 @@ export class ProfileComponent implements OnInit {
    
   }); 
 
-  validateFormExperience = new FormGroup({
+  selectedValueGender = "Male";
+
+  validateFormExperienceAdd = new FormGroup({
     nameExp:new FormControl(),
     position: new FormControl(),
     start: new FormControl(),
     end: new FormControl() 
   }); 
+
+  nameExpAdd : string = "";
+  positionAdd : string = "";
+  startAdd : Date = new Date();
+  endAdd : Date = new Date();
 
   oldUsername!: String;
   usernameChanged = false;
@@ -44,21 +50,37 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.decoded_token = this.authService.getDataFromToken();
-    this.profileService.getProfile2(this.decoded_token).subscribe(data=> { //promeniti na  this.decoded_token.id
+    this.profileService.getProfile(this.decoded_token.username).subscribe(data=> {
       this.validateForm = this.fb.group({
         username: [data.username,[Validators.required]],
         name: [data.name,[Validators.required]],
         surname: [data.surname,[Validators.required]],
         email: [data.email,[Validators.required]],
-        password: [data.password,[Validators.required]],
         phone : [data.phone,[Validators.required]],
         dateOfBirth: [new Date(data.dateOfBirth)	,[Validators.required]],
         gender: [data.gender,[Validators.required]],
         biography: [data.biography,[Validators.required]]
 
       });
+      this.selectedValueGender = data.gender;
       this.oldUsername = data.username;
     });
+
+    /*
+    this.profileService.getExperience(this.decoded_token.username).subscribe(data=> {
+      console.log(data)
+      this.validateForm = this.fb.group({
+        id: [data.id,[Validators.required]],
+        nameEx: [data.name,[Validators.required]],
+        positionEx: [data.position,[Validators.required]],
+        startEx: [data.start,[Validators.required]],
+        endEx : [data.end,[Validators.required]],
+        userInfoId: [data.userInfoId,[Validators.required]]
+
+      });
+
+    });*/
+
   }
 
   genders: Gender[] = [
@@ -67,7 +89,7 @@ export class ProfileComponent implements OnInit {
     {value: 'Non-Binary'},
   ];
 
-  submitForm() {
+  submitForm(): void {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
@@ -84,7 +106,6 @@ export class ProfileComponent implements OnInit {
         name: this.validateForm.value.name,
         surname: this.validateForm.value.surname,
         email: this.validateForm.value.email,
-        password: this.validateForm.value.password,
         phone: this.validateForm.value.phone,
         dateOfBirth: this.validateForm.value.dateOfBirth,       
         gender: this.validateForm.value.gender,
@@ -101,25 +122,25 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  submitFormExperience() {
-    for (const i in this.validateFormExperience.controls) {
-      this.validateFormExperience.controls[i].markAsDirty();
-      this.validateFormExperience.controls[i].updateValueAndValidity();
+  submitFormExperienceAdd(): void  {
+    for (const i in this.validateFormExperienceAdd.controls) {
+      this.validateFormExperienceAdd.controls[i].markAsDirty();
+      this.validateFormExperienceAdd.controls[i].updateValueAndValidity();
     }
 
-    if(this.validateFormExperience.valid){
+    if(this.validateFormExperienceAdd.valid){
 
       const body = {
-        name: this.validateForm.value.nameExp,
-        position: this.validateForm.value.position,
-        start: this.validateForm.value.start,
-        end: this.validateForm.value.end
+        name: this.validateFormExperienceAdd.value.nameExp,
+        position: this.validateFormExperienceAdd.value.position,
+        start: this.validateFormExperienceAdd.value.start,
+        end: this.validateFormExperienceAdd.value.end,
+        userInfoId: this.decoded_token.id
       }
-      console.log(body);
       
       this.profileService.addExperience(body).subscribe(data => {
         if(data)
-          alert("Experience successfully edited");
+          alert("Experience successfully added!");
       });
     }
   }

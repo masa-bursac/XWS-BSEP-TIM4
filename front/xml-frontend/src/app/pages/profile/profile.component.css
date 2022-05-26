@@ -77,3 +77,9 @@ body {
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
   padding: 0.8375em 0;
 }
+
+.inlineblock {
+  display:inline-block;
+  margin-left: 8%;
+  margin-right: 8%;
+}
