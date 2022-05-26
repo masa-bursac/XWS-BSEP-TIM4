@@ -75,6 +75,75 @@
       </form>
     </mat-card>
   </div>
+
+  <div class="login-wrapper">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Add education</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="validateFormEducationAdd" (ngSubmit)="submitFormEducationAdd()">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" formControlName="nameEducation">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Position" formControlName="positionEducation">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a start date</mat-label>
+            <input matInput [matDatepicker]="pickerStartEducation" formControlName="startEducation">
+            <mat-datepicker-toggle matSuffix [for]="pickerStartEducation"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStartEducation></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a end date</mat-label>
+            <input matInput [matDatepicker]="pickerEndEducation" formControlName="endEducation">
+            <mat-datepicker-toggle matSuffix [for]="pickerEndEducation"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEndEducation></mat-datepicker>
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block">Add education</button>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="login-wrapper">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Add skill</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="validateFormSkillAdd" (ngSubmit)="submitFormSkillAdd()">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" formControlName="nameSkill">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Other information" formControlName="otherInfoSkill">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block">Add skill</button>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="login-wrapper">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Add interest</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="validateFormInterestAdd" (ngSubmit)="submitFormInterestAdd()">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" formControlName="nameInterest">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Other information" formControlName="otherInfoInterest">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block">Add interest</button>
+      </form>
+    </mat-card>
+  </div>
 </div>
 
 

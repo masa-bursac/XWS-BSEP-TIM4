@@ -30,4 +30,12 @@ export class ProfileService {
   public addEducation(body: any): Observable<any>{
     return this.http.post(profile_url+`/addEducation`, body);
   }
+
+  public addSkill(body: any): Observable<any>{
+    return this.http.post(profile_url+`/addSkill`, body);
+  }
+
+  public addInterest(body: any): Observable<any>{
+    return this.http.post(profile_url+`/addInterest`, body);
+  }
 }

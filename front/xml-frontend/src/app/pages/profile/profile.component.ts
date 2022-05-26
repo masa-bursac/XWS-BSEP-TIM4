@@ -29,16 +29,29 @@ export class ProfileComponent implements OnInit {
   selectedValueGender = "Male";
 
   validateFormExperienceAdd = new FormGroup({
-    nameExp:new FormControl(),
+    nameExp: new FormControl(),
     position: new FormControl(),
     start: new FormControl(),
     end: new FormControl() 
   }); 
 
-  nameExpAdd : string = "";
-  positionAdd : string = "";
-  startAdd : Date = new Date();
-  endAdd : Date = new Date();
+  validateFormEducationAdd = new FormGroup({
+    nameEducation: new FormControl(),
+    positionEducation: new FormControl(),
+    startEducation: new FormControl(),
+    endEducation: new FormControl() 
+  });
+
+  validateFormSkillAdd = new FormGroup({
+    nameSkill: new FormControl(),
+    otherInfoSkill: new FormControl()
+  });
+
+  validateFormInterestAdd = new FormGroup({
+    nameInterest: new FormControl(),
+    otherInfoInterest: new FormControl()
+  });
+
 
   oldUsername!: String;
   usernameChanged = false;
@@ -141,6 +154,71 @@ export class ProfileComponent implements OnInit {
       this.profileService.addExperience(body).subscribe(data => {
         if(data)
           alert("Experience successfully added!");
+      });
+    }
+  }
+
+  submitFormEducationAdd(): void  {
+    for (const i in this.validateFormEducationAdd.controls) {
+      this.validateFormEducationAdd.controls[i].markAsDirty();
+      this.validateFormEducationAdd.controls[i].updateValueAndValidity();
+    }
+
+    if(this.validateFormEducationAdd.valid){
+
+      const body = {
+        name: this.validateFormEducationAdd.value.nameEducation,
+        position: this.validateFormEducationAdd.value.positionEducation,
+        start: this.validateFormEducationAdd.value.startEducation,
+        end: this.validateFormEducationAdd.value.endEducation,
+        userInfoId: this.decoded_token.id
+      }
+      
+      this.profileService.addEducation(body).subscribe(data => {
+        if(data)
+          alert("Education successfully added!");
+      });
+    }
+  }
+
+  submitFormSkillAdd(): void  {
+    for (const i in this.validateFormSkillAdd.controls) {
+      this.validateFormSkillAdd.controls[i].markAsDirty();
+      this.validateFormSkillAdd.controls[i].updateValueAndValidity();
+    }
+
+    if(this.validateFormSkillAdd.valid){
+
+      const body = {
+        name: this.validateFormSkillAdd.value.nameSkill,
+        otherInfo: this.validateFormSkillAdd.value.otherInfoSkill,
+        userInfoId: this.decoded_token.id
+      }
+      
+      this.profileService.addSkill(body).subscribe(data => {
+        if(data)
+          alert("Skill successfully added!");
+      });
+    }
+  }
+
+  submitFormInterestAdd(): void  {
+    for (const i in this.validateFormInterestAdd.controls) {
+      this.validateFormInterestAdd.controls[i].markAsDirty();
+      this.validateFormInterestAdd.controls[i].updateValueAndValidity();
+    }
+
+    if(this.validateFormInterestAdd.valid){
+
+      const body = {
+        name: this.validateFormInterestAdd.value.nameInterest,
+        otherInfo: this.validateFormInterestAdd.value.otherInfoInterest,
+        userInfoId: this.decoded_token.id
+      }
+      
+      this.profileService.addInterest(body).subscribe(data => {
+        if(data)
+          alert("Interest successfully added!");
       });
     }
   }
