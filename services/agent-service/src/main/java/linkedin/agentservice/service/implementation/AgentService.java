@@ -1,5 +1,8 @@
 package linkedin.agentservice.service.implementation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import linkedin.agentservice.config.GeneralException;
 import linkedin.agentservice.dto.AuthDTO;
 import linkedin.agentservice.dto.RegistrationDTO;
+import linkedin.agentservice.dto.RegistrationRequestDTO;
 import linkedin.agentservice.dto.UserAccessDTO;
 import linkedin.agentservice.model.AccountStatus;
 import linkedin.agentservice.model.Roles;
@@ -24,13 +28,18 @@ public class AgentService implements IAgentService{
 	private final PasswordEncoder passwordEncoder;
 	private final AgentRepository agentRepository;
 	private final Token token;
+	private final PasswordTokenService passwordTokenService;
+	private final EmailService emailService;
 	
 	@Autowired
-    public AgentService(SequenceGeneratorService sequenceGeneratorService,PasswordEncoder passwordEncoder, AgentRepository agentRepository, Token token) {
+    public AgentService(SequenceGeneratorService sequenceGeneratorService,PasswordEncoder passwordEncoder, AgentRepository agentRepository, Token token,
+    		PasswordTokenService passwordTokenService, EmailService emailService) {
 		this.sequenceGeneratorService = sequenceGeneratorService;
 		this.passwordEncoder = passwordEncoder;
 		this.agentRepository = agentRepository;
 		this.token = token;
+		this.passwordTokenService = passwordTokenService;
+		this.emailService = emailService;
     }
 
 	@Override
@@ -83,6 +92,40 @@ public class AgentService implements IAgentService{
         
         return userResponse;
         
+	}
+
+	@Override
+	public List<RegistrationRequestDTO> getRegistrationRequests() {
+		List<UserInfo> users = agentRepository.findAllByAccountStatus(AccountStatus.PENDING);
+        List<RegistrationRequestDTO> regResponses = new ArrayList<>();
+        for (UserInfo user: users) {
+        	RegistrationRequestDTO registrationRequestDTO = new RegistrationRequestDTO();
+        	registrationRequestDTO.setId(user.getId());
+        	registrationRequestDTO.setName(user.getName());
+        	registrationRequestDTO.setSurname(user.getSurname());
+        	registrationRequestDTO.setUsername(user.getUsername());
+        	registrationRequestDTO.setEmail(user.getEmail());
+        	regResponses.add(registrationRequestDTO);
+        }
+        return regResponses;
+	}
+
+	@Override
+	public void approveRegistrationRequest(int id) {
+		UserInfo user = agentRepository.findOneById(id);
+        user.setAccountStatus(AccountStatus.APPROVED);
+        UserInfo savedUser = agentRepository.save(user);
+        passwordTokenService.createToken(user.getUsername());
+        emailService.approveRegistrationMail(savedUser);		
+	}
+
+	@Override
+	public void denyRegistrationRequest(int id) {
+		UserInfo user = agentRepository.findOneById(id);
+        user.setAccountStatus(AccountStatus.DENIED);
+        UserInfo savedUser = agentRepository.save(user);
+        emailService.denyRegistrationMail(savedUser);
+		
 	}
 
 }
