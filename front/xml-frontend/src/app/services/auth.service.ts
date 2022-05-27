@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
-const auth_url = 'https://localhost:8140/auth';
+const auth_url = 'http://localhost:8140/auth';
 
 @Injectable({
   providedIn: 'root'

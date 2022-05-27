@@ -10,6 +10,7 @@ import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordl
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
+import { ViewProfileComponent } from './pages/view-profile/view-profile.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'homePage/:token', component: HomePageComponent},
   { path: 'adminHomePage', component: AdminHomePageComponent},
   { path: 'registrationRequest', component: RegistrationRequestComponent},
-  { path: 'passwordlessLogin', component: PasswordlessLoginComponent}
+  { path: 'passwordlessLogin', component: PasswordlessLoginComponent},
+  { path: 'viewProfile/:username', component: ViewProfileComponent}
 ];
 
 @NgModule({
