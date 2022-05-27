@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.agentservice.config.GeneralException;
+import linkedin.agentservice.dto.AuthDTO;
 import linkedin.agentservice.dto.RegistrationDTO;
 import linkedin.agentservice.service.IAgentService;
 
@@ -30,6 +31,15 @@ public class AgentController {
         		return new ResponseEntity(HttpStatus.OK);
         	else
         		return new ResponseEntity(HttpStatus.CONFLICT);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
+        }
+    }
+    
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody AuthDTO authDTO){
+        try{
+            return new ResponseEntity(agentService.login(authDTO), HttpStatus.OK);
         }catch(GeneralException e){
             return new ResponseEntity(e.getMessage(), e.getHttpStatus());
         }

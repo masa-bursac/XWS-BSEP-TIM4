@@ -2,8 +2,8 @@ package linkedin.agentservice.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import linkedin.agentservice.dto.RegistrationDTO;
@@ -57,6 +58,10 @@ public class UserInfo implements UserDetails{
     @Field
     private AccountStatus accountStatus; 
     
+    public UserInfo() {
+		super();
+	}
+    
     public UserInfo(RegistrationDTO registrationDTO) {
 		// TODO Auto-generated constructor stub
 		this.username = registrationDTO.getUsername();
@@ -80,20 +85,11 @@ public class UserInfo implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        list.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+        return list;
 	}
 
 	@Override
@@ -126,6 +122,22 @@ public class UserInfo implements UserDetails{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getName() {
@@ -191,15 +203,5 @@ public class UserInfo implements UserDetails{
 	public void setAccountStatus(AccountStatus accountStatus) {
 		this.accountStatus = accountStatus;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 
 }
