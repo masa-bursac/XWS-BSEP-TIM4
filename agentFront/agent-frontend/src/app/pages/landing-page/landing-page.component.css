@@ -1,0 +1,25 @@
+.example-card{
+    background-color:#DCDCDC;
+    border-radius: 2.5%;
+    margin-left: 3%;
+    margin-right: 3%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.review-holder {
+    margin-top: 2%;
+}
+
+.mat-card-font {
+    font-size:18px;
+}
+
+.div-search {
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+.div-inline {
+    display:inline-block;
+    width: 33%;
+}
