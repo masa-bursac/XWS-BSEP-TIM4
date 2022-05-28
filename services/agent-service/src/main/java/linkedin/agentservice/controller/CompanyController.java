@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.agentservice.config.GeneralException;
+import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
 import linkedin.agentservice.dto.UpdateCompanyDTO;
@@ -71,6 +72,15 @@ public class CompanyController {
     public ResponseEntity addJobOffer(@RequestBody JobOfferDTO jobOfferDTO) {
         try {
         	return new ResponseEntity(companyService.addJobOffer(jobOfferDTO), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/addComment")
+    public ResponseEntity addComment(@RequestBody CommentDTO commentDTO) {
+        try {
+        	return new ResponseEntity(companyService.addComment(commentDTO), HttpStatus.OK);
         } catch (Exception e) {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

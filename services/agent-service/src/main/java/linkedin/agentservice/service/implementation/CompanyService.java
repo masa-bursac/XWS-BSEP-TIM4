@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
 import linkedin.agentservice.dto.UpdateCompanyDTO;
@@ -110,6 +111,28 @@ public class CompanyService implements ICompanyService {
 		company.getJobOffers().add(jobOffer);
 		
 		companyRepository.save(company);
+		return true;
+	}
+
+	@Override
+	public Boolean addComment(CommentDTO commentDTO) {
+		Company company = companyRepository.findOneByCompanyName(commentDTO.getCompanyName());
+		JobOffer jobOffer = new JobOffer();
+		for(JobOffer jobOffers : company.getJobOffers()) {
+			if(jobOffers.getId() == commentDTO.getIdJobOffer()) {
+				jobOffer = jobOffers;		
+			}
+		}
+		
+		Comment comment = new Comment();
+		comment.setId((int) sequenceGeneratorService.generateSequence(Comment.SEQUENCE_NAME));
+		comment.setContent(commentDTO.getContent());
+		comment.setUserId(commentDTO.getUserId());
+		
+		jobOffer.getComments().add(comment);
+		
+		companyRepository.save(company);
+		
 		return true;
 	}
 
