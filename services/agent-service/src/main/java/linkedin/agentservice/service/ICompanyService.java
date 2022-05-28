@@ -2,7 +2,11 @@ package linkedin.agentservice.service;
 
 import java.util.List;
 
+import org.springframework.util.MultiValueMap;
+
 import linkedin.agentservice.dto.CompanyDTO;
+import linkedin.agentservice.dto.JobOfferDTO;
+import linkedin.agentservice.dto.UpdateCompanyDTO;
 
 public interface ICompanyService {
 
@@ -13,5 +17,9 @@ public interface ICompanyService {
 	void approveRegistrationRequest(String companyName);
 
 	void denyRegistrationRequest(String companyName);
+
+	Boolean update(UpdateCompanyDTO updateCompanyDTO);
+
+	Boolean addJobOffer(JobOfferDTO jobOfferDTO);
 
 }

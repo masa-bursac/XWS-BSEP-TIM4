@@ -24,19 +24,19 @@ public class JobOffer {
     private List<Comment> comments;
     
     @Field
-    private String salary;
+    private List<String> salary;
     
     @Field
     private List<Integer> marks;
     
     @Field
-    private String selection;
+    private List<Selection> selection;
     
     
-
 	public JobOffer() {
 		super();
 	}
+
 
 	public int getId() {
 		return id;
@@ -62,11 +62,11 @@ public class JobOffer {
 		this.comments = comments;
 	}
 
-	public String getSalary() {
+	public List<String> getSalary() {
 		return salary;
 	}
 
-	public void setSalary(String salary) {
+	public void setSalary(List<String> salary) {
 		this.salary = salary;
 	}
 
@@ -78,13 +78,14 @@ public class JobOffer {
 		this.marks = marks;
 	}
 
-	public String getSelection() {
+	public List<Selection> getSelection() {
 		return selection;
 	}
 
-	public void setSelection(String selection) {
+	public void setSelection(List<Selection> selection) {
 		this.selection = selection;
 	}
-    
+
+	
     
 }

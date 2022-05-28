@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.agentservice.config.GeneralException;
 import linkedin.agentservice.dto.CompanyDTO;
-import linkedin.agentservice.dto.RegistrationDTO;
-import linkedin.agentservice.dto.RegistrationRequestDTO;
-import linkedin.agentservice.service.IAgentService;
+import linkedin.agentservice.dto.JobOfferDTO;
+import linkedin.agentservice.dto.UpdateCompanyDTO;
 import linkedin.agentservice.service.ICompanyService;
 
 @RestController
@@ -54,6 +53,27 @@ public class CompanyController {
     @PutMapping("/deny")
     public void denyRegistrationRequest(@RequestBody String companyName){
     	companyService.denyRegistrationRequest(companyName);
+    }
+    
+    @PutMapping("/updateCompany")
+    public ResponseEntity update(@RequestBody UpdateCompanyDTO updateCompanyDTO) {
+        try {
+        	if(companyService.update(updateCompanyDTO))
+        		return new ResponseEntity(companyService.update(updateCompanyDTO), HttpStatus.OK);
+        	else
+        		return new ResponseEntity(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/addJobOffer")
+    public ResponseEntity addJobOffer(@RequestBody JobOfferDTO jobOfferDTO) {
+        try {
+        	return new ResponseEntity(companyService.addJobOffer(jobOfferDTO), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

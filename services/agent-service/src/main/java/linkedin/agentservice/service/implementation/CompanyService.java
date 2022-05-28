@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import linkedin.agentservice.dto.CompanyDTO;
-import linkedin.agentservice.dto.RegistrationRequestDTO;
-import linkedin.agentservice.model.AccountStatus;
+import linkedin.agentservice.dto.JobOfferDTO;
+import linkedin.agentservice.dto.UpdateCompanyDTO;
+import linkedin.agentservice.model.Comment;
 import linkedin.agentservice.model.Company;
 import linkedin.agentservice.model.CompanyStatus;
 import linkedin.agentservice.model.JobOffer;
+import linkedin.agentservice.model.Roles;
+import linkedin.agentservice.model.Selection;
 import linkedin.agentservice.model.UserInfo;
+import linkedin.agentservice.repository.AgentRepository;
 import linkedin.agentservice.repository.CompanyRepository;
 import linkedin.agentservice.service.ICompanyService;
 
@@ -22,12 +26,15 @@ public class CompanyService implements ICompanyService {
 	private final CompanyRepository companyRepository;
 	static SequenceGeneratorService sequenceGeneratorService;
 	private final EmailService emailService;
+	private final AgentRepository agentRepository;
 	 
 	@Autowired
-	public CompanyService(CompanyRepository companyRepository, SequenceGeneratorService sequenceGeneratorService, EmailService emailService) {
+	public CompanyService(CompanyRepository companyRepository, SequenceGeneratorService sequenceGeneratorService, EmailService emailService,
+			AgentRepository agentRepository) {
 		this.companyRepository = companyRepository;
 		this.sequenceGeneratorService = sequenceGeneratorService;
 		this.emailService = emailService;
+		this.agentRepository = agentRepository;
 	}
 
 	@Override
@@ -66,6 +73,9 @@ public class CompanyService implements ICompanyService {
 	public void approveRegistrationRequest(String companyName) {
 		Company company = companyRepository.findOneByCompanyName(companyName);
 		company.setCompanyStatus(CompanyStatus.APPROVED);
+		UserInfo user = agentRepository.findOneByUsername(company.getUsername());
+		user.setRole(Roles.OWNER);
+		agentRepository.save(user);
 		companyRepository.save(company);
 		
 	}
@@ -76,6 +86,31 @@ public class CompanyService implements ICompanyService {
 		company.setCompanyStatus(CompanyStatus.DENIED);
 		companyRepository.save(company);
 		
+	}
+
+	@Override
+	public Boolean update(UpdateCompanyDTO updateCompanyDTO) {
+		Company companyForUpdating = companyRepository.findOneByCompanyName(updateCompanyDTO.getCompanyName());
+		companyForUpdating.setDescription(updateCompanyDTO.getDescription());
+		companyRepository.save(companyForUpdating);
+        return true;
+
+	}
+
+	@Override
+	public Boolean addJobOffer(JobOfferDTO jobOfferDTO) {
+		Company company = companyRepository.findOneByCompanyName(jobOfferDTO.getCompanyName());
+		JobOffer jobOffer = new JobOffer();
+		jobOffer.setId((int) sequenceGeneratorService.generateSequence(JobOffer.SEQUENCE_NAME));
+		jobOffer.setJobPosition(jobOfferDTO.getJobPosition());
+		jobOffer.setComments(new ArrayList<Comment>());
+		jobOffer.setMarks(new ArrayList<Integer>());
+		jobOffer.setSalary(new ArrayList<String>());
+		jobOffer.setSelection(new ArrayList<Selection>());
+		company.getJobOffers().add(jobOffer);
+		
+		companyRepository.save(company);
+		return true;
 	}
 
 }
