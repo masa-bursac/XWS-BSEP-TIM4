@@ -25,9 +25,7 @@ public class JobOffer {
     
     @Field
     private List<String> salary;
-    
-    @Field
-    private List<Integer> marks;
+
     
     @Field
     private List<Selection> selection;
@@ -68,14 +66,6 @@ public class JobOffer {
 
 	public void setSalary(List<String> salary) {
 		this.salary = salary;
-	}
-
-	public List<Integer> getMarks() {
-		return marks;
-	}
-
-	public void setMarks(List<Integer> marks) {
-		this.marks = marks;
 	}
 
 	public List<Selection> getSelection() {

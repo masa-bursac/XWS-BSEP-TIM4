@@ -15,6 +15,8 @@ import linkedin.agentservice.config.GeneralException;
 import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
+import linkedin.agentservice.dto.SalaryDTO;
+import linkedin.agentservice.dto.SelectionDTO;
 import linkedin.agentservice.dto.UpdateCompanyDTO;
 import linkedin.agentservice.service.ICompanyService;
 
@@ -81,6 +83,24 @@ public class CompanyController {
     public ResponseEntity addComment(@RequestBody CommentDTO commentDTO) {
         try {
         	return new ResponseEntity(companyService.addComment(commentDTO), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/addSalary")
+    public ResponseEntity addSalary(@RequestBody SalaryDTO salaryDTO) {
+        try {
+        	return new ResponseEntity(companyService.addSalary(salaryDTO), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/addSelection")
+    public ResponseEntity addSelection(@RequestBody SelectionDTO selectionDTO) {
+        try {
+        	return new ResponseEntity(companyService.addSelection(selectionDTO), HttpStatus.OK);
         } catch (Exception e) {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

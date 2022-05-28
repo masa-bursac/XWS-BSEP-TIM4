@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
+import linkedin.agentservice.dto.SalaryDTO;
+import linkedin.agentservice.dto.SelectionDTO;
 import linkedin.agentservice.dto.UpdateCompanyDTO;
 import linkedin.agentservice.model.Comment;
 import linkedin.agentservice.model.Company;
@@ -105,7 +107,6 @@ public class CompanyService implements ICompanyService {
 		jobOffer.setId((int) sequenceGeneratorService.generateSequence(JobOffer.SEQUENCE_NAME));
 		jobOffer.setJobPosition(jobOfferDTO.getJobPosition());
 		jobOffer.setComments(new ArrayList<Comment>());
-		jobOffer.setMarks(new ArrayList<Integer>());
 		jobOffer.setSalary(new ArrayList<String>());
 		jobOffer.setSelection(new ArrayList<Selection>());
 		company.getJobOffers().add(jobOffer);
@@ -130,6 +131,46 @@ public class CompanyService implements ICompanyService {
 		comment.setUserId(commentDTO.getUserId());
 		
 		jobOffer.getComments().add(comment);
+		
+		companyRepository.save(company);
+		
+		return true;
+	}
+
+	@Override
+	public Boolean addSalary(SalaryDTO salaryDTO) {
+		Company company = companyRepository.findOneByCompanyName(salaryDTO.getCompanyName());
+		JobOffer jobOffer = new JobOffer();
+		for(JobOffer jobOffers : company.getJobOffers()) {
+			if(jobOffers.getId() == salaryDTO.getIdJobOffer()) {
+				jobOffer = jobOffers;		
+			}
+		}
+				
+		jobOffer.getSalary().add(salaryDTO.getSalary());
+		
+		companyRepository.save(company);
+		
+		return true;
+	}
+
+	@Override
+	public Boolean addSelection(SelectionDTO selectionDTO) {
+		Company company = companyRepository.findOneByCompanyName(selectionDTO.getCompanyName());
+		JobOffer jobOffer = new JobOffer();
+		for(JobOffer jobOffers : company.getJobOffers()) {
+			if(jobOffers.getId() == selectionDTO.getIdJobOffer()) {
+				jobOffer = jobOffers;		
+			}
+		}
+		
+		Selection selection = new Selection();
+		selection.setId((int) sequenceGeneratorService.generateSequence(Selection.SEQUENCE_NAME));
+		selection.setComment(selectionDTO.getComment());
+		selection.setDuration(selectionDTO.getDuration());
+		selection.setMark(selectionDTO.getMark());
+		
+		jobOffer.getSelection().add(selection);
 		
 		companyRepository.save(company);
 		
