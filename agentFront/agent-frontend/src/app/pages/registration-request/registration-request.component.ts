@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrationRequestService } from 'src/app/services/registration-request.service';
 import jwt_decode from 'jwt-decode';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-registration-request',
@@ -10,6 +11,7 @@ import jwt_decode from 'jwt-decode';
 })
 export class RegistrationRequestComponent implements OnInit {
   public pendingUsers: any[];
+  public pendingCompanies: any[];
   public approveAlert = false;
   public denyAlert = false;
   public empty = false;
@@ -17,13 +19,15 @@ export class RegistrationRequestComponent implements OnInit {
   public token: any;
 
 
-  constructor(private router: Router, private rrService: RegistrationRequestService) { 
+  constructor(private router: Router, private rrService: RegistrationRequestService, private companyService: CompanyService) { 
     this.pendingUsers = [];
+    this.pendingCompanies = [];
   }
 
   ngOnInit(): void {
     this.getToken();
     this.getAllPendingUsers();
+    this.getAllPendingCompanies();
   }
 
   private getToken(): void {
@@ -65,6 +69,17 @@ export class RegistrationRequestComponent implements OnInit {
     })
   }
 
+  private getAllPendingCompanies(): void {
+    this.companyService.getAllPendingCompanies().subscribe(data => {
+      this.pendingCompanies = data;
+      if (this.pendingCompanies.length === 0) {
+        this.empty = true;
+      }
+    }, error => {
+
+    })
+  }
+
   public approve(id:number): void {
     this.rrService.approveRegistrationRequest(id).subscribe(data => {
       this.approveAlert = true;
@@ -75,6 +90,22 @@ export class RegistrationRequestComponent implements OnInit {
 
   public deny(id:number): void {
     this.rrService.denyRegistrationRequest(id).subscribe(data => {
+      this.denyAlert = true;
+    })
+    alert("Denied!");
+    this.ngOnInit();
+  }
+
+  public approveCompany(companyName:any): void {
+    this.companyService.approveRegistrationRequest(companyName).subscribe(data => {
+      this.approveAlert = true;
+    })
+    alert("Approved!");
+    this.ngOnInit();
+  }
+
+  public denyCompany(companyName:any): void {
+    this.companyService.denyRegistrationRequest(companyName).subscribe(data => {
       this.denyAlert = true;
     })
     alert("Denied!");

@@ -17,3 +17,21 @@
     <br>
     <br>
 </div>
+<div *ngFor="let pending of pendingCompanies">
+  <div class="review-holder">
+  <mat-card class="example-card">
+      <mat-card-title>Pending company</mat-card-title>
+      <mat-card-content>
+        <p><b>Name:</b> {{ pending.companyName }}</p>
+        <p><b>Username:</b> {{ pending.phone }}</p>
+        <p><b>Email:</b> {{ pending.description }}</p>
+        <span>
+          <a mat-button (click)="approveCompany(pending.companyName)">Approve</a>
+        </span>
+        <a mat-button (click)="denyCompany(pending.companyName)">Deny</a>
+      </mat-card-content>
+  </mat-card>
+  </div>
+  <br>
+  <br>
+</div>

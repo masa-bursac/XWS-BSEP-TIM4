@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
+import { CompanyRegistrationComponent } from './pages/company-registration/company-registration.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { RegistrationRequestComponent } from './pages/registration-request/regis
     AdminHomePageComponent,
     OwnerHomePageComponent,
     RegistrationComponent,
-    RegistrationRequestComponent
+    RegistrationRequestComponent,
+    CompanyRegistrationComponent
   ],
   imports: [
     BrowserModule,
