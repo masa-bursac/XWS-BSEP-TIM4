@@ -19,4 +19,6 @@ public interface IAgentService {
 
 	void denyRegistrationRequest(int id);
 
+	Boolean confirmRegistrationRequest(String token);
+
 }

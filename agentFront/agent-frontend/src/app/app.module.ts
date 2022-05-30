@@ -17,6 +17,12 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OwnerHomePageComponent } from './pages/owner-home-page/owner-home-page.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
+
 
 @NgModule({
   declarations: [
@@ -26,20 +32,25 @@ import { OwnerHomePageComponent } from './pages/owner-home-page/owner-home-page.
     NavbarComponent,
     HomePageComponent,
     AdminHomePageComponent,
-    OwnerHomePageComponent
+    OwnerHomePageComponent,
+    RegistrationComponent,
+    RegistrationRequestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

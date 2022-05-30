@@ -1,6 +1,7 @@
 package linkedin.agentservice.service.implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,12 @@ import linkedin.agentservice.dto.RegistrationDTO;
 import linkedin.agentservice.dto.RegistrationRequestDTO;
 import linkedin.agentservice.dto.UserAccessDTO;
 import linkedin.agentservice.model.AccountStatus;
+import linkedin.agentservice.model.PasswordToken;
 import linkedin.agentservice.model.Roles;
 import linkedin.agentservice.model.Token;
 import linkedin.agentservice.model.UserInfo;
 import linkedin.agentservice.repository.AgentRepository;
+import linkedin.agentservice.repository.PasswordTokenRepository;
 import linkedin.agentservice.service.IAgentService;
 
 
@@ -29,16 +32,18 @@ public class AgentService implements IAgentService{
 	private final AgentRepository agentRepository;
 	private final Token token;
 	private final PasswordTokenService passwordTokenService;
+	private final PasswordTokenRepository passwordTokenRepository;
 	private final EmailService emailService;
 	
 	@Autowired
     public AgentService(SequenceGeneratorService sequenceGeneratorService,PasswordEncoder passwordEncoder, AgentRepository agentRepository, Token token,
-    		PasswordTokenService passwordTokenService, EmailService emailService) {
+    		PasswordTokenService passwordTokenService, PasswordTokenRepository passwordTokenRepository, EmailService emailService) {
 		this.sequenceGeneratorService = sequenceGeneratorService;
 		this.passwordEncoder = passwordEncoder;
 		this.agentRepository = agentRepository;
 		this.token = token;
 		this.passwordTokenService = passwordTokenService;
+		this.passwordTokenRepository = passwordTokenRepository;
 		this.emailService = emailService;
     }
 
@@ -126,6 +131,27 @@ public class AgentService implements IAgentService{
         UserInfo savedUser = agentRepository.save(user);
         emailService.denyRegistrationMail(savedUser);
 		
+	}
+
+	@Override
+	public Boolean confirmRegistrationRequest(String token) {
+		String username = passwordTokenRepository.findOneByToken(token).getUsername();
+
+        if(username == null){
+            return false;
+        }
+        
+        UserInfo user = agentRepository.findOneByUsername(username);
+        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
+        Date now = new Date();
+        if(passwordToken.getExpiryDate().before(now)){
+            return false;
+        }else {
+            user.setAccountStatus(AccountStatus.ACTIVATED);
+            agentRepository.save(user);
+            passwordTokenRepository.delete(passwordToken);
+            return true;
+        }
 	}
 
 }

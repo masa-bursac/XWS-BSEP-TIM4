@@ -66,4 +66,8 @@ public class AgentController {
         agentService.denyRegistrationRequest(id);
     }
 
+    @PutMapping("/confirm")
+    public boolean confirmRegistrationRequest(@RequestBody String token){
+        return agentService.confirmRegistrationRequest(token);
+    }
 }

@@ -30,15 +30,15 @@ export class LoginComponent implements OnInit {
       remember: [true]
     });
 
-    /*
-    const token = this.route.snapshot.params.token;
+    
+    const token = this.route.snapshot.params['token'];
     if (token != undefined) {
       this.rrService.confirmRegistrationRequest(token).subscribe(() => {
         this.router.navigateByUrl(`/login`);
       },
         error => {
         });
-    }*/
+    }
   }
 
   submitForm(): void {

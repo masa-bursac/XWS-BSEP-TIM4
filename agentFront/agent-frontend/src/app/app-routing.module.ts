@@ -5,6 +5,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginComponent } from './pages/login/login.component';
 import { OwnerHomePageComponent } from './pages/owner-home-page/owner-home-page.component';
+import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
 
 const routes: Routes = [
   { path: '', pathMatch:'full', redirectTo:'landingPage'},
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'login/:token', component: LoginComponent},
   { path: 'homePage', component: HomePageComponent},
   { path: 'adminHomePage', component: AdminHomePageComponent},
-  { path: 'ownerHomePage', component: OwnerHomePageComponent}
+  { path: 'ownerHomePage', component: OwnerHomePageComponent},
+  { path: 'registration', component: RegistrationComponent},
+  { path: 'registrationRequest', component: RegistrationRequestComponent}
 ];
 
 @NgModule({
