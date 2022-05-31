@@ -1,2 +1,18 @@
 <app-navbar></app-navbar>
-<p>home-page works!</p>
+<div *ngFor="let jobOffer of jobOffers;let index = index">
+    <div class="review-holder">
+    <mat-card class="example-card">
+        <mat-card-title>Job offer</mat-card-title>
+        <mat-card-content>
+          <p><b>Company name:</b> {{ jobOffer.companyName }} </p>
+          <p><b>Job position:</b> {{ jobOffer.jobPosition }} </p>          
+          <span>
+            <input matInput placeholder="Comment" [(ngModel)] = "content[index]">
+            <a mat-button (click)="addComment(jobOffer.companyName, jobOffer.id, index)">Add comment</a>
+          </span>
+        </mat-card-content>
+    </mat-card>
+    </div>
+    <br>
+    <br>
+</div>

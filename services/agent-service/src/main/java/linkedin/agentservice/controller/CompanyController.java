@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import linkedin.agentservice.config.GeneralException;
 import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
+import linkedin.agentservice.dto.JobOfferCommentDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
 import linkedin.agentservice.dto.SalaryDTO;
 import linkedin.agentservice.dto.SelectionDTO;
@@ -110,6 +111,11 @@ public class CompanyController {
     @GetMapping("/getCompany/{username}")
     public UpdateCompanyDTO getCompany(@PathVariable String username){
         return companyService.getCompany(username);
+    }
+    
+    @GetMapping("/getAllJobOffers")
+    public List<JobOfferCommentDTO> getAllJobOffers(){
+        return companyService.getAllJobOffers();
     }
 
 }

@@ -38,4 +38,12 @@ export class CompanyService {
   public addJobOffer(body: any) : Observable<any>{ 
     return this.http.post(company_url + `/addJobOffer`, body);
   }
+
+  public getAllJobOffers(): Observable<any> {
+    return this.http.get(company_url + `/getAllJobOffers`);
+  }
+
+  public addComment(body: any) : Observable<any>{ 
+    return this.http.post(company_url + `/addComment`, body);
+  }
 }

@@ -6,6 +6,7 @@ import org.springframework.util.MultiValueMap;
 
 import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
+import linkedin.agentservice.dto.JobOfferCommentDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
 import linkedin.agentservice.dto.SalaryDTO;
 import linkedin.agentservice.dto.SelectionDTO;
@@ -32,5 +33,7 @@ public interface ICompanyService {
 	Boolean addSelection(SelectionDTO selectionDTO);
 
 	UpdateCompanyDTO getCompany(String username);
+
+	List<JobOfferCommentDTO> getAllJobOffers();
 
 }

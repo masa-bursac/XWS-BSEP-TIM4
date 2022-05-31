@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import linkedin.agentservice.dto.CommentDTO;
 import linkedin.agentservice.dto.CompanyDTO;
+import linkedin.agentservice.dto.JobOfferCommentDTO;
 import linkedin.agentservice.dto.JobOfferDTO;
 import linkedin.agentservice.dto.SalaryDTO;
 import linkedin.agentservice.dto.SelectionDTO;
@@ -189,6 +190,24 @@ public class CompanyService implements ICompanyService {
 		
 		return updateCompanyDTO;
 		
+	}
+
+	@Override
+	public List<JobOfferCommentDTO> getAllJobOffers() {
+		List<Company> companies = companyRepository.findAll();
+		List<JobOfferCommentDTO> jobOffers = new ArrayList<JobOfferCommentDTO>();
+		
+		for(Company company: companies) {
+			for(JobOffer jobOffer: company.getJobOffers()) {
+				JobOfferCommentDTO jobOfferDTO = new JobOfferCommentDTO();
+				jobOfferDTO.setCompanyName(company.getCompanyName());
+				jobOfferDTO.setJobPosition(jobOffer.getJobPosition());
+				jobOfferDTO.setId(jobOffer.getId());
+				jobOffers.add(jobOfferDTO);
+			}			
+		}
+		
+		return jobOffers;
 	}
 
 }
