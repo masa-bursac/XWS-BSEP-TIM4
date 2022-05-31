@@ -45,7 +45,8 @@
 </div>
 
 <div>
-  <div class="login-wrapper">
+  <h1 style="text-align:center; font-size:3em">Experience</h1>
+  <div class="login-wrapper inlineblock">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>Add experience</mat-card-title>
@@ -75,6 +76,39 @@
       </form>
     </mat-card>
   </div>
+
+  <div class="login-wrapper inlineblock" *ngFor="let experience of AllExperience;let index = index">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>My experience</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" [(ngModel)] = "experience.name" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Position" [(ngModel)] = "experience.position" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a start date</mat-label>
+            <input matInput [matDatepicker]="pickerStart" [(ngModel)] = "experience.start" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a end date</mat-label>
+            <input matInput [matDatepicker]="pickerEnd" [(ngModel)] = "experience.end" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="updateExperience(experience.id, experience.name, experience.position, experience.start, experience.end, experience.userInfoId)">Update experience</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
 
   <div class="login-wrapper">
     <mat-card class="box">
@@ -144,6 +178,6 @@
       </form>
     </mat-card>
   </div>
-</div>
+
 
 

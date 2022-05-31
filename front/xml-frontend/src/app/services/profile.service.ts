@@ -42,4 +42,8 @@ export class ProfileService {
   public searchPublicProfiles(body:any): Observable<any>{
     return this.http.get(profile_url+`/getByUsername/${body}`);
   }
+
+  public updateExperience(body: any): Observable<any>{
+    return this.http.put(profile_url+`/updateExperience`, body);
+  }
 }

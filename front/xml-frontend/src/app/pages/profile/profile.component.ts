@@ -59,6 +59,8 @@ export class ProfileComponent implements OnInit {
   
   today = new Date();
 
+  public AllExperience: any[] = [];
+
   constructor(private fb: FormBuilder, private authService : AuthService, private profileService : ProfileService) { }
 
   ngOnInit(): void {
@@ -79,20 +81,11 @@ export class ProfileComponent implements OnInit {
       this.oldUsername = data.username;
     });
 
-    /*
+    
     this.profileService.getExperience(this.decoded_token.username).subscribe(data=> {
-      console.log(data)
-      this.validateForm = this.fb.group({
-        id: [data.id,[Validators.required]],
-        nameEx: [data.name,[Validators.required]],
-        positionEx: [data.position,[Validators.required]],
-        startEx: [data.start,[Validators.required]],
-        endEx : [data.end,[Validators.required]],
-        userInfoId: [data.userInfoId,[Validators.required]]
-
-      });
-
-    });*/
+      this.AllExperience = data;
+      console.log(this.AllExperience)
+    });
 
   }
 
@@ -221,6 +214,22 @@ export class ProfileComponent implements OnInit {
           alert("Interest successfully added!");
       });
     }
+  }
+
+  public updateExperience(id:number, name:string, position:string, start:string, end:string, userInfoId:number): void {
+    const body = {
+      id: id,
+      name: name,
+      position: position,
+      start : start,
+      end : end,
+      userInfoId : userInfoId
+    }
+
+    this.profileService.updateExperience(body).subscribe(data => {
+      alert("Experience updated!");
+    })
+    
   }
 
 }
