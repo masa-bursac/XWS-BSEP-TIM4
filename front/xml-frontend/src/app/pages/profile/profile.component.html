@@ -77,7 +77,7 @@
     </mat-card>
   </div>
 
-  <div class="login-wrapper inlineblock" *ngFor="let experience of AllExperience;let index = index">
+  <div class="login-wrapper inlineblock" *ngFor="let experience of AllExperience">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>My experience</mat-card-title>
@@ -109,8 +109,12 @@
   </div>
 </div>
 
+<br>
+<br>
 
-  <div class="login-wrapper">
+<div>
+  <h1 style="text-align:center; font-size:3em">Education</h1>
+  <div class="login-wrapper inlineblock">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>Add education</mat-card-title>
@@ -141,7 +145,44 @@
     </mat-card>
   </div>
 
-  <div class="login-wrapper">
+  <div class="login-wrapper inlineblock" *ngFor="let education of AllEducation">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>My education</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" [(ngModel)] = "education.name" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Position" [(ngModel)] = "education.position" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a start date</mat-label>
+            <input matInput [matDatepicker]="pickerStart" [(ngModel)] = "education.start" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a end date</mat-label>
+            <input matInput [matDatepicker]="pickerEnd" [(ngModel)] = "education.end" [ngModelOptions]="{standalone: true}">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="updateEducation(education.id, education.name, education.position, education.start, education.end, education.userInfoId)">Update education</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
+<br>
+<br>
+
+<div>
+  <h1 style="text-align:center; font-size:3em">Skill</h1>
+  <div class="login-wrapper inlineblock">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>Add skill</mat-card-title>
@@ -160,7 +201,32 @@
     </mat-card>
   </div>
 
-  <div class="login-wrapper">
+  <div class="login-wrapper inlineblock" *ngFor="let skill of AllSkill">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>My skill</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" [(ngModel)] = "skill.name" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Other information" [(ngModel)] = "skill.otherInfo" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="updateSkill(skill.id, skill.name, skill.otherInfo, skill.userInfoId)">Update skill</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
+<br>
+<br>
+
+<div>
+  <h1 style="text-align:center; font-size:3em">Interest</h1>
+  <div class="login-wrapper inlineblock">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>Add interest</mat-card-title>
@@ -179,5 +245,24 @@
     </mat-card>
   </div>
 
+  <div class="login-wrapper inlineblock" *ngFor="let interest of AllInterest">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>My interest</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" [(ngModel)] = "interest.name" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Other information" [(ngModel)] = "interest.otherInfo" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="updateInterest(interest.id, interest.name, interest.otherInfo, interest.userInfoId)">Update interest</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
 
 

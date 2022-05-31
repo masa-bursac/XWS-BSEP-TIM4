@@ -37,4 +37,7 @@ public interface IProfileService {
 	void denyFollowRequest(int to, int from);
 	UpdateDTO getProfile(String username);
 	List<Institution> getExperience(String username);
+	List<Institution> getEducation(String username);
+	List<Skill> getSkill(String username);
+	List<Skill> getInterest(String username);
 }

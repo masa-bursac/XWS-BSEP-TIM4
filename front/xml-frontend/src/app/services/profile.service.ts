@@ -19,6 +19,18 @@ export class ProfileService {
     return this.http.get(profile_url+`/getExperience/${body}`);
   }
 
+  public getEducation(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getEducation/${body}`);
+  }
+
+  public getSkill(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getSkill/${body}`);
+  }
+
+  public getInterest(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getInterest/${body}`);
+  }
+
   public editProfile(body: any): Observable<any>{
     return this.http.put(profile_url+`/update`, body);
   }
@@ -45,5 +57,17 @@ export class ProfileService {
 
   public updateExperience(body: any): Observable<any>{
     return this.http.put(profile_url+`/updateExperience`, body);
+  }
+
+  public updateEducation(body: any): Observable<any>{
+    return this.http.put(profile_url+`/updateEducation`, body);
+  }
+
+  public updateSkill(body: any): Observable<any>{
+    return this.http.put(profile_url+`/updateSkill`, body);
+  }
+
+  public updateInterest(body: any): Observable<any>{
+    return this.http.put(profile_url+`/updateInterest`, body);
   }
 }

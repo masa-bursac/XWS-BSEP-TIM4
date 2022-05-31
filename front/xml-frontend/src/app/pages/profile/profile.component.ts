@@ -60,6 +60,9 @@ export class ProfileComponent implements OnInit {
   today = new Date();
 
   public AllExperience: any[] = [];
+  public AllEducation: any[] = [];
+  public AllSkill: any[] = [];
+  public AllInterest: any[] = [];
 
   constructor(private fb: FormBuilder, private authService : AuthService, private profileService : ProfileService) { }
 
@@ -84,7 +87,18 @@ export class ProfileComponent implements OnInit {
     
     this.profileService.getExperience(this.decoded_token.username).subscribe(data=> {
       this.AllExperience = data;
-      console.log(this.AllExperience)
+    });
+
+    this.profileService.getEducation(this.decoded_token.username).subscribe(data=> {
+      this.AllEducation = data;
+    });
+
+    this.profileService.getSkill(this.decoded_token.username).subscribe(data=> {
+      this.AllSkill = data;
+    });
+
+    this.profileService.getInterest(this.decoded_token.username).subscribe(data=> {
+      this.AllInterest = data;
     });
 
   }
@@ -147,6 +161,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.addExperience(body).subscribe(data => {
         if(data)
           alert("Experience successfully added!");
+          this.ngOnInit();
       });
     }
   }
@@ -170,6 +185,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.addEducation(body).subscribe(data => {
         if(data)
           alert("Education successfully added!");
+          this.ngOnInit();
       });
     }
   }
@@ -191,6 +207,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.addSkill(body).subscribe(data => {
         if(data)
           alert("Skill successfully added!");
+          this.ngOnInit();
       });
     }
   }
@@ -212,6 +229,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.addInterest(body).subscribe(data => {
         if(data)
           alert("Interest successfully added!");
+          this.ngOnInit();
       });
     }
   }
@@ -228,6 +246,50 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.updateExperience(body).subscribe(data => {
       alert("Experience updated!");
+    })
+    
+  }
+
+  public updateEducation(id:number, name:string, position:string, start:string, end:string, userInfoId:number): void {
+    const body = {
+      id: id,
+      name: name,
+      position: position,
+      start : start,
+      end : end,
+      userInfoId : userInfoId
+    }
+
+    this.profileService.updateEducation(body).subscribe(data => {
+      alert("Education updated!");
+    })
+    
+  }
+
+  public updateSkill(id:number, name:string, otherInfo:string, userInfoId:number): void {
+    const body = {
+      id: id,
+      name: name,
+      otherInfo: otherInfo,
+      userInfoId : userInfoId
+    }
+
+    this.profileService.updateSkill(body).subscribe(data => {
+      alert("Skill updated!");
+    })
+    
+  }
+
+  public updateInterest(id:number, name:string, otherInfo:string, userInfoId:number): void {
+    const body = {
+      id: id,
+      name: name,
+      otherInfo: otherInfo,
+      userInfoId : userInfoId
+    }
+
+    this.profileService.updateInterest(body).subscribe(data => {
+      alert("Interest updated!");
     })
     
   }

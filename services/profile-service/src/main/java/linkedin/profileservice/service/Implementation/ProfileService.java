@@ -432,4 +432,25 @@ public class ProfileService implements IProfileService{
 		
 	}
 
+	@Override
+	public List<Institution> getEducation(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getEducation();
+	}
+
+	@Override
+	public List<Skill> getSkill(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getSkills();
+	}
+
+	@Override
+	public List<Skill> getInterest(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getInterests();
+	}
+
 }

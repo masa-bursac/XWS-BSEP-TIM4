@@ -207,5 +207,20 @@ public class ProfileController {
     public List<Institution> getExperience(@PathVariable String username){
         return profileService.getExperience(username);
     }
+	
+	@GetMapping("/getEducation/{username}")
+    public List<Institution> getEducation(@PathVariable String username){
+        return profileService.getEducation(username);
+    }
+	
+	@GetMapping("/getSkill/{username}")
+    public List<Skill> getSkill(@PathVariable String username){
+        return profileService.getSkill(username);
+    }
+	
+	@GetMapping("/getInterest/{username}")
+    public List<Skill> getInterest(@PathVariable String username){
+        return profileService.getInterest(username);
+    }
 
 }
