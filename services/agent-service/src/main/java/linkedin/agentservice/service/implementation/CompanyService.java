@@ -93,7 +93,9 @@ public class CompanyService implements ICompanyService {
 
 	@Override
 	public Boolean update(UpdateCompanyDTO updateCompanyDTO) {
-		Company companyForUpdating = companyRepository.findOneByCompanyName(updateCompanyDTO.getCompanyName());
+		Company companyForUpdating = companyRepository.findOneByUsername(updateCompanyDTO.getUsername());
+		companyForUpdating.setCompanyName(updateCompanyDTO.getCompanyName());
+		companyForUpdating.setPhone(updateCompanyDTO.getPhone());
 		companyForUpdating.setDescription(updateCompanyDTO.getDescription());
 		companyRepository.save(companyForUpdating);
         return true;
@@ -175,6 +177,18 @@ public class CompanyService implements ICompanyService {
 		companyRepository.save(company);
 		
 		return true;
+	}
+
+	@Override
+	public UpdateCompanyDTO getCompany(String username) {
+		UpdateCompanyDTO updateCompanyDTO = new UpdateCompanyDTO();
+		Company company = companyRepository.findOneByUsername(username);
+		updateCompanyDTO.setCompanyName(company.getCompanyName());
+		updateCompanyDTO.setPhone(company.getPhone());
+		updateCompanyDTO.setDescription(company.getDescription());
+		
+		return updateCompanyDTO;
+		
 	}
 
 }

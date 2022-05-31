@@ -31,4 +31,6 @@ public interface ICompanyService {
 
 	Boolean addSelection(SelectionDTO selectionDTO);
 
+	UpdateCompanyDTO getCompany(String username);
+
 }

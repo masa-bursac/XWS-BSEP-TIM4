@@ -13,4 +13,6 @@ public interface CompanyRepository extends MongoRepository<Company,Integer>{
 	List<Company> findAllByCompanyStatus(CompanyStatus pending);
 
 	Company findOneByCompanyName(String companyName);
+
+	Company findOneByUsername(String username);
 }

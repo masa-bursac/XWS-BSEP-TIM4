@@ -23,8 +23,8 @@
       <mat-card-title>Pending company</mat-card-title>
       <mat-card-content>
         <p><b>Name:</b> {{ pending.companyName }}</p>
-        <p><b>Username:</b> {{ pending.phone }}</p>
-        <p><b>Email:</b> {{ pending.description }}</p>
+        <p><b>Phone:</b> {{ pending.phone }}</p>
+        <p><b>Description:</b> {{ pending.description }}</p>
         <span>
           <a mat-button (click)="approveCompany(pending.companyName)">Approve</a>
         </span>

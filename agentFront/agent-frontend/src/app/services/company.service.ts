@@ -26,4 +26,16 @@ export class CompanyService {
   public denyRegistrationRequest(companyName:any): Observable<any> {
     return this.http.put(company_url + '/deny', companyName);
   }
+
+  public getCompany(body:any): Observable<any> {
+    return this.http.get(company_url + `/getCompany/${body}`);
+  }
+
+  public updateCompany(body: any): Observable<any>{
+    return this.http.put(company_url + `/updateCompany`, body);
+  }
+
+  public addJobOffer(body: any) : Observable<any>{ 
+    return this.http.post(company_url + `/addJobOffer`, body);
+  }
 }
