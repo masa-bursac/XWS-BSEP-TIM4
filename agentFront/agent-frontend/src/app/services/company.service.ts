@@ -46,4 +46,12 @@ export class CompanyService {
   public addComment(body: any) : Observable<any>{ 
     return this.http.post(company_url + `/addComment`, body);
   }
+
+  public addSalary(body: any) : Observable<any>{ 
+    return this.http.post(company_url + `/addSalary`, body);
+  }
+
+  public addSelection(body: any) : Observable<any>{ 
+    return this.http.post(company_url + `/addSelection`, body);
+  }
 }

@@ -7,9 +7,30 @@
           <p><b>Company name:</b> {{ jobOffer.companyName }} </p>
           <p><b>Job position:</b> {{ jobOffer.jobPosition }} </p>          
           <span>
+            <mat-form-field class="example-full-width">
             <input matInput placeholder="Comment" [(ngModel)] = "content[index]">
-            <a mat-button (click)="addComment(jobOffer.companyName, jobOffer.id, index)">Add comment</a>
+            </mat-form-field>
+            <a mat-button (click)="addComment(jobOffer.companyName, jobOffer.id, index)">Add comment</a><br>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Salary" [(ngModel)] = "salary[index]">
+            </mat-form-field>
+            <a mat-button (click)="addSalary(jobOffer.companyName, jobOffer.id, index)">Add salary</a>
           </span>
+            <mat-card-title class="margin-selection">Selection</mat-card-title>
+            <mat-card-content>         
+              <span>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Comment" [(ngModel)] = "comment[index]">
+                </mat-form-field><br>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Duration" [(ngModel)] = "duration[index]">
+                </mat-form-field><br>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Mark" [(ngModel)] = "mark[index]">
+                </mat-form-field><br>
+                <a mat-button (click)="addSelection(jobOffer.companyName, jobOffer.id, index)">Add selection</a>
+              </span>
+            </mat-card-content>
         </mat-card-content>
     </mat-card>
     </div>

@@ -12,6 +12,10 @@ export class HomePageComponent implements OnInit {
   public jobOffers: any[] = [];
   public empty = false;
   public content: string[] = [];
+  public salary: string[] = [];
+  public comment: string[] = [];
+  public duration: string[] = [];
+  public mark: string[] = [];
   decoded_token : any;
 
   constructor(private companyService: CompanyService, private authService: AuthService) { }
@@ -24,7 +28,6 @@ export class HomePageComponent implements OnInit {
     this.decoded_token = this.authService.getDataFromToken();
     this.companyService.getAllJobOffers().subscribe(data => {
       this.jobOffers = data;
-      console.log(this.jobOffers)
       if (this.jobOffers.length === 0) {
         this.empty = true;
       }
@@ -41,10 +44,38 @@ export class HomePageComponent implements OnInit {
       idJobOffer : id
     }
 
-    console.log(body)
-
     this.companyService.addComment(body).subscribe(data => {
       alert("Added comment!");
+    })
+    
+  }
+
+  public addSalary(companyName:string, id:number, index:number): void {
+    const body = {
+      salary: this.salary[index],
+      userId: this.decoded_token.id,
+      companyName: companyName,
+      idJobOffer : id
+    }
+
+    this.companyService.addSalary(body).subscribe(data => {
+      alert("Added salary!");
+    })
+    
+  }
+
+  public addSelection(companyName:string, id:number, index:number): void {
+    const body = {
+      comment: this.comment[index],
+      userId: this.decoded_token.id,
+      companyName: companyName,
+      idJobOffer : id,
+      duration: this.duration[index],
+      mark: this.mark[index]
+    }
+
+    this.companyService.addSelection(body).subscribe(data => {
+      alert("Added selection!");
     })
     
   }
