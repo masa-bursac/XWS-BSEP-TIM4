@@ -22,4 +22,12 @@ export class PostService {
   public getAllPosts(id:number): Observable<any>{
     return this.http.get(post_url + `/getAllPosts/${id}`);
   }
+
+  public like(userId:number, postId:number): Observable<any>{
+    return this.http.put(post_url + `/like/${userId}/${postId}`, null);
+  }
+
+  public dislike(userId:number, postId:number): Observable<any>{
+    return this.http.put(post_url + `/dislike/${userId}/${postId}`, null);
+  }
 }

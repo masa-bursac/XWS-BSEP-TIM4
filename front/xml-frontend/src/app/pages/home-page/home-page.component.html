@@ -28,12 +28,17 @@
     <img [src]="post.image"/>
     <br>
       <mat-card-content class="mat-card-font">
+        <button *ngIf="post.isLiked!=true" mat-icon-button color="primary" (click)="Like(post.id)"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="post.isLiked==true" mat-icon-button color="accent"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="post.isDisliked!=true" mat-icon-button color="primary" (click)="Dislike(post.id)"><mat-icon>thumb_down_alt</mat-icon></button>
+        <button *ngIf="post.isDisliked==true" mat-icon-button color="accent"><mat-icon>thumb_down_alt</mat-icon></button>
         <p *ngIf="post.link!=true"><b>Caption:</b> {{ post.postInfo.caption }} </p>
         <p *ngIf="post.link==true"><b>Link: </b>
         <a href = "{{ post.postInfo.caption }}"> {{ post.postInfo.caption }} </a></p>
+        <p *ngIf="post.likeIds != null"><b>Likes:</b> {{ post.likeIds.length }} </p>
+        <p *ngIf="post.dislikeIds != null"><b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
         <mat-card-content *ngFor="let comment of post.comments">
-          <p><b>Comments:</b> {{ comment.content }}</p>
-          <p><b>Likes:</b> {{ post.likeIds.length }}   <b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
+          <p><b>Comments:</b> {{ comment.content }} </p>
         </mat-card-content>
       </mat-card-content>
   </mat-card>

@@ -76,6 +76,27 @@ export class HomePageComponent implements OnInit {
         let objectURL = 'data:image/png;base64,' + this.allPosts[i].content;
         this.allPosts[i].image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
+        if(this.allPosts[i].likeIds != null){
+          for(let j=0; j<this.allPosts[i].likeIds.length; j++){
+            if(this.allPosts[i].likeIds[j] == this.decodedToken.id){
+              this.allPosts[i].isLiked = true;
+            }else{
+              this.allPosts[i].isLiked = false;
+            }
+          }
+        }
+
+        if(this.allPosts[i].dislikeIds != null){
+          for(let j=0; j<this.allPosts[i].dislikeIds.length; j++){
+            if(this.allPosts[i].dislikeIds[j] == this.decodedToken.id){
+              this.allPosts[i].isDisliked = true;
+            }else{
+              this.allPosts[i].isDisliked = false;
+            }
+          }
+        }
+        
+
         if(this.allPosts[i].postInfo.caption.substring(0,4) === "http"){
           this.allPosts[i].link = true;
         }
@@ -88,6 +109,22 @@ export class HomePageComponent implements OnInit {
     }, error => {
 
     })
+  }
+
+  public Like(id:number): void {
+    this.postService.like(this.decodedToken.id,id).subscribe(data => {
+    }, error => {
+
+    })
+    this.ngOnInit();
+  }
+
+  public Dislike(id:number): void {
+    this.postService.dislike(this.decodedToken.id,id).subscribe(data => {
+    }, error => {
+
+    })
+    this.ngOnInit();
   }
 
 }
