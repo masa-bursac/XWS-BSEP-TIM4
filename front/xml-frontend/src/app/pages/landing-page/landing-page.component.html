@@ -22,13 +22,16 @@
     <br>
     <br>
 </div>
-<div *ngFor="let post of allPosts" fxLayoutAlign="center center">
+<div *ngFor="let post of allPosts">
   <div class="review-holder">
   <mat-card class="example-card">
+    <img [src]="post.image"/>
+    <br>
       <mat-card-content class="mat-card-font">
         <p><b>Caption:</b> {{ post.postInfo.caption }} </p>
         <mat-card-content *ngFor="let comment of post.comments">
           <p><b>Comments:</b> {{ comment.content }}</p>
+          <p><b>Likes:</b> {{ post.likeIds.length }}   <b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
         </mat-card-content>
       </mat-card-content>
   </mat-card>

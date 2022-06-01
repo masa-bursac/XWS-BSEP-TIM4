@@ -39,4 +39,14 @@ public class ImageService {
 			return newLink.getId();
 		}
 	}
+
+	public byte[] getContent(Integer id) {
+		Image image = imageRepository.findOneById(id);
+		return image.getContent();
+	}
+
+	public String getName(Integer id) {
+		Image image = imageRepository.findOneById(id);
+		return image.getName();
+	}
 }

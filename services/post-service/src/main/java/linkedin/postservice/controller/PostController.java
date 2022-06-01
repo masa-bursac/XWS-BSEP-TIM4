@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import linkedin.postservice.dto.CommentDTO;
+import linkedin.postservice.dto.PostDTO;
 import linkedin.postservice.model.Post;
 import linkedin.postservice.service.IPostService;
 
@@ -53,7 +54,7 @@ public class PostController {
     }
     
     @GetMapping("/getAllPublic")
-    public List<Post> getAllPublic() {
+    public List<PostDTO> getAllPublic() {
         return postService.getAllPublic();
     }
     

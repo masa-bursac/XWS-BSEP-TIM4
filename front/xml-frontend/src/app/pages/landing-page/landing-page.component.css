@@ -1,4 +1,6 @@
 .example-card{
+    width: 50%;
+    max-height: 400px;
     background-color:#DCDCDC;
     border-radius: 2.5%;
     margin-left: 3%;
@@ -8,6 +10,8 @@
 
 .review-holder {
     margin-top: 2%;
+    display: flex;
+    justify-content: center;
 }
 
 .mat-card-font {
@@ -22,4 +26,12 @@
 .div-inline {
     display:inline-block;
     width: 33%;
+}
+
+img {
+    max-width: 90%;
+    max-height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

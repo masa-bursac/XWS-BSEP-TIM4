@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,8 +14,9 @@ export class LandingPageComponent implements OnInit {
   public empty = false;
   search : string ="";
   public allPosts: any[] = [];
+  public image: any;
 
-  constructor(private profileService : ProfileService, private postService : PostService) { 
+  constructor(private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer) { 
     this.searchedProfiles = [];
   }
 
@@ -38,6 +40,11 @@ export class LandingPageComponent implements OnInit {
     this.postService.getAllPublicPosts().subscribe(data => {
       this.allPosts = data;
       console.log(this.allPosts)
+      for(let i = 0; i<this.allPosts.length; i++){
+        let objectURL = 'data:image/png;base64,' + this.allPosts[i].content;
+        this.allPosts[i].image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }
+
       if (this.allPosts.length === 0) {
         this.empty = true;
       }
