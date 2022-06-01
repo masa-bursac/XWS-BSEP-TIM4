@@ -75,11 +75,16 @@ export class HomePageComponent implements OnInit {
       for(let i = 0; i<this.allPosts.length; i++){
         let objectURL = 'data:image/png;base64,' + this.allPosts[i].content;
         this.allPosts[i].image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+        if(this.allPosts[i].postInfo.caption.substring(0,4) === "http"){
+          this.allPosts[i].link = true;
+        }
       }
 
       if (this.allPosts.length === 0) {
         this.empty = true;
       }
+
     }, error => {
 
     })
