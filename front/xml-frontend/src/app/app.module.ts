@@ -28,6 +28,7 @@ import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
 import { ViewProfileComponent } from './pages/view-profile/view-profile.component';
+import { PostComponent } from './pages/post/post.component';
 
 
 
@@ -46,7 +47,8 @@ import { ViewProfileComponent } from './pages/view-profile/view-profile.componen
     AdminHomePageComponent,
     RegistrationRequestComponent,
     PasswordlessLoginComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
+import { PostComponent } from './pages/post/post.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'adminHomePage', component: AdminHomePageComponent},
   { path: 'registrationRequest', component: RegistrationRequestComponent},
   { path: 'passwordlessLogin', component: PasswordlessLoginComponent},
-  { path: 'viewProfile/:username', component: ViewProfileComponent}
+  { path: 'viewProfile/:username', component: ViewProfileComponent},
+  { path: 'post', component: PostComponent}
 ];
 
 @NgModule({
