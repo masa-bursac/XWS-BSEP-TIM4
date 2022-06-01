@@ -30,4 +30,8 @@ export class PostService {
   public dislike(userId:number, postId:number): Observable<any>{
     return this.http.put(post_url + `/dislike/${userId}/${postId}`, null);
   }
+
+  public addComment(body:any): Observable<any>{
+    return this.http.put(post_url + `/addComment`, body);
+  }
 }

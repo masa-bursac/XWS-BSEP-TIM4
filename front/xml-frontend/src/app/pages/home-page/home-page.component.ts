@@ -19,6 +19,7 @@ export class HomePageComponent implements OnInit {
   search : string ="";
   public allPosts: any[] = [];
   public image: any;
+  public comment: string ="";
 
   constructor(private route: ActivatedRoute, private router: Router, private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer) { }
 
@@ -121,6 +122,25 @@ export class HomePageComponent implements OnInit {
 
   public Dislike(id:number): void {
     this.postService.dislike(this.decodedToken.id,id).subscribe(data => {
+    }, error => {
+
+    })
+    this.ngOnInit();
+  }
+
+  public Comment(id:number): void {
+    for(let i = 0; i<this.allPosts.length; i++){
+      if(this.allPosts[i].id == id){
+        this.comment = this.allPosts[i].comment
+      }
+    }
+    const body = {
+      postId: id,
+      profileId: this.decodedToken.id,
+      content: this.comment
+    }
+ 
+    this.postService.addComment(body).subscribe(data => {
     }, error => {
 
     })

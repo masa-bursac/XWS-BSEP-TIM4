@@ -36,9 +36,13 @@
         <p *ngIf="post.link==true"><b>Link: </b>
         <a href = "{{ post.postInfo.caption }}"> {{ post.postInfo.caption }} </a></p>
         <p *ngIf="post.likeIds != null"><b>Likes:</b> {{ post.likeIds.length }} </p>
+        <mat-form-field class="example-full">
+          <input matInput placeholder="Comment..." [(ngModel)] = "post.comment">
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="Comment(post.id)">Add</button>
         <p *ngIf="post.dislikeIds != null"><b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
         <mat-card-content *ngFor="let comment of post.comments">
-          <p><b>Comments:</b> {{ comment.content }} </p>
+          <p><b>Comment:</b> {{ comment.content }} </p>
         </mat-card-content>
       </mat-card-content>
   </mat-card>
