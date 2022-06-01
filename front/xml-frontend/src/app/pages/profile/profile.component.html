@@ -265,4 +265,29 @@
   </div>
 </div>
 
+<br>
+<br>
+
+<h1 style="text-align:center; font-size:3em">My posts</h1>
+<br>
+<div *ngFor="let post of allPosts">
+  <div class="review-holder">
+  <mat-card class="example-card">
+    <img [src]="post.image"/>
+    <br>
+      <mat-card-content class="mat-card-font">
+        <p *ngIf="post.link!=true"><b>Caption:</b> {{ post.postInfo.caption }} </p>
+        <p *ngIf="post.link==true"><b>Link: </b>
+        <a href = "{{ post.postInfo.caption }}"> {{ post.postInfo.caption }} </a></p>
+        <mat-card-content *ngFor="let comment of post.comments">
+          <p><b>Comments:</b> {{ comment.content }}</p>
+          <p><b>Likes:</b> {{ post.likeIds.length }}   <b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
+        </mat-card-content>
+      </mat-card-content>
+  </mat-card>
+  </div>
+  <br>
+  <br>
+</div>
+
 

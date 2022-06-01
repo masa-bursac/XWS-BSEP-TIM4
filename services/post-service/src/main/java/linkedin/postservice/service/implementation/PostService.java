@@ -163,6 +163,22 @@ public class PostService implements IPostService{
 		}
 		return followingPosts;
 	}
+
+	@Override
+	public List<PostDTO> getAllPosts(int id) {
+		List<PostDTO> userPosts = new ArrayList<>();
+		List<Post> posts= postRepository.findAll();
+		PostDTO postDTO = new PostDTO();
+		for(int i = 0;i < posts.size(); i++) {
+			if(posts.get(i).getIdUser() == id) {
+				postDTO = new PostDTO(posts.get(i));
+				postDTO.setContent(pictureClient.getContent(posts.get(i).getPostInfo().getPicture().get(0)));
+				postDTO.setName(pictureClient.getName(posts.get(i).getPostInfo().getPicture().get(0)));
+				userPosts.add(postDTO);
+			}
+		}
+		return userPosts;
+	}
 	
 	
 }

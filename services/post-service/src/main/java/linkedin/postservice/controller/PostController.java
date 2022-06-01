@@ -62,5 +62,10 @@ public class PostController {
     public List<Post> getFollowingProfilesPosts(@PathVariable int loggedInId) {
         return postService.getFollowingProfilesPosts(loggedInId);
     }
+    
+    @GetMapping("/getAllPosts/{id}")
+    public List<PostDTO> getAllPosts(@PathVariable int id) {
+        return postService.getAllPosts(id);
+    }
 
 }

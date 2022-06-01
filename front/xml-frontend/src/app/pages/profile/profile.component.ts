@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
+import { PostService } from 'src/app/services/post.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 interface Gender {
@@ -64,7 +66,11 @@ export class ProfileComponent implements OnInit {
   public AllSkill: any[] = [];
   public AllInterest: any[] = [];
 
-  constructor(private fb: FormBuilder, private authService : AuthService, private profileService : ProfileService) { }
+  public allPosts: any[] = [];
+  public image: any;
+  public empty = false;
+
+  constructor(private fb: FormBuilder, private authService : AuthService, private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.decoded_token = this.authService.getDataFromToken();
@@ -87,10 +93,19 @@ export class ProfileComponent implements OnInit {
     
     this.profileService.getExperience(this.decoded_token.username).subscribe(data=> {
       this.AllExperience = data;
+      for(let i = 0; i<this.AllExperience.length; i++){
+        this.AllExperience[i].start = new Date(this.AllExperience[i].start);
+        this.AllExperience[i].end = new Date(this.AllExperience[i].end);
+      }
     });
 
     this.profileService.getEducation(this.decoded_token.username).subscribe(data=> {
       this.AllEducation = data;
+      this.AllEducation = data;
+      for(let i = 0; i<this.AllEducation.length; i++){
+        this.AllEducation[i].start = new Date(this.AllEducation[i].start);
+        this.AllEducation[i].end = new Date(this.AllEducation[i].end);
+      }
     });
 
     this.profileService.getSkill(this.decoded_token.username).subscribe(data=> {
@@ -100,6 +115,8 @@ export class ProfileComponent implements OnInit {
     this.profileService.getInterest(this.decoded_token.username).subscribe(data=> {
       this.AllInterest = data;
     });
+
+    this.showPosts();
 
   }
 
@@ -292,6 +309,27 @@ export class ProfileComponent implements OnInit {
       alert("Interest updated!");
     })
     
+  }
+
+  public showPosts(): void {
+    this.postService.getAllPosts(this.decoded_token.id).subscribe(data => {
+      this.allPosts = data;
+      console.log(this.allPosts)
+      for(let i = 0; i<this.allPosts.length; i++){
+        let objectURL = 'data:image/png;base64,' + this.allPosts[i].content;
+        this.allPosts[i].image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+        if(this.allPosts[i].postInfo.caption.substring(0,4) === "http"){
+          this.allPosts[i].link = true;
+        }
+      }
+
+      if (this.allPosts.length === 0) {
+        this.empty = true;
+      }
+    }, error => {
+
+    })
   }
 
 }

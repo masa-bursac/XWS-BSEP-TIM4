@@ -24,4 +24,6 @@ public interface IPostService {
 
 	List<Post> getFollowingProfilesPosts(int loggedInId);
 
+	List<PostDTO> getAllPosts(int id);
+
 }

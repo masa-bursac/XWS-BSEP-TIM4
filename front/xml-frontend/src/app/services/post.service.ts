@@ -18,4 +18,8 @@ export class PostService {
   public createPost(body: FormData) : Observable<any>{ 
     return this.http.post(post_url + `/create`, body);
   }
+
+  public getAllPosts(id:number): Observable<any>{
+    return this.http.get(post_url + `/getAllPosts/${id}`);
+  }
 }
