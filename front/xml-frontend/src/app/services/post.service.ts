@@ -34,4 +34,8 @@ export class PostService {
   public addComment(body:any): Observable<any>{
     return this.http.put(post_url + `/addComment`, body);
   }
+
+  public getFollowingProfilesPosts(loggedInId:number): Observable<any>{
+    return this.http.get(post_url + `/getFollowingProfilesPosts/${loggedInId}`);
+  }
 }

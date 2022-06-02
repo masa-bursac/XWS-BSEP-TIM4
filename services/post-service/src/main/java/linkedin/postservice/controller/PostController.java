@@ -59,7 +59,7 @@ public class PostController {
     }
     
     @GetMapping("/getFollowingProfilesPosts/{loggedInId}")
-    public List<Post> getFollowingProfilesPosts(@PathVariable int loggedInId) {
+    public List<PostDTO> getFollowingProfilesPosts(@PathVariable int loggedInId) {
         return postService.getFollowingProfilesPosts(loggedInId);
     }
     

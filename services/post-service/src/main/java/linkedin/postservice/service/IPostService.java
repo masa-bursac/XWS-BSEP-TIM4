@@ -22,7 +22,7 @@ public interface IPostService {
 
 	List<PostDTO> getAllPublic();
 
-	List<Post> getFollowingProfilesPosts(int loggedInId);
+	List<PostDTO> getFollowingProfilesPosts(int loggedInId);
 
 	List<PostDTO> getAllPosts(int id);
 
