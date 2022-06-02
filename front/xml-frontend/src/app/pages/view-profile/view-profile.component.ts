@@ -20,6 +20,7 @@ export class ViewProfileComponent implements OnInit {
   public gender: string = "";
   public biography: string = "";
   public id!: number;
+  public isPrivate: boolean = false;
 
   public decodedToken: any;
   public token: any;
@@ -30,7 +31,7 @@ export class ViewProfileComponent implements OnInit {
     this.getUsername();
     this.getToken();
 
-    this.profileService.getProfile(this.usernameRoute).subscribe(data=> {
+    this.profileService.getProfileView(this.usernameRoute).subscribe(data=> {
       this.username = data.username,
       this.name= data.name,
       this.surname= data.surname,
@@ -39,7 +40,8 @@ export class ViewProfileComponent implements OnInit {
       this.dateOfBirth= new Date(data.dateOfBirth),
       this.gender= data.gender,
       this.biography= data.biography,
-      this.id = data.id
+      this.id = data.id,
+      this.isPrivate = data.isPrivate
   });
 
   }
@@ -67,6 +69,16 @@ export class ViewProfileComponent implements OnInit {
     alert("Connected!");
   }
 
+  public SendRequest(): void {  
+    const body = {
+      accepted: false,
+      fromProfileId: this.decodedToken.id,
+      toProfileId: this.id
+    }
+    this.profileService.newRequest(body).subscribe(data => {
+    })
+    alert("Request sent!");
+  }
   
 
 }

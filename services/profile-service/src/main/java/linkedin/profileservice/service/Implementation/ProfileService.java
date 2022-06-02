@@ -14,6 +14,7 @@ import linkedin.profileservice.client.RequestClient;
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.ProfileDTO;
+import linkedin.profileservice.dto.ProfileViewDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
@@ -471,6 +472,25 @@ public class ProfileService implements IProfileService{
 		}
 		
 		return profileDTOs;
+	}
+
+	@Override
+	public ProfileViewDTO getProfileView(String username) {
+		ProfileViewDTO getUser = new ProfileViewDTO();
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		getUser.setId(user.getId());
+		getUser.setUsername(user.getUsername());
+		getUser.setName(user.getName());
+		getUser.setSurname(user.getSurname());
+		getUser.setEmail(user.getEmail());
+		getUser.setPhone(user.getPhone());
+		getUser.setDateOfBirth(user.getDateOfBirth().toString());
+		getUser.setGender(user.getGender().toString());
+		getUser.setBiography(profile.getBiography());
+		getUser.setIsPrivate(profile.getIsPrivate());
+		
+		return getUser;
 	}
 
 }

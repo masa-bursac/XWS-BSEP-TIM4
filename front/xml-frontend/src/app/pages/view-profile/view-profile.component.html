@@ -35,7 +35,8 @@
             <input [readonly]="true" matInput placeholder="Biography" [(ngModel)]="biography" [ngModelOptions]="{standalone: true}">
           </mat-form-field>
         </mat-card-content>
-        <button mat-stroked-button color="accent" class="btn-block" (click)="Connect()">Connect</button>
+        <button *ngIf="isPrivate==false" mat-stroked-button color="accent" class="btn-block" (click)="Connect()">Connect</button>
+        <button *ngIf="isPrivate==true"mat-stroked-button color="accent" class="btn-block" (click)="SendRequest()">Send request</button>
       </form>
     </mat-card>
 </div>

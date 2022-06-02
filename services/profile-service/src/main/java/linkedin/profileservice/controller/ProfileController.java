@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
+import linkedin.profileservice.dto.ProfileViewDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Institution;
@@ -230,6 +231,11 @@ public class ProfileController {
         } catch (Exception e) {
         	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+	
+	@GetMapping("/getProfileView/{username}")
+    public ProfileViewDTO getProfileView(@PathVariable String username){
+        return profileService.getProfileView(username);
     }
 
 }

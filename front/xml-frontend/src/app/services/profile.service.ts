@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 const profile_url = 'http://localhost:8140/profile';
+const request_url = 'http://localhost:8160/request';
 
 @Injectable({
   providedIn: 'root'
@@ -77,5 +78,25 @@ export class ProfileService {
 
   public searchAllProfiles(body:any): Observable<any>{
     return this.http.get(profile_url+`/getAllByUsername/${body}`);
+  }
+
+  public getProfileView(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getProfileView/${body}`);
+  }
+
+  public newRequest(body: any): Observable<any>{
+    return this.http.post(request_url+`/newRequest`, body);
+  }
+
+  public getAllForProfile(loggedInId: number): Observable<any>{
+    return this.http.get(request_url + `/getAllForProfile/${loggedInId}`);
+  }
+
+  public acceptFollowRequest(to: number, from: number): Observable<any>{
+    return this.http.put(profile_url + `/acceptFollowRequest/${to}/${from}`, null);
+  }
+
+  public denyFollowRequest(to: number, from: number): Observable<any>{
+    return this.http.put(profile_url + `/acceptFollowRequest/${to}/${from}`, null);
   }
 }

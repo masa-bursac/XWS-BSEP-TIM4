@@ -30,6 +30,7 @@ import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordl
 import { ViewProfileComponent } from './pages/view-profile/view-profile.component';
 import { PostComponent } from './pages/post/post.component';
 import { JobOffersComponent } from './pages/job-offers/job-offers.component';
+import { FollowingRequestComponent } from './pages/following-request/following-request.component';
 
 
 
@@ -50,7 +51,8 @@ import { JobOffersComponent } from './pages/job-offers/job-offers.component';
     PasswordlessLoginComponent,
     ViewProfileComponent,
     PostComponent,
-    JobOffersComponent
+    JobOffersComponent,
+    FollowingRequestComponent
   ],
   imports: [
     BrowserModule,
