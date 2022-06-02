@@ -24,6 +24,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 import { CompanyRegistrationComponent } from './pages/company-registration/company-registration.component';
 import { CompanyComponent } from './pages/company/company.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { CompanyComponent } from './pages/company/company.component';
     MatNativeDateModule,
     MatDatepickerModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

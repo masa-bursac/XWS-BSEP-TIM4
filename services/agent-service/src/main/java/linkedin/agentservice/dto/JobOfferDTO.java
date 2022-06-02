@@ -5,6 +5,8 @@ public class JobOfferDTO {
 	private String companyName;
 
 	private String jobPosition;
+	
+	private Boolean share;
 		
 
 	public JobOfferDTO() {
@@ -26,6 +28,15 @@ public class JobOfferDTO {
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
+
+	public Boolean getShare() {
+		return share;
+	}
+
+	public void setShare(Boolean share) {
+		this.share = share;
+	}
+	
 	
 	
 }

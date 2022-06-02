@@ -43,7 +43,7 @@ public class EmailService implements IEmailService {
 
         Context context = new Context();
         context.setVariable("name", String.format("%s %s", savedUser.getName(), savedUser.getSurname()));
-        context.setVariable("link", String.format("http://localhost:4200/login/%s", passwordToken.getToken()));
+        context.setVariable("link", String.format("http://localhost:4300/login/%s", passwordToken.getToken()));
         emailContext.send("firma4validation@gmail.com", title, "approveRegistration", context);
 		
 	}

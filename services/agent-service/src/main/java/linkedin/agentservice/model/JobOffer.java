@@ -20,6 +20,9 @@ public class JobOffer {
 	@Field
     private String jobPosition;
 	
+	@Field
+    private Boolean share;
+	
     @Field
     private List<Comment> comments;
     
@@ -74,6 +77,16 @@ public class JobOffer {
 
 	public void setSelection(List<Selection> selection) {
 		this.selection = selection;
+	}
+
+
+	public Boolean getShare() {
+		return share;
+	}
+
+
+	public void setShare(Boolean share) {
+		this.share = share;
 	}
 
 	

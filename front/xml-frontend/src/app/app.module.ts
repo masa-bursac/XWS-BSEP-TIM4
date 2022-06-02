@@ -29,6 +29,7 @@ import { RegistrationRequestComponent } from './pages/registration-request/regis
 import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
 import { ViewProfileComponent } from './pages/view-profile/view-profile.component';
 import { PostComponent } from './pages/post/post.component';
+import { JobOffersComponent } from './pages/job-offers/job-offers.component';
 
 
 
@@ -48,7 +49,8 @@ import { PostComponent } from './pages/post/post.component';
     RegistrationRequestComponent,
     PasswordlessLoginComponent,
     ViewProfileComponent,
-    PostComponent
+    PostComponent,
+    JobOffersComponent
   ],
   imports: [
     BrowserModule,

@@ -109,6 +109,7 @@ public class CompanyService implements ICompanyService {
 		JobOffer jobOffer = new JobOffer();
 		jobOffer.setId((int) sequenceGeneratorService.generateSequence(JobOffer.SEQUENCE_NAME));
 		jobOffer.setJobPosition(jobOfferDTO.getJobPosition());
+		jobOffer.setShare(jobOfferDTO.getShare());
 		jobOffer.setComments(new ArrayList<Comment>());
 		jobOffer.setSalary(new ArrayList<String>());
 		jobOffer.setSelection(new ArrayList<Selection>());
@@ -204,6 +205,26 @@ public class CompanyService implements ICompanyService {
 				jobOfferDTO.setJobPosition(jobOffer.getJobPosition());
 				jobOfferDTO.setId(jobOffer.getId());
 				jobOffers.add(jobOfferDTO);
+			}			
+		}
+		
+		return jobOffers;
+	}
+
+	@Override
+	public List<JobOfferCommentDTO> getAllSharedJobOffers() {
+		List<Company> companies = companyRepository.findAll();
+		List<JobOfferCommentDTO> jobOffers = new ArrayList<JobOfferCommentDTO>();
+		
+		for(Company company: companies) {
+			for(JobOffer jobOffer: company.getJobOffers()) {
+				if(jobOffer.getShare()) {
+					JobOfferCommentDTO jobOfferDTO = new JobOfferCommentDTO();
+					jobOfferDTO.setCompanyName(company.getCompanyName());
+					jobOfferDTO.setJobPosition(jobOffer.getJobPosition());
+					jobOfferDTO.setId(jobOffer.getId());
+					jobOffers.add(jobOfferDTO);
+				}				
 			}			
 		}
 		

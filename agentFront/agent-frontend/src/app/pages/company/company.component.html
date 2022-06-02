@@ -30,7 +30,8 @@
         <mat-card-content>
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Job position" formControlName="jobPosition">
-          </mat-form-field>                  
+          </mat-form-field> 
+          <mat-checkbox class="example-margin" [(ngModel)] = "share" ngDefaultControl [ngModelOptions]="{standalone: true}">Share on Dislinkt</mat-checkbox>                 
         </mat-card-content>
         <button mat-stroked-button color="accent" class="btn-block">Add</button>
       </form>

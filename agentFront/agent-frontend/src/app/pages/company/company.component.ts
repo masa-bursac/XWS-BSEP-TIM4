@@ -20,6 +20,8 @@ export class CompanyComponent implements OnInit {
     jobPosition:new FormControl()
   });
 
+  public share: boolean = false;
+
   decoded_token : any;
 
   constructor(private fb: FormBuilder, private authService : AuthService, private companyService : CompanyService) { }
@@ -67,8 +69,10 @@ export class CompanyComponent implements OnInit {
     if(this.validateFormJobOffer.valid){
       const body = {
         companyName: this.validateForm.value.companyName,
-        jobPosition: this.validateFormJobOffer.value.jobPosition
+        jobPosition: this.validateFormJobOffer.value.jobPosition,
+        share: this.share
       }
+ 
       
       this.companyService.addJobOffer(body).subscribe(data => {
         if(data)

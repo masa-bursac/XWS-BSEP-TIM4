@@ -6,6 +6,7 @@
       <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/login">Login</a>
       <a *ngIf="role != 'USER' && role != 'ADMIN'" mat-button routerLink="/registration">Registration</a>
       <a *ngIf="role == 'ADMIN'" mat-button routerLink="/registrationRequest">Registration requests</a>
+      <a *ngIf="role == 'USER'" mat-button routerLink="/jobOffers">Job offers</a>
       <a *ngIf="role == 'USER'" mat-button routerLink="/post">Create post</a>
       <a *ngIf="role == 'USER'" mat-button routerLink="/profile">Profile</a>
       <a *ngIf="role == 'USER' || role == 'ADMIN'" mat-button (click)="Logout()">Logout</a>

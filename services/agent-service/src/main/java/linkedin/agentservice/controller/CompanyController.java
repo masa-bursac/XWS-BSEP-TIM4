@@ -117,5 +117,10 @@ public class CompanyController {
     public List<JobOfferCommentDTO> getAllJobOffers(){
         return companyService.getAllJobOffers();
     }
+    
+    @GetMapping("/getAllSharedJobOffers")
+    public List<JobOfferCommentDTO> getAllSharedJobOffers(){
+        return companyService.getAllSharedJobOffers();
+    }
 
 }

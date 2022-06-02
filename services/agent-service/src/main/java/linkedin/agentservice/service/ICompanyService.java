@@ -36,4 +36,6 @@ public interface ICompanyService {
 
 	List<JobOfferCommentDTO> getAllJobOffers();
 
+	List<JobOfferCommentDTO> getAllSharedJobOffers();
+
 }
