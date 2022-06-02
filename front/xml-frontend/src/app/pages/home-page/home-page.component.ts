@@ -59,7 +59,7 @@ export class HomePageComponent implements OnInit {
   }
 
   public Search(): void {
-    this.profileService.searchPublicProfiles(this.search).subscribe(data => {
+    this.profileService.searchAllProfiles(this.search).subscribe(data => {
       this.searchedProfiles = data;
       if (this.searchedProfiles.length === 0) {
         this.empty = true;

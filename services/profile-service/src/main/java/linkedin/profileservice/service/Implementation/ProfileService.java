@@ -453,4 +453,24 @@ public class ProfileService implements IProfileService{
 		return profile.getInterests();
 	}
 
+	@Override
+	public List<ProfileDTO> getAllByUsername(String username) {
+		List<Profile> profiles =  profileRepository.findAll();
+		List<Integer> userInfoIds = new ArrayList();
+		List<ProfileDTO> profileDTOs = new ArrayList();
+		
+		for(int i=0; i<profiles.size();i++) {
+			userInfoIds.add(profiles.get(i).getUserInfo());			
+		}
+
+		for(int i=0; i<userInfoIds.size();i++) {
+			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
+			if(profile.getUsername().contains(username)) {
+				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getUsername(),profile.getName(),profile.getSurname()));
+			}
+		}
+		
+		return profileDTOs;
+	}
+
 }

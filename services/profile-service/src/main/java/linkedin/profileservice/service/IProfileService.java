@@ -40,4 +40,5 @@ public interface IProfileService {
 	List<Institution> getEducation(String username);
 	List<Skill> getSkill(String username);
 	List<Skill> getInterest(String username);
+	List<ProfileDTO> getAllByUsername(String username);
 }

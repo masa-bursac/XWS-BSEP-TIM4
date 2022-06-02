@@ -70,4 +70,12 @@ export class ProfileService {
   public updateInterest(body: any): Observable<any>{
     return this.http.put(profile_url+`/updateInterest`, body);
   }
+
+  public follow(loggedInId: number, currentId: number): Observable<any>{
+    return this.http.put(profile_url + `/follow/${loggedInId}/${currentId}`, null);
+  }
+
+  public searchAllProfiles(body:any): Observable<any>{
+    return this.http.get(profile_url+`/getAllByUsername/${body}`);
+  }
 }

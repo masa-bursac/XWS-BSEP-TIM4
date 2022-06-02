@@ -222,5 +222,14 @@ public class ProfileController {
     public List<Skill> getInterest(@PathVariable String username){
         return profileService.getInterest(username);
     }
+	
+	@GetMapping("/getAllByUsername/{username}")
+    public ResponseEntity getAllByUsername(@PathVariable String username) {
+        try {
+        	return new ResponseEntity(profileService.getAllByUsername(username), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
