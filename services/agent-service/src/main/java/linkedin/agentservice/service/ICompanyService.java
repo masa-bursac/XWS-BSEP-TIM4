@@ -38,4 +38,6 @@ public interface ICompanyService {
 
 	List<JobOfferCommentDTO> getAllSharedJobOffers();
 
+	List<JobOfferCommentDTO> searchJobOffers(String jobPosition);
+
 }

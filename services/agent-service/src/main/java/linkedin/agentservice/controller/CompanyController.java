@@ -122,5 +122,14 @@ public class CompanyController {
     public List<JobOfferCommentDTO> getAllSharedJobOffers(){
         return companyService.getAllSharedJobOffers();
     }
+    
+    @GetMapping("/searchJobOffers/{jobPosition}")
+    public ResponseEntity searchJobOffers(@PathVariable String jobPosition) {
+        try {
+        	return new ResponseEntity(companyService.searchJobOffers(jobPosition), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

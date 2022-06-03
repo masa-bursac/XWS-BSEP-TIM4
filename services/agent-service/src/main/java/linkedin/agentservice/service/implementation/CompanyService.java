@@ -231,4 +231,27 @@ public class CompanyService implements ICompanyService {
 		return jobOffers;
 	}
 
+	@Override
+	public List<JobOfferCommentDTO> searchJobOffers(String jobPosition) {
+		List<Company> companies = companyRepository.findAll();
+		List<JobOfferCommentDTO> jobOffers = new ArrayList<JobOfferCommentDTO>();
+		
+		for(int i=0; i<companies.size();i++) {	
+
+			for(int j=0; j<companies.get(i).getJobOffers().size();j++) {
+
+				if(companies.get(i).getJobOffers().get(j).getJobPosition().toLowerCase().contains(jobPosition.toLowerCase()) && 
+						companies.get(i).getJobOffers().get(j).getShare() == true) {
+					JobOfferCommentDTO jobOfferCommentDTO = new JobOfferCommentDTO();
+					jobOfferCommentDTO.setCompanyName(companies.get(i).getCompanyName());
+					jobOfferCommentDTO.setId(companies.get(i).getJobOffers().get(j).getId());
+					jobOfferCommentDTO.setJobPosition(companies.get(i).getJobOffers().get(j).getJobPosition());
+					jobOffers.add(jobOfferCommentDTO);
+				}
+			}
+		}
+		
+		return jobOffers;
+	}
+
 }

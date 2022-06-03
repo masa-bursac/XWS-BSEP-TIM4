@@ -12,6 +12,8 @@ export class JobOffersComponent implements OnInit {
   decoded_token : any;
   public jobOffers: any[] = [];
   public empty = false;
+  search : string ="";
+  public searchedJobOffers: any[]= [];
 
   constructor(private companyService: CompanyService, private authService: AuthService) { }
 
@@ -24,6 +26,18 @@ export class JobOffersComponent implements OnInit {
     this.companyService.getAllSharedJobOffers().subscribe(data => {
       this.jobOffers = data;
       if (this.jobOffers.length === 0) {
+        this.empty = true;
+      }
+    }, error => {
+
+    })
+  }
+
+  public Search(): void {
+    this.companyService.searchJobOffers(this.search).subscribe(data => {
+      this.searchedJobOffers = data;
+      console.log(this.searchedJobOffers)
+      if (this.searchedJobOffers.length === 0) {
         this.empty = true;
       }
     }, error => {

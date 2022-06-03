@@ -14,4 +14,8 @@ export class CompanyService {
   public getAllSharedJobOffers(): Observable<any> {
     return this.http.get(company_url + `/getAllSharedJobOffers`);
   }
+
+  public searchJobOffers(body:any): Observable<any>{
+    return this.http.get(company_url + `/searchJobOffers/${body}`);
+  }
 }
