@@ -27,6 +27,10 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 import { RegistrationRequestComponent } from './pages/registration-request/registration-request.component';
 import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
+import { ViewProfileComponent } from './pages/view-profile/view-profile.component';
+import { PostComponent } from './pages/post/post.component';
+import { JobOffersComponent } from './pages/job-offers/job-offers.component';
+import { FollowingRequestComponent } from './pages/following-request/following-request.component';
 
 
 
@@ -44,7 +48,11 @@ import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordl
     HomePageComponent,
     AdminHomePageComponent,
     RegistrationRequestComponent,
-    PasswordlessLoginComponent
+    PasswordlessLoginComponent,
+    ViewProfileComponent,
+    PostComponent,
+    JobOffersComponent,
+    FollowingRequestComponent
   ],
   imports: [
     BrowserModule,

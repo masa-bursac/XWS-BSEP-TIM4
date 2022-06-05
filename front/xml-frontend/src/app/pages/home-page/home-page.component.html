@@ -1,2 +1,84 @@
 <app-navbar></app-navbar>
-<p>home-page works!</p>
+<div class="div-search">
+    <form class="example-form">      
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input type="tel" matInput placeholder="Search profiles by username" name= "search" [(ngModel)]= "search">
+          <button matSuffix mat-button (click)="Search()"><mat-icon>search</mat-icon></button>
+        </mat-form-field>
+      </form>
+</div>
+<div *ngFor="let searched of searchedProfiles" class="div-inline">
+    <div class="review-holder">
+    <mat-card class="example-card">
+        <mat-card-content class="mat-card-font">
+          <p><b>Name:</b> {{ searched.name }} {{ searched.surname }}</p>
+          <p><b>Username:</b> {{ searched.username }}</p>
+          <span>
+            <a mat-button routerLink="/viewProfile/{{searched.username}}">View</a>
+          </span>
+        </mat-card-content>
+    </mat-card>
+    </div>
+    <br>
+    <br>
+</div>
+
+<div *ngFor="let followingPosts of allFollowingPosts">
+  <div class="review-holder">
+  <mat-card class="example-card">
+    <img [src]="followingPosts.images"/>
+    <br>
+      <mat-card-content class="mat-card-font">
+        <button *ngIf="followingPosts.isLiked!=true" mat-icon-button color="primary" (click)="Like(followingPosts.id)"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="followingPosts.isLiked==true" mat-icon-button color="accent"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="followingPosts.isDisliked!=true" mat-icon-button color="primary" (click)="Dislike(followingPosts.id)"><mat-icon>thumb_down_alt</mat-icon></button>
+        <button *ngIf="followingPosts.isDisliked==true" mat-icon-button color="accent"><mat-icon>thumb_down_alt</mat-icon></button>
+        <p *ngIf="followingPosts.link!=true"><b>Caption:</b> {{ followingPosts.postInfo.caption }} </p>
+        <p *ngIf="followingPosts.link==true"><b>Link: </b>
+        <a href = "{{ followingPosts.postInfo.caption }}"> {{ followingPosts.postInfo.caption }} </a></p>
+        <p *ngIf="followingPosts.likeIds != null"><b>Likes:</b> {{ followingPosts.likeIds.length }} </p>
+        <mat-form-field class="example-full">
+          <input matInput placeholder="Comment..." [(ngModel)] = "followingPosts.comment">
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="Comment(followingPosts.id)">Add</button>
+        <p *ngIf="followingPosts.dislikeIds != null"><b>Dislikes:</b> {{ followingPosts.dislikeIds.length }} </p>
+        <mat-card-content *ngFor="let comment of followingPosts.comments">
+          <p><b>Comment:</b> {{ comment.content }} </p>
+        </mat-card-content>
+      </mat-card-content>
+  </mat-card>
+  </div>
+  <br>
+  <br>
+</div>
+
+
+
+<div *ngFor="let post of allPosts">
+  <div class="review-holder">
+  <mat-card class="example-card">
+    <img [src]="post.image"/>
+    <br>
+      <mat-card-content class="mat-card-font">
+        <button *ngIf="post.isLiked!=true" mat-icon-button color="primary" (click)="Like(post.id)"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="post.isLiked==true" mat-icon-button color="accent"><mat-icon>favorite</mat-icon></button>
+        <button *ngIf="post.isDisliked!=true" mat-icon-button color="primary" (click)="Dislike(post.id)"><mat-icon>thumb_down_alt</mat-icon></button>
+        <button *ngIf="post.isDisliked==true" mat-icon-button color="accent"><mat-icon>thumb_down_alt</mat-icon></button>
+        <p *ngIf="post.link!=true"><b>Caption:</b> {{ post.postInfo.caption }} </p>
+        <p *ngIf="post.link==true"><b>Link: </b>
+        <a href = "{{ post.postInfo.caption }}"> {{ post.postInfo.caption }} </a></p>
+        <p *ngIf="post.likeIds != null"><b>Likes:</b> {{ post.likeIds.length }} </p>
+        <mat-form-field class="example-full">
+          <input matInput placeholder="Comment..." [(ngModel)] = "post.comment">
+        </mat-form-field>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="Comment(post.id)">Add</button>
+        <p *ngIf="post.dislikeIds != null"><b>Dislikes:</b> {{ post.dislikeIds.length }} </p>
+        <mat-card-content *ngFor="let comment of post.comments">
+          <p><b>Comment:</b> {{ comment.content }} </p>
+        </mat-card-content>
+      </mat-card-content>
+  </mat-card>
+  </div>
+  <br>
+  <br>
+</div>

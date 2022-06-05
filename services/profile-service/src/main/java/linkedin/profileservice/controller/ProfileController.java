@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
+import linkedin.profileservice.dto.ProfileViewDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Skill;
 import linkedin.profileservice.service.IProfileService;
 
@@ -196,5 +198,44 @@ public class ProfileController {
 	public void denyFollowRequest(@PathVariable int to, @PathVariable int from){
 	      profileService.denyFollowRequest(to, from);
 	}
+	
+	@GetMapping("/getProfile/{username}")
+    public UpdateDTO getProfile(@PathVariable String username){
+        return profileService.getProfile(username);
+    }
+	
+	@GetMapping("/getExperience/{username}")
+    public List<Institution> getExperience(@PathVariable String username){
+        return profileService.getExperience(username);
+    }
+	
+	@GetMapping("/getEducation/{username}")
+    public List<Institution> getEducation(@PathVariable String username){
+        return profileService.getEducation(username);
+    }
+	
+	@GetMapping("/getSkill/{username}")
+    public List<Skill> getSkill(@PathVariable String username){
+        return profileService.getSkill(username);
+    }
+	
+	@GetMapping("/getInterest/{username}")
+    public List<Skill> getInterest(@PathVariable String username){
+        return profileService.getInterest(username);
+    }
+	
+	@GetMapping("/getAllByUsername/{username}")
+    public ResponseEntity getAllByUsername(@PathVariable String username) {
+        try {
+        	return new ResponseEntity(profileService.getAllByUsername(username), HttpStatus.OK);
+        } catch (Exception e) {
+        	return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+	
+	@GetMapping("/getProfileView/{username}")
+    public ProfileViewDTO getProfileView(@PathVariable String username){
+        return profileService.getProfileView(username);
+    }
 
 }

@@ -26,6 +26,7 @@ public class FollowRequestService implements IFollowRequestService {
     @Override
     public FollowRequest newRequest(FollowRequest request) {
     	request.setId((int) sequenceGeneratorService.generateSequence(FollowRequest.SEQUENCE_NAME));
+    	request.setAccepted(false);
         return followRequestRepository.save(request);
     }
     

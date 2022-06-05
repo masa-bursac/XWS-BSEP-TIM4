@@ -7,6 +7,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import linkedin.postservice.dto.CommentDTO;
+import linkedin.postservice.dto.PostDTO;
 import linkedin.postservice.model.Post;
 
 public interface IPostService {
@@ -19,8 +20,10 @@ public interface IPostService {
 
 	Boolean addComment(CommentDTO commentDTO);
 
-	List<Post> getAllPublic();
+	List<PostDTO> getAllPublic();
 
-	List<Post> getFollowingProfilesPosts(int loggedInId);
+	List<PostDTO> getFollowingProfilesPosts(int loggedInId);
+
+	List<PostDTO> getAllPosts(int id);
 
 }

@@ -14,6 +14,7 @@ import linkedin.profileservice.client.RequestClient;
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.ProfileDTO;
+import linkedin.profileservice.dto.ProfileViewDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.UpdateDTO;
 import linkedin.profileservice.model.Gender;
@@ -44,7 +45,7 @@ public class ProfileService implements IProfileService{
 	
 	@Override
 	public Boolean update(UpdateDTO userInfo) {
-		UserInfo userForUpdating = authRepository.findOneById(userInfo.getId());
+		UserInfo userForUpdating = authRepository.findOneByUsername(userInfo.getUsername());
 		userForUpdating.setEmail(userInfo.getEmail());
 		if(userInfo.getGender().toLowerCase().equals(Gender.Male.toString().toLowerCase(Locale.ROOT)))
 			userForUpdating.setGender(Gender.Male);
@@ -67,7 +68,7 @@ public class ProfileService implements IProfileService{
         };
     	userForUpdating.setUsername(userInfo.getUsername());
 
-		Profile profile = profileRepository.findOneByUserInfoId(userInfo.getId());
+		Profile profile = profileRepository.findOneByUserInfoId(userForUpdating.getId());
 		profile.setBiography(userInfo.getBiography());
 		
         if (authRepository.save(userForUpdating) != null && profileRepository.save(profile) != null)
@@ -280,7 +281,7 @@ public class ProfileService implements IProfileService{
 		for(int i=0; i<userInfoIds.size();i++) {
 			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
 			if(profile.getUsername().contains(searchUsername)) {
-				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getName(),profile.getSurname(),profile.getUsername()));
+				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getUsername(),profile.getName(),profile.getSurname()));
 			}
 		}
 		
@@ -404,5 +405,92 @@ public class ProfileService implements IProfileService{
     public void denyFollowRequest(int to, int from) {
     	requestClient.delete(to, from);
     }
+
+	@Override
+	public UpdateDTO getProfile(String username) {
+		UpdateDTO getUser = new UpdateDTO();
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		getUser.setId(user.getId());
+		getUser.setUsername(user.getUsername());
+		getUser.setName(user.getName());
+		getUser.setSurname(user.getSurname());
+		getUser.setEmail(user.getEmail());
+		getUser.setPhone(user.getPhone());
+		getUser.setDateOfBirth(user.getDateOfBirth().toString());
+		getUser.setGender(user.getGender().toString());
+		getUser.setBiography(profile.getBiography());
+		
+		return getUser;
+
+	}
+
+	@Override
+	public List<Institution> getExperience(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getExperience();
+		
+	}
+
+	@Override
+	public List<Institution> getEducation(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getEducation();
+	}
+
+	@Override
+	public List<Skill> getSkill(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getSkills();
+	}
+
+	@Override
+	public List<Skill> getInterest(String username) {
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		return profile.getInterests();
+	}
+
+	@Override
+	public List<ProfileDTO> getAllByUsername(String username) {
+		List<Profile> profiles =  profileRepository.findAll();
+		List<Integer> userInfoIds = new ArrayList();
+		List<ProfileDTO> profileDTOs = new ArrayList();
+		
+		for(int i=0; i<profiles.size();i++) {
+			userInfoIds.add(profiles.get(i).getUserInfo());			
+		}
+
+		for(int i=0; i<userInfoIds.size();i++) {
+			UserInfo profile =  authRepository.findOneById(userInfoIds.get(i));
+			if(profile.getUsername().contains(username)) {
+				profileDTOs.add(new ProfileDTO(profile.getId(),profile.getUsername(),profile.getName(),profile.getSurname()));
+			}
+		}
+		
+		return profileDTOs;
+	}
+
+	@Override
+	public ProfileViewDTO getProfileView(String username) {
+		ProfileViewDTO getUser = new ProfileViewDTO();
+		UserInfo user = authRepository.findOneByUsername(username);
+		Profile profile = profileRepository.findOneByUserInfoId(user.getId());
+		getUser.setId(user.getId());
+		getUser.setUsername(user.getUsername());
+		getUser.setName(user.getName());
+		getUser.setSurname(user.getSurname());
+		getUser.setEmail(user.getEmail());
+		getUser.setPhone(user.getPhone());
+		getUser.setDateOfBirth(user.getDateOfBirth().toString());
+		getUser.setGender(user.getGender().toString());
+		getUser.setBiography(profile.getBiography());
+		getUser.setIsPrivate(profile.getIsPrivate());
+		
+		return getUser;
+	}
 
 }

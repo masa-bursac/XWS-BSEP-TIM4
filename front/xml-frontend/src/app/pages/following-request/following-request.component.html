@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div *ngFor="let follow of followRequests">
+    <div class="review-holder">
+    <mat-card class="example-card">
+        <mat-card-title>Pending</mat-card-title>
+        <mat-card-content>
+          <p><b>Username:</b> {{ follow.username }}</p>
+          <span>
+            <a mat-button (click)="approve(follow.id)">Approve</a>
+          </span>
+          <a mat-button (click)="deny(follow.id)">Deny</a>
+        </mat-card-content>
+    </mat-card>
+    </div>
+    <br>
+    <br>
+</div>

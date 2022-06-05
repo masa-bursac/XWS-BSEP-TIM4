@@ -2,13 +2,13 @@ package linkedin.profileservice.service;
 
 import java.util.List;
 
-import org.springframework.util.MultiValueMap;
-
 import linkedin.profileservice.dto.InstitutionDTO;
 import linkedin.profileservice.dto.InstitutionUpdateDTO;
 import linkedin.profileservice.dto.SkillDTO;
 import linkedin.profileservice.dto.ProfileDTO;
+import linkedin.profileservice.dto.ProfileViewDTO;
 import linkedin.profileservice.dto.UpdateDTO;
+import linkedin.profileservice.model.Institution;
 import linkedin.profileservice.model.Skill;
 
 public interface IProfileService {
@@ -34,4 +34,11 @@ public interface IProfileService {
 	List<Integer> getFollowingIds(int loggedInId);
 	void acceptFollowRequest(int to, int from);
 	void denyFollowRequest(int to, int from);
+	UpdateDTO getProfile(String username);
+	List<Institution> getExperience(String username);
+	List<Institution> getEducation(String username);
+	List<Skill> getSkill(String username);
+	List<Skill> getInterest(String username);
+	List<ProfileDTO> getAllByUsername(String username);
+	ProfileViewDTO getProfileView(String username);
 }

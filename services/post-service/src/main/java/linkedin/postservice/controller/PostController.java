@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import linkedin.postservice.dto.CommentDTO;
+import linkedin.postservice.dto.PostDTO;
 import linkedin.postservice.model.Post;
 import linkedin.postservice.service.IPostService;
 
@@ -52,13 +54,18 @@ public class PostController {
     }
     
     @GetMapping("/getAllPublic")
-    public List<Post> getAllPublic() {
+    public List<PostDTO> getAllPublic() {
         return postService.getAllPublic();
     }
     
     @GetMapping("/getFollowingProfilesPosts/{loggedInId}")
-    public List<Post> getFollowingProfilesPosts(@PathVariable int loggedInId) {
+    public List<PostDTO> getFollowingProfilesPosts(@PathVariable int loggedInId) {
         return postService.getFollowingProfilesPosts(loggedInId);
+    }
+    
+    @GetMapping("/getAllPosts/{id}")
+    public List<PostDTO> getAllPosts(@PathVariable int id) {
+        return postService.getAllPosts(id);
     }
 
 }

@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div *ngFor="let pending of pendingUsers">
+    <div class="review-holder">
+    <mat-card class="example-card">
+        <mat-card-title>Pending</mat-card-title>
+        <mat-card-content>
+          <p><b>Name:</b> {{ pending.name }} {{ pending.surname }}</p>
+          <p><b>Username:</b> {{ pending.username }}</p>
+          <p><b>Email:</b> {{ pending.email }}</p>
+          <span>
+            <a mat-button (click)="approve(pending.id)">Approve</a>
+          </span>
+          <a mat-button (click)="deny(pending.id)">Deny</a>
+        </mat-card-content>
+    </mat-card>
+    </div>
+    <br>
+    <br>
+</div>
+<div *ngFor="let pending of pendingCompanies">
+  <div class="review-holder">
+  <mat-card class="example-card">
+      <mat-card-title>Pending company</mat-card-title>
+      <mat-card-content>
+        <p><b>Name:</b> {{ pending.companyName }}</p>
+        <p><b>Phone:</b> {{ pending.phone }}</p>
+        <p><b>Description:</b> {{ pending.description }}</p>
+        <span>
+          <a mat-button (click)="approveCompany(pending.companyName)">Approve</a>
+        </span>
+        <a mat-button (click)="denyCompany(pending.companyName)">Deny</a>
+      </mat-card-content>
+  </mat-card>
+  </div>
+  <br>
+  <br>
+</div>

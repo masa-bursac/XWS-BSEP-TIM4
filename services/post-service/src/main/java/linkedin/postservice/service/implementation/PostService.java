@@ -13,6 +13,7 @@ import linkedin.postservice.client.PictureClient;
 import linkedin.postservice.client.ProfileClient;
 import linkedin.postservice.dto.CommentDTO;
 import linkedin.postservice.dto.ImageDTO;
+import linkedin.postservice.dto.PostDTO;
 import linkedin.postservice.model.Comment;
 import linkedin.postservice.model.Post;
 import linkedin.postservice.model.PostInfo;
@@ -127,15 +128,19 @@ public class PostService implements IPostService{
 	}
 
 	@Override
-	public List<Post> getAllPublic() {
+	public List<PostDTO> getAllPublic() {
 		// TODO Auto-generated method stub
 		List<Integer> publicProfileIds = profileClient.getAllPublicIds();
-		List<Post> publicPosts = new ArrayList<>();
+		List<PostDTO> publicPosts = new ArrayList<>();
 		List<Post> posts= postRepository.findAll();
+		PostDTO postDTO = new PostDTO();
 		for(int i = 0;i < posts.size(); i++) {
 			for(int j=0; j<publicProfileIds.size();j++) {
 				if(posts.get(i).getIdUser() == publicProfileIds.get(j)) {
-					publicPosts.add(posts.get(i));
+					postDTO = new PostDTO(posts.get(i));
+					postDTO.setContent(pictureClient.getContent(posts.get(i).getPostInfo().getPicture().get(0)));
+					postDTO.setName(pictureClient.getName(posts.get(i).getPostInfo().getPicture().get(0)));
+					publicPosts.add(postDTO);
 				}
 			}
 		}
@@ -143,20 +148,40 @@ public class PostService implements IPostService{
 	}
 
 	@Override
-	public List<Post> getFollowingProfilesPosts(int loggedInId) {
+	public List<PostDTO> getFollowingProfilesPosts(int loggedInId) {
 		// TODO Auto-generated method stub
 		List<Integer> followingIds = profileClient.getFollowingIds(loggedInId);
 		
-		List<Post> followingPosts = new ArrayList<>();
+		List<PostDTO> followingPosts = new ArrayList<>();
 		List<Post> posts= postRepository.findAll();
+		PostDTO postDTO = new PostDTO();
 		for(int i = 0;i < posts.size(); i++) {
 			for(int j=0; j<followingIds.size();j++) {
 				if(posts.get(i).getIdUser() == followingIds.get(j)) {
-					followingPosts.add(posts.get(i));
+					postDTO = new PostDTO(posts.get(i));
+					postDTO.setContent(pictureClient.getContent(posts.get(i).getPostInfo().getPicture().get(0)));
+					postDTO.setName(pictureClient.getName(posts.get(i).getPostInfo().getPicture().get(0)));
+					followingPosts.add(postDTO);
 				}
 			}
 		}
 		return followingPosts;
+	}
+
+	@Override
+	public List<PostDTO> getAllPosts(int id) {
+		List<PostDTO> userPosts = new ArrayList<>();
+		List<Post> posts= postRepository.findAll();
+		PostDTO postDTO = new PostDTO();
+		for(int i = 0;i < posts.size(); i++) {
+			if(posts.get(i).getIdUser() == id) {
+				postDTO = new PostDTO(posts.get(i));
+				postDTO.setContent(pictureClient.getContent(posts.get(i).getPostInfo().getPicture().get(0)));
+				postDTO.setName(pictureClient.getName(posts.get(i).getPostInfo().getPicture().get(0)));
+				userPosts.add(postDTO);
+			}
+		}
+		return userPosts;
 	}
 	
 	
