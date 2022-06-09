@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegistrationRequestService } from 'src/app/services/registration-request.service';
 import jwt_decode from 'jwt-decode';
+import { AttackService } from 'src/app/services/attack.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = true;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private authService : AuthService, private rrService: RegistrationRequestService) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private authService : AuthService, private rrService: RegistrationRequestService, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -50,35 +51,39 @@ export class LoginComponent implements OnInit {
     this.username = this.validateForm.value.username;
     this.password = this.validateForm.value.password;
 
-    const body = {
-      username: this.username,
-      password: this.password
-    }
+    this.attackService.username(this.username).subscribe(data => {
+      this.usernameBool = data.bool
+      if (this.usernameBool) {
+        const body = {
+          username: this.username,
+          password: this.password
+        }
+        this.authService.login(body).subscribe(data => {
+          const user = data;
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', JSON.stringify(user.token));
 
-    this.authService.login(body).subscribe(data => {
-      const user = data;
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(user.token));
+          sessionStorage.setItem('username', user.username);
+          let authString = 'Basic ' + btoa(user.username + ':' + user.password);
+          sessionStorage.setItem('basicauth', authString);
 
-      sessionStorage.setItem('username', user.username);
-      let authString = 'Basic ' + btoa(user.username + ':' + user.password);
-      sessionStorage.setItem('basicauth', authString);
-
-      if(this.getDecodedAccessToken(data.token).user_role === 'USER'){
-        this.router.navigate(['homePage']);
+          if(this.getDecodedAccessToken(data.token).user_role === 'USER'){
+            this.router.navigate(['homePage']);
+          }
+          else if(this.getDecodedAccessToken(data.token).user_role === 'ADMIN'){
+            this.router.navigate(['adminHomePage']);
+          }else if(this.getDecodedAccessToken(data.token).user_role === 'OWNER'){
+            this.router.navigate(['ownerHomePage']);
+          }
+        }, error => {
+          this.errorLogin = true;
+          alert(error.error);
+        })
       }
-      else if(this.getDecodedAccessToken(data.token).user_role === 'ADMIN'){
-        this.router.navigate(['adminHomePage']);
+      else {
+        alert("Error!");
       }
-      else if(this.getDecodedAccessToken(data.token).user_role === 'OWNER'){
-        this.router.navigate(['ownerHomePage']);
-      }
-    }, error => {
-      this.errorLogin = true;
-      alert(error.error);
-    })
-
-    
+    });    
   }
 
   getDecodedAccessToken(token: string): any {

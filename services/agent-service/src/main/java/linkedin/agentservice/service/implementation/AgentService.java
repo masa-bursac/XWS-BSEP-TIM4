@@ -34,10 +34,11 @@ public class AgentService implements IAgentService{
 	private final PasswordTokenService passwordTokenService;
 	private final PasswordTokenRepository passwordTokenRepository;
 	private final EmailService emailService;
+	private final AttackService attackService;
 	
 	@Autowired
     public AgentService(SequenceGeneratorService sequenceGeneratorService,PasswordEncoder passwordEncoder, AgentRepository agentRepository, Token token,
-    		PasswordTokenService passwordTokenService, PasswordTokenRepository passwordTokenRepository, EmailService emailService) {
+    		PasswordTokenService passwordTokenService, PasswordTokenRepository passwordTokenRepository, EmailService emailService, AttackService attackService) {
 		this.sequenceGeneratorService = sequenceGeneratorService;
 		this.passwordEncoder = passwordEncoder;
 		this.agentRepository = agentRepository;
@@ -45,11 +46,14 @@ public class AgentService implements IAgentService{
 		this.passwordTokenService = passwordTokenService;
 		this.passwordTokenRepository = passwordTokenRepository;
 		this.emailService = emailService;
+		this.attackService = attackService;
     }
 
 	@Override
 	public Boolean registration(RegistrationDTO registrationDTO) {
 		
+		if(!attackService.validateRegistration(registrationDTO))
+			throw new GeneralException("Form input is not valid.", HttpStatus.BAD_REQUEST);
 		if(!registrationDTO.getPassword().equals(registrationDTO.getRepeatPassword())){
             throw new GeneralException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         }

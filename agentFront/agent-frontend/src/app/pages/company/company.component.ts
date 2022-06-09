@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
 
@@ -24,7 +25,12 @@ export class CompanyComponent implements OnInit {
 
   decoded_token : any;
 
-  constructor(private fb: FormBuilder, private authService : AuthService, private companyService : CompanyService) { }
+  companyNameBoolean: boolean = false;
+  phoneBoolean: boolean = false;
+  descriptionBoolean: boolean = false;
+  jobPositionBoolean: boolean = false;
+
+  constructor(private fb: FormBuilder, private authService : AuthService, private companyService : CompanyService, private attackService : AttackService) { }
 
   ngOnInit(): void {
     this.decoded_token = this.authService.getDataFromToken();
@@ -43,21 +49,43 @@ export class CompanyComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
 
-    if(this.validateForm.valid){
-      const body = {
-        companyName: this.validateForm.value.companyName,
-        phone: this.validateForm.value.phone,
-        description: this.validateForm.value.description,
-        username: this.decoded_token.username
-      }
-      
-      this.companyService.updateCompany(body).subscribe(data => {
-        if(data)
-          alert("Company successfully edited");
-        else
-        alert("Username already exist");
+    this.attackService.companyName(this.validateForm.value.companyName).subscribe(data => {
+      this.companyNameBoolean = data.bool;
+      if(!this.companyNameBoolean)
+      alert("Format for company name is not right");
+
+      this.attackService.phoneNumber(this.validateForm.value.phone).subscribe(data => {
+        this.phoneBoolean = data.bool;
+        if(!this.phoneBoolean)
+        alert("Format for phone is not right");
+
+        this.attackService.description(this.validateForm.value.description).subscribe(data => {
+          this.descriptionBoolean = data.bool;
+          if(!this.descriptionBoolean)
+          alert("Format for description is not right");
+
+          if(this.companyNameBoolean && this.phoneBoolean && this.descriptionBoolean)
+          {
+            const body = {
+              username: this.decoded_token.username,
+              companyName: this.validateForm.value.companyName,
+              phone: this.validateForm.value.phone,
+              description: this.validateForm.value.description
+            }
+
+            if(this.validateForm.valid){
+              this.companyService.updateCompany(body).subscribe(data => {
+                if(data)
+                  alert("Company successfully edited");
+                else
+                alert("Username already exist");
+              });
+            }
+          }
+        });
       });
-    }
+    });
+  
   }
 
   submitFormJobOffer(): void {
@@ -66,21 +94,26 @@ export class CompanyComponent implements OnInit {
       this.validateFormJobOffer.controls[i].updateValueAndValidity();
     }
 
-    if(this.validateFormJobOffer.valid){
-      const body = {
+    this.attackService.description(this.validateFormJobOffer.value.jobPosition).subscribe(data => {
+      this.jobPositionBoolean = data.bool
+      if(!this.jobPositionBoolean)
+          alert("Format for job position is not right");
+
+      if (this.jobPositionBoolean) {
+        const body = {
         companyName: this.validateForm.value.companyName,
         jobPosition: this.validateFormJobOffer.value.jobPosition,
         share: this.share
       }
- 
-      
+    
       this.companyService.addJobOffer(body).subscribe(data => {
         if(data)
           alert("Job offer successfully added");
         else
         alert("Username already exist");
       });
-    }
+      }
+    });
   }
 
 }
