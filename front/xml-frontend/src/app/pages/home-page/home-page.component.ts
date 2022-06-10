@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { AttackService } from 'src/app/services/attack.service';
 import { PostService } from 'src/app/services/post.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -22,8 +23,10 @@ export class HomePageComponent implements OnInit {
   public comment: string ="";
   public allFollowingPosts: any[] = [];
   public images: any;
+  usernameBool: boolean = true;
+  commentBool: boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer) { }
+  constructor(private route: ActivatedRoute, private router: Router, private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.getToken();
@@ -62,14 +65,19 @@ export class HomePageComponent implements OnInit {
   }
 
   public Search(): void {
-    this.profileService.searchAllProfiles(this.search).subscribe(data => {
-      this.searchedProfiles = data;
-      if (this.searchedProfiles.length === 0) {
-        this.empty = true;
+    this.attackService.escaping(this.search).subscribe(data => {
+      this.usernameBool = data.bool
+      if (this.usernameBool) {
+        this.profileService.searchPublicProfiles(this.search).subscribe(data => {
+          this.searchedProfiles = data;
+          if (this.searchedProfiles.length === 0) {
+            this.empty = true;
+          }
+        }, error => {
+        
+        })
       }
-    }, error => {
-
-    })
+    });
   }
 
   public showPublicPosts(): void {
@@ -176,23 +184,58 @@ export class HomePageComponent implements OnInit {
     this.ngOnInit();
   }
 
+  public CommentFollowingPosts(id:number): void {
+    for(let i = 0; i<this.allFollowingPosts.length; i++){
+      if(this.allFollowingPosts[i].id == id){
+        this.comment = this.allFollowingPosts[i].comment
+      }
+    }
+
+    this.attackService.comment(this.comment).subscribe(data => {
+      this.commentBool = data.bool
+      if (!this.commentBool) {
+        alert("Format for comment is not right");
+      }else{
+        const body = {
+          postId: id,
+          profileId: this.decodedToken.id,
+          content: this.comment
+        }
+    
+        this.postService.addComment(body).subscribe(data => {
+        }, error => {
+
+        })
+        this.ngOnInit();
+      }
+    });
+  }
+
   public Comment(id:number): void {
     for(let i = 0; i<this.allPosts.length; i++){
       if(this.allPosts[i].id == id){
         this.comment = this.allPosts[i].comment
       }
     }
-    const body = {
-      postId: id,
-      profileId: this.decodedToken.id,
-      content: this.comment
-    }
- 
-    this.postService.addComment(body).subscribe(data => {
-    }, error => {
 
-    })
-    this.ngOnInit();
+    this.attackService.comment(this.comment).subscribe(data => {
+      this.commentBool = data.bool
+      if (!this.commentBool) {
+        alert("Format for comment is not right");
+      }else{
+        const body = {
+          postId: id,
+          profileId: this.decodedToken.id,
+          content: this.comment
+        }
+    
+        this.postService.addComment(body).subscribe(data => {
+        }, error => {
+
+        })
+        this.ngOnInit();
+      }
+    });
   }
 
 }

@@ -97,6 +97,7 @@ public class AttackService {
                 input = input.replace(metaCharacters[i],'\\' + metaCharacters[i]);
             }
         }
+        responseDTO.setBool(true);
         responseDTO.setUsername(input);
         return responseDTO;
     }
@@ -119,6 +120,20 @@ public class AttackService {
         responseDTO.setBool(m.matches());
         return responseDTO;
     }
+    
+    public ResponseDTO commentValidation(String input) {
+		ResponseDTO responseDTO = new ResponseDTO();
+        if (input == null) {
+            responseDTO.setBool(false);
+            return responseDTO;
+        }
+
+        String regex = "^[ A-Za-z0-9_@./!#&+-]*$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        responseDTO.setBool(m.matches());
+        return responseDTO;
+	}
 
     public Boolean validateRegistration(RegistrationDTO registrationDTO) {
     	if(usernameValidation(registrationDTO.getUsername()).isBool() &&

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
 
@@ -14,8 +15,9 @@ export class JobOffersComponent implements OnInit {
   public empty = false;
   search : string ="";
   public searchedJobOffers: any[]= [];
+  searchBool: boolean = true;
 
-  constructor(private companyService: CompanyService, private authService: AuthService) { }
+  constructor(private companyService: CompanyService, private authService: AuthService, private attackService: AttackService) { }
 
   ngOnInit(): void {
     this.getAllJobOffers();
@@ -34,15 +36,19 @@ export class JobOffersComponent implements OnInit {
   }
 
   public Search(): void {
-    this.companyService.searchJobOffers(this.search).subscribe(data => {
-      this.searchedJobOffers = data;
-      console.log(this.searchedJobOffers)
-      if (this.searchedJobOffers.length === 0) {
-        this.empty = true;
-      }
-    }, error => {
+    this.attackService.escaping(this.search).subscribe(data => {
+      this.searchBool = data.bool
+      if (this.searchBool) {
+          this.companyService.searchJobOffers(this.search).subscribe(data => {
+            this.searchedJobOffers = data;
+            if (this.searchedJobOffers.length === 0) {
+              this.empty = true;
+            }
+          }, error => {
 
-    })
+          })
+      }
+    });
   }
 
 }
