@@ -25,6 +25,7 @@ import { RegistrationRequestComponent } from './pages/registration-request/regis
 import { CompanyRegistrationComponent } from './pages/company-registration/company-registration.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { JwtInterceptorComponent } from './jwt-interceptor/jwt-interceptor.component';
 
 
 @NgModule({
@@ -58,7 +59,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [   
+     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorComponent, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -51,16 +51,19 @@ public class AgentController {
         }
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/registration-requests")
     public List<RegistrationRequestDTO> getRegistrationRequests(){
         return agentService.getRegistrationRequests();
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/approve")
     public void approveRegistrationRequest(@RequestBody int id){
         agentService.approveRegistrationRequest(id);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/deny")
     public void denyRegistrationRequest(@RequestBody int id){
         agentService.denyRegistrationRequest(id);

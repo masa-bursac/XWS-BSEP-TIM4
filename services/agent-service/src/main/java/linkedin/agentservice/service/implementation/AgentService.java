@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -162,6 +163,12 @@ public class AgentService implements IAgentService{
             passwordTokenRepository.delete(passwordToken);
             return true;
         }
+	}
+
+	public UserDetails loadUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		UserInfo userInfo = agentRepository.findOneByUsername(username);
+        return userInfo;
 	}
 
 }

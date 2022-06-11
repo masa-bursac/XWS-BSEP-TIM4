@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
@@ -24,16 +25,16 @@ export class CompanyComponent implements OnInit {
   public share: boolean = false;
 
   decoded_token : any;
-
   companyNameBoolean: boolean = false;
   phoneBoolean: boolean = false;
   descriptionBoolean: boolean = false;
   jobPositionBoolean: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService : AuthService, private companyService : CompanyService, private attackService : AttackService) { }
+  constructor(private fb: FormBuilder, private authService : AuthService, private companyService : CompanyService, 
+      private attackService : AttackService, private router: Router) { }
 
   ngOnInit(): void {
-    this.decoded_token = this.authService.getDataFromToken();
+    this.checkToken();
     this.companyService.getCompany(this.decoded_token.username).subscribe(data=> {
       this.validateForm = this.fb.group({
         companyName: [data.companyName,[Validators.required]],
@@ -41,6 +42,23 @@ export class CompanyComponent implements OnInit {
         description: [data.description,[Validators.required]]
       });
     });
+  }
+  checkToken():void{
+    this.decoded_token = this.authService.getDataFromToken();
+    console.log(this.decoded_token);
+    if (this.decoded_token === null || this.decoded_token === undefined) {
+      alert("Nije dozvoljen pristup");
+      this.router.navigate(['landingPage']);
+    }else {
+      if(this.decoded_token.user_role === 'USER'){
+        alert("Nije dozvoljen pristup");
+        this.router.navigate(['homePage']);
+      }
+      if(this.decoded_token.user_role ==='ADMIN'){
+        alert("Nije dozvoljen pristup");
+        this.router.navigate(['adminHomePage']);
+      }
+    }
   }
 
   submitForm(): void {
