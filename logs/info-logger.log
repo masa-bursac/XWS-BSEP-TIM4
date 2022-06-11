@@ -1,29 +1,11 @@
-2022-06-10 14:55:30,672 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 14.229 seconds (JVM running for 15.669)
-2022-06-10 14:57:52,661 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-3] User bojana123 has successfully logged in
-2022-06-10 14:58:57,876 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-6] User zoran123 has successfully logged in
-2022-06-11 10:21:52,468 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 2480 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 10:21:52,521 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 10:22:17,399 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 27.929 seconds (JVM running for 33.503)
-2022-06-11 10:26:08,619 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
-2022-06-11 10:38:38,787 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 10300 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 10:38:38,841 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 10:38:53,044 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 16.334 seconds (JVM running for 18.347)
-2022-06-11 10:41:35,836 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
-2022-06-11 10:44:33,065 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 10364 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 10:44:33,076 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 10:44:48,882 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 17.275 seconds (JVM running for 18.724)
-2022-06-11 10:48:05,755 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 6872 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 10:48:05,761 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 10:48:17,539 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 13.028 seconds (JVM running for 14.391)
-2022-06-11 10:48:22,888 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
-2022-06-11 10:48:23,161 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has successfully logged in
-2022-06-11 10:50:09,643 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-5] User marija123 has successfully logged in
-2022-06-11 10:51:14,308 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has successfully logged in
-2022-06-11 10:56:55,953 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has successfully logged in
-2022-06-11 11:00:41,345 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 8804 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 11:00:41,351 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 11:00:56,572 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 17.708 seconds (JVM running for 22.072)
-2022-06-11 11:01:19,616 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
-2022-06-11 11:35:14,384 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 10012 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
-2022-06-11 11:35:14,394 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
-2022-06-11 11:35:41,832 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 31.795 seconds (JVM running for 36.496)
+2022-06-11 12:17:49,412 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 48.22 seconds (JVM running for 49.53)
+2022-06-11 12:36:31,258 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-3] User milos123 has successfully logged in
+2022-06-11 12:36:31,700 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-3] User milos123 has successfully logged in
+2022-06-11 12:37:04,992 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has successfully logged in
+2022-06-11 12:37:13,128 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 has successfully logged in
+2022-06-11 12:37:15,661 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
+2022-06-11 12:37:17,996 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has successfully logged in
+2022-06-11 12:37:20,168 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-6] User milos123 has successfully logged in
+2022-06-11 12:37:27,418 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has successfully logged in
+2022-06-11 12:38:41,106 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 has successfully logged in
+2022-06-11 12:38:41,205 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 has successfully logged in

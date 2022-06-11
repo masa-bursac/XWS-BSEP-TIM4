@@ -72,9 +72,10 @@ public class AgentService implements IAgentService{
         
         userInfo.setRole(Roles.USER);
         userInfo.setAccountStatus(AccountStatus.PENDING);
+        userInfo.setBlockDate(new Date(1001-01-01));
+        userInfo.setLoginCounter(0);
         userInfo.setId((int) sequenceGeneratorService.generateSequence(UserInfo.SEQUENCE_NAME));
         agentRepository.save(userInfo);
-
        
         return true;
 	}
@@ -107,7 +108,35 @@ public class AgentService implements IAgentService{
         UserAccessDTO userResponse = new UserAccessDTO(user,jwt);
         userResponse.setTokenExpiresIn(expiresIn);
         
-        return userResponse;
+        Date now = new Date();
+        Date dayAfter = new Date(user.getBlockDate().getTime() + (1000 * 60 * 60 * 24));
+        
+        if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
+        	if(dayAfter.before(now)) {
+        		
+        	logger.info("User " + authDTO.getUsername() + " has successfully logged in");
+        	user.setLoginCounter(0);
+            agentRepository.save(user);
+        	return userResponse;
+        	}else 
+        	{
+        		logger.warn("User " + user.getUsername() + " is blocked");
+        		 throw new GeneralException("You are blocked!", HttpStatus.BAD_REQUEST);
+        	}
+        }
+        else{
+        	user.setLoginCounter(user.getLoginCounter()+1);
+            agentRepository.save(user);
+            if(user.getLoginCounter() > 4)
+            {
+            	user.setBlockDate(now);
+            	agentRepository.save(user);
+            	logger.warn("User " + user.getUsername() + " has entered bad password " + user.getLoginCounter() + " times");
+            	throw new GeneralException("You have tried to login more then 4 times!", HttpStatus.BAD_REQUEST);
+            }
+
+            throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
+        }
         
 	}
 
