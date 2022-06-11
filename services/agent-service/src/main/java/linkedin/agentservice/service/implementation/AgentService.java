@@ -25,6 +25,7 @@ import linkedin.agentservice.model.UserInfo;
 import linkedin.agentservice.repository.AgentRepository;
 import linkedin.agentservice.repository.PasswordTokenRepository;
 import linkedin.agentservice.service.IAgentService;
+import linkedin.agentservice.dto.ChangePasswordDTO;
 
 
 @Service
@@ -169,6 +170,32 @@ public class AgentService implements IAgentService{
 		// TODO Auto-generated method stub
 		UserInfo userInfo = agentRepository.findOneByUsername(username);
         return userInfo;
+	}
+	
+	@Override
+	public void forgotPassword(String username) {
+		emailService.forgotPassword(username);		
+	}
+
+	@Override
+	public Boolean changePassword(ChangePasswordDTO request) {
+		
+		if(!request.getPassword().equals(request.getRePassword())){
+            return false;
+        }
+		
+        PasswordToken passwordToken = passwordTokenRepository.findOneByToken(request.getUsername());
+        UserInfo user = agentRepository.findOneByUsername(passwordToken.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        agentRepository.save(user);
+        passwordTokenRepository.delete(passwordToken);
+        return true;
+		
+	}
+	
+	@Override
+	public void passwordlessLogin(String username) {
+		emailService.passwordlessLogin(username);
 	}
 
 }

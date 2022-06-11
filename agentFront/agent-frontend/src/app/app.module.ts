@@ -26,6 +26,9 @@ import { CompanyRegistrationComponent } from './pages/company-registration/compa
 import { CompanyComponent } from './pages/company/company.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JwtInterceptorComponent } from './jwt-interceptor/jwt-interceptor.component';
+import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { JwtInterceptorComponent } from './jwt-interceptor/jwt-interceptor.compo
     RegistrationComponent,
     RegistrationRequestComponent,
     CompanyRegistrationComponent,
-    CompanyComponent
+    CompanyComponent,
+    PasswordlessLoginComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

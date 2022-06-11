@@ -24,3 +24,6 @@
 2022-06-11 11:00:41,351 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
 2022-06-11 11:00:56,572 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 17.708 seconds (JVM running for 22.072)
 2022-06-11 11:01:19,616 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 has successfully logged in
+2022-06-11 11:35:14,384 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-ELBODNO with PID 10012 (E:\XWS-BSEP-TIM4\services\agent-service\target\classes started by Tatjana in E:\XWS-BSEP-TIM4\services\agent-service)
+2022-06-11 11:35:14,394 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-11 11:35:41,832 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 31.795 seconds (JVM running for 36.496)

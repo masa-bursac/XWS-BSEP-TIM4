@@ -38,5 +38,17 @@ export class AuthService {
       return null;
     }
   }
+
+  public forgotPassword(body: any): Observable<any> {
+    return this.http.post(auth_url + `/forgot-password`, body);
+  }
+
+  public changePassword(body: any): Observable<any> {
+    return this.http.put(auth_url + `/change-password`, body);
+  }
+
+  public passwordlessLogin(body: any): Observable<any> {
+    return this.http.post(auth_url + `/passwordless-login`, body);
+  }
 }
 
