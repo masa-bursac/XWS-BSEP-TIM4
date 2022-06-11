@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +43,7 @@ public class AuthService implements IAuthService{
     private final PasswordTokenRepository passwordTokenRepository;
     private final PasswordTokenService passwordTokenService;
     private final AttackService attackService;
+    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
 
 	@Autowired
@@ -89,11 +92,14 @@ public class AuthService implements IAuthService{
 
         if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
         	if(dayAfter.before(now)) {
+        		
+        	logger.info("User " + authDTO.getUsername() + " has successfully logged in");
         	user.setLoginCounter(0);
             authRepository.save(user);
         	return userResponse;
         	}else 
         	{
+        		logger.warn("User " + user.getUsername() + " is blocked");
         		 throw new GeneralException("You are blocked!", HttpStatus.BAD_REQUEST);
         	}
         }
@@ -104,7 +110,8 @@ public class AuthService implements IAuthService{
             {
             	user.setBlockDate(now);
             	authRepository.save(user);
-            	throw new GeneralException("You have tried to login more then 3 times!", HttpStatus.BAD_REQUEST);
+            	logger.warn("User " + user.getUsername() + " has entered bad password " + user.getLoginCounter() + " times");
+            	throw new GeneralException("You have tried to login more then 4 times!", HttpStatus.BAD_REQUEST);
             }
 
             throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
