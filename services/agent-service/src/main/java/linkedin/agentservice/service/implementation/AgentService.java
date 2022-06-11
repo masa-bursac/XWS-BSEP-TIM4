@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +37,8 @@ public class AgentService implements IAgentService{
 	private final PasswordTokenRepository passwordTokenRepository;
 	private final EmailService emailService;
 	private final AttackService attackService;
+    private final Logger logger = LoggerFactory.getLogger(AgentService.class);
+
 	
 	@Autowired
     public AgentService(SequenceGeneratorService sequenceGeneratorService,PasswordEncoder passwordEncoder, AgentRepository agentRepository, Token token,
@@ -93,6 +97,8 @@ public class AgentService implements IAgentService{
             throw new GeneralException("Your registration has been approved by admin. Please activate your account.", HttpStatus.BAD_REQUEST);
         }
         
+    	logger.info("User " + authDTO.getUsername() + " has successfully logged in");
+
         String jwt = token.generateToken(user);
         int expiresIn = token.getEXPIRES_IN();
 
