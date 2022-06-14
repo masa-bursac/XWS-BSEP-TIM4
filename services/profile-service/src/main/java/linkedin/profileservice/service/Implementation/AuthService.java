@@ -114,6 +114,7 @@ public class AuthService implements IAuthService{
             	throw new GeneralException("You have tried to login more then 4 times!", HttpStatus.BAD_REQUEST);
             }
 
+            logger.warn("User " + user.getUsername() + " has entered bad credentials");
             throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
         }
 	}
@@ -152,6 +153,9 @@ public class AuthService implements IAuthService{
         profile.setPostIds(new ArrayList<Integer>());
         
         profileRepository.save(profile);
+        
+        logger.info("User " + registrationDTO.getUsername() + " has successfully registered");
+        
         return true;
 	}
 	@Override
@@ -170,6 +174,7 @@ public class AuthService implements IAuthService{
 
 	@Override
 	public void forgotPassword(String username) {
+		logger.info("User " + username + " has forgot password");
 		emailService.forgotPassword(username);		
 	}
 
@@ -185,6 +190,8 @@ public class AuthService implements IAuthService{
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         authRepository.save(user);
         passwordTokenRepository.delete(passwordToken);
+        logger.info("User " + user.getUsername() + " has changed password");
+        
         return true;
 		
 	}
@@ -211,7 +218,9 @@ public class AuthService implements IAuthService{
         user.setAccountStatus(AccountStatus.APPROVED);
         UserInfo savedUser = authRepository.save(user);
         passwordTokenService.createToken(user.getUsername());
-        emailService.approveRegistrationMail(savedUser);		
+        emailService.approveRegistrationMail(savedUser);
+        logger.info("Approve registration email has been sent to " + user.getEmail());
+    	
 	}
 
 	@Override
@@ -219,12 +228,13 @@ public class AuthService implements IAuthService{
 		UserInfo user = authRepository.findOneById(id);
         user.setAccountStatus(AccountStatus.DENIED);
         UserInfo savedUser = authRepository.save(user);
-        emailService.denyRegistrationMail(savedUser);		
+        emailService.denyRegistrationMail(savedUser);	
+        logger.info("Deny registration email has been sent to " + user.getEmail());
+		
 	}
 
 	@Override
 	public boolean confirmRegistrationRequest(String token) {
-		System.out.println(passwordTokenRepository.findOneByToken(token));
         String username = passwordTokenRepository.findOneByToken(token).getUsername();
 
         if(username == null){
@@ -240,12 +250,15 @@ public class AuthService implements IAuthService{
             user.setAccountStatus(AccountStatus.ACTIVATED);
             authRepository.save(user);
             passwordTokenRepository.delete(passwordToken);
+            logger.info("User " + user.getUsername() + " has activated his account");
+         
             return true;
         }
 	}
 
 	@Override
 	public void passwordlessLogin(String username) {
+		logger.info("User " + username + " wants to login without password");
 		emailService.passwordlessLogin(username);
 	}
 	

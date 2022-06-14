@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,7 @@ public class ProfileService implements IProfileService{
 	private final AuthRepository authRepository;
 	static SequenceGeneratorService sequenceGeneratorService;
 	private final RequestClient requestClient;
+	private final Logger logger = LoggerFactory.getLogger(ProfileService.class);
 	
 	@Autowired
 	public ProfileService(ProfileRepository profileRepository, AuthRepository ar,SequenceGeneratorService sg,RequestClient requestClient)
@@ -71,8 +74,10 @@ public class ProfileService implements IProfileService{
 		Profile profile = profileRepository.findOneByUserInfoId(userForUpdating.getId());
 		profile.setBiography(userInfo.getBiography());
 		
-        if (authRepository.save(userForUpdating) != null && profileRepository.save(profile) != null)
-            return true;
+        if (authRepository.save(userForUpdating) != null && profileRepository.save(profile) != null) {
+        	logger.info("User " + userForUpdating.getUsername() + " updated his profile");
+        	return true;
+        }        
         else
             return false;
         
@@ -85,6 +90,7 @@ public class ProfileService implements IProfileService{
 		institution.setId((int) sequenceGeneratorService.generateSequence(Institution.SEQUENCE_NAME));
 		profile.getExperience().add(institution);
 		profileRepository.save(profile);
+		logger.info("User with id: " + institutionDTO.getUserInfoId() + " added experience");
 		return true;
 	}
 	
@@ -95,6 +101,7 @@ public class ProfileService implements IProfileService{
 		institution.setId((int) sequenceGeneratorService.generateSequence(Institution.SEQUENCE_NAME));
 		profile.getEducation().add(institution);
 		profileRepository.save(profile);
+		logger.info("User with id: " + institutionDTO.getUserInfoId() + " added education");
 		return true;
 	}
 
@@ -105,6 +112,7 @@ public class ProfileService implements IProfileService{
 		skill.setId((int) sequenceGeneratorService.generateSequence(Skill.SEQUENCE_NAME));
 		profile.getSkills().add(skill);
 		profileRepository.save(profile);
+		logger.info("User with id: " + skillDTO.getUserInfoId() + " added skill");
 		return true;
 	}
 
@@ -115,6 +123,7 @@ public class ProfileService implements IProfileService{
 		skill.setId((int) sequenceGeneratorService.generateSequence(Skill.SEQUENCE_NAME));
 		profile.getInterests().add(skill);
 		profileRepository.save(profile);
+		logger.info("User with id: " + skillDTO.getUserInfoId() + " added interest");
 		return true;
 	}
 
@@ -128,8 +137,10 @@ public class ProfileService implements IProfileService{
 				profile.getInterests().get(i).setOtherInfo(skill.getOtherInfo());
 			}
 		}
-        if (profileRepository.save(profile) != null)
-            return true;
+        if (profileRepository.save(profile) != null) {
+        	logger.info("User with id: " + profile.getId() + " updated interest");
+        	return true;
+        }          
         else
             return false;
 	}
@@ -145,7 +156,10 @@ public class ProfileService implements IProfileService{
 			}
 		}
         if (profileRepository.save(profile) != null)
-            return true;
+        {
+        	logger.info("User with id: " + profile.getId() + " updated skill");
+        	return true;
+        }
         else
             return false;
 	}
@@ -165,7 +179,10 @@ public class ProfileService implements IProfileService{
 			}
 		}
         if (profileRepository.save(profile) != null)
-            return true;
+        {
+        	logger.info("User with id: " + profile.getId() + " updated experience");
+        	return true;
+        }
         else
             return false;
 	}
@@ -185,7 +202,10 @@ public class ProfileService implements IProfileService{
 			}
 		}
         if (profileRepository.save(profile) != null)
-            return true;
+        {
+        	logger.info("User with id: " + profile.getId() + " updated education");
+        	return true;
+        }
         else
             return false;
 	}
@@ -296,8 +316,10 @@ public class ProfileService implements IProfileService{
         ids.add(postId);
         profile.setPostIds(ids);
         int new_ids_len = profileRepository.save(profile).getPostIds().size();
-        if(new_ids_len > old_ids_len)
-            return true;
+        if(new_ids_len > old_ids_len) {
+        	logger.info("User with id: " + userInfoId + " added post");
+        	return true;
+        }          
         else return false;
 	}
 

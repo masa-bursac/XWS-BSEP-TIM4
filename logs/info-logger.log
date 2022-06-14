@@ -18,3 +18,10 @@
 2022-06-14 12:58:35,860 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User marija123 has successfully logged in
 2022-06-14 12:58:46,611 INFO linkedin.agentservice.service.implementation.CompanyService [http-nio-8180-exec-2] User marija123 has updated his company
 2022-06-14 12:58:46,712 INFO linkedin.agentservice.service.implementation.CompanyService [http-nio-8180-exec-2] User marija123 has updated his company
+2022-06-14 13:18:28,000 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 12892 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-14 13:18:28,013 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-14 13:18:57,937 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 33.07 seconds (JVM running for 35.222)
+2022-06-14 13:20:50,491 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] User bojana123 has successfully logged in
+2022-06-14 13:21:25,681 INFO linkedin.profileservice.service.Implementation.ProfileService [http-nio-8140-exec-8] User bojana123 updated his profile
+2022-06-14 13:21:25,982 INFO linkedin.profileservice.service.Implementation.ProfileService [http-nio-8140-exec-8] User bojana123 updated his profile
+2022-06-14 13:22:22,510 INFO linkedin.profileservice.service.Implementation.ProfileService [http-nio-8140-exec-5] User with id: 24 updated education
