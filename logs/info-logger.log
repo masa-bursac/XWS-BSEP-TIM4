@@ -9,3 +9,12 @@
 2022-06-11 12:37:27,418 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has successfully logged in
 2022-06-11 12:38:41,106 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 has successfully logged in
 2022-06-11 12:38:41,205 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 has successfully logged in
+2022-06-14 12:43:13,569 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 8356 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\agent-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\agent-service)
+2022-06-14 12:43:13,587 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-14 12:43:34,060 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 22.467 seconds (JVM running for 24.662)
+2022-06-14 12:57:25,646 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 14720 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\agent-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\agent-service)
+2022-06-14 12:57:25,672 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-14 12:57:48,140 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 24.836 seconds (JVM running for 27.182)
+2022-06-14 12:58:35,860 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User marija123 has successfully logged in
+2022-06-14 12:58:46,611 INFO linkedin.agentservice.service.implementation.CompanyService [http-nio-8180-exec-2] User marija123 has updated his company
+2022-06-14 12:58:46,712 INFO linkedin.agentservice.service.implementation.CompanyService [http-nio-8180-exec-2] User marija123 has updated his company

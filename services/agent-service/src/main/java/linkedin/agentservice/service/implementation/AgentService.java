@@ -76,6 +76,8 @@ public class AgentService implements IAgentService{
         userInfo.setLoginCounter(0);
         userInfo.setId((int) sequenceGeneratorService.generateSequence(UserInfo.SEQUENCE_NAME));
         agentRepository.save(userInfo);
+        
+        logger.info("User " + registrationDTO.getUsername() + " has successfully registered");
        
         return true;
 	}
@@ -100,8 +102,7 @@ public class AgentService implements IAgentService{
             throw new GeneralException("Your registration has been approved by admin. Please activate your account.", HttpStatus.BAD_REQUEST);
         }
         
-    	logger.info("User " + authDTO.getUsername() + " has successfully logged in");
-
+        
         String jwt = token.generateToken(user);
         int expiresIn = token.getEXPIRES_IN();
 
@@ -135,6 +136,7 @@ public class AgentService implements IAgentService{
             	throw new GeneralException("You have tried to login more then 4 times!", HttpStatus.BAD_REQUEST);
             }
 
+            logger.warn("User " + user.getUsername() + " has entered bad credentials");
             throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
         }
         
@@ -162,7 +164,8 @@ public class AgentService implements IAgentService{
         user.setAccountStatus(AccountStatus.APPROVED);
         UserInfo savedUser = agentRepository.save(user);
         passwordTokenService.createToken(user.getUsername());
-        emailService.approveRegistrationMail(savedUser);		
+        emailService.approveRegistrationMail(savedUser);
+        logger.info("Approve registration email has been sent to " + user.getEmail());
 	}
 
 	@Override
@@ -171,6 +174,7 @@ public class AgentService implements IAgentService{
         user.setAccountStatus(AccountStatus.DENIED);
         UserInfo savedUser = agentRepository.save(user);
         emailService.denyRegistrationMail(savedUser);
+        logger.info("Deny registration email has been sent to " + user.getEmail());
 		
 	}
 
@@ -191,6 +195,7 @@ public class AgentService implements IAgentService{
             user.setAccountStatus(AccountStatus.ACTIVATED);
             agentRepository.save(user);
             passwordTokenRepository.delete(passwordToken);
+            logger.info("User " + user.getUsername() + " has activated his account");
             return true;
         }
 	}
@@ -203,6 +208,7 @@ public class AgentService implements IAgentService{
 	
 	@Override
 	public void forgotPassword(String username) {
+		logger.info("User " + username + " has forgot password");
 		emailService.forgotPassword(username);		
 	}
 
@@ -218,12 +224,14 @@ public class AgentService implements IAgentService{
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         agentRepository.save(user);
         passwordTokenRepository.delete(passwordToken);
+        logger.info("User " + user.getUsername() + " has changed password");
         return true;
 		
 	}
 	
 	@Override
 	public void passwordlessLogin(String username) {
+		logger.info("User " + username + " wants to login without password");
 		emailService.passwordlessLogin(username);
 	}
 
