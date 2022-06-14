@@ -32,3 +32,6 @@
 2022-06-14 12:57:39,756 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtRequestFilter' configured for use
 2022-06-14 13:18:28,011 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
 2022-06-14 13:18:47,181 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtRequestFilter' configured for use
+2022-06-14 13:35:24,138 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-14 13:35:38,729 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtRequestFilter' configured for use
+2022-06-14 13:36:01,600 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
