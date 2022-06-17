@@ -1,0 +1,14 @@
+2022-06-17 10:22:20,108 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has entered bad credentials
+2022-06-17 10:22:22,450 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-6] User milos123 has entered bad credentials
+2022-06-17 10:22:24,768 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-3] User milos123 has entered bad credentials
+2022-06-17 10:22:27,052 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-9] User milos123 has entered bad credentials
+2022-06-17 10:22:29,041 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-1] User milos123 has entered bad password 5 times
+2022-06-17 10:24:31,642 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-3] User milos123 has entered bad credentials
+2022-06-17 10:24:33,527 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-9] User milos123 has entered bad credentials
+2022-06-17 10:24:35,651 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-1] User milos123 has entered bad credentials
+2022-06-17 10:24:37,256 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has entered bad credentials
+2022-06-17 10:24:39,009 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-6] User milos123 has entered bad password 5 times
+2022-06-17 10:33:19,865 WARN linkedin.profileservice.service.Implementation.AttackService [http-nio-8140-exec-7] Injection attempt!
+2022-06-17 10:36:07,844 WARN linkedin.profileservice.service.Implementation.AttackService [http-nio-8140-exec-9] Injection attempt!
+2022-06-17 10:36:38,031 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-3] User milos123 has entered bad credentials
+2022-06-17 10:44:27,753 WARN linkedin.agentservice.service.implementation.AttackService [http-nio-8180-exec-10] Injection attempt!

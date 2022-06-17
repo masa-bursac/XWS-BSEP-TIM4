@@ -1,0 +1,4 @@
+2022-06-10 14:25:21,250 WARN linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-3] User sandra123 has entered bad password 5 times
+2022-06-10 14:25:55,387 WARN linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-5] User sandra123 is blocked
+2022-06-11 12:37:20,353 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-6] User milos123 has entered bad password 5 times
+2022-06-11 12:37:27,605 WARN linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-8] User milos123 has entered bad password 6 times

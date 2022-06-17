@@ -3,6 +3,8 @@ package linkedin.profileservice.service.Implementation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import linkedin.profileservice.dto.RegistrationDTO;
@@ -10,6 +12,8 @@ import linkedin.profileservice.dto.ResponseDTO;
 
 @Service
 public class AttackService {
+	
+	private final Logger logger = LoggerFactory.getLogger(AttackService.class);
 
 	public ResponseDTO usernameValidation(String input) {
 		
@@ -22,6 +26,12 @@ public class AttackService {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
 	}
 
@@ -37,6 +47,12 @@ public class AttackService {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
     }
 
@@ -51,6 +67,12 @@ public class AttackService {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
     }
 
@@ -66,6 +88,12 @@ public class AttackService {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
     }
 
@@ -80,6 +108,12 @@ public class AttackService {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
 	}
 	
@@ -97,6 +131,7 @@ public class AttackService {
                 input = input.replace(metaCharacters[i],'\\' + metaCharacters[i]);
             }
         }
+        responseDTO.setBool(true);
         responseDTO.setUsername(input);
         return responseDTO;
     }
@@ -117,8 +152,34 @@ public class AttackService {
         }
         Matcher m = p.matcher(input.split("T")[0]);
         responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
         return responseDTO;
     }
+    
+    public ResponseDTO commentValidation(String input) {
+		ResponseDTO responseDTO = new ResponseDTO();
+        if (input == null) {
+            responseDTO.setBool(false);
+            return responseDTO;
+        }
+
+        String regex = "^[ A-Za-z0-9_@./!#&+-]*$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        responseDTO.setBool(m.matches());
+        
+        if(!m.matches()) {
+        	logger.debug("Format not adequate, status:400 Bad Request");
+        	logger.warn("Injection attempt!");
+        }
+        
+        return responseDTO;
+	}
 
     public Boolean validateRegistration(RegistrationDTO registrationDTO) {
     	if(usernameValidation(registrationDTO.getUsername()).isBool() &&

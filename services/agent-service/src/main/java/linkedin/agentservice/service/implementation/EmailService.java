@@ -56,6 +56,47 @@ public class EmailService implements IEmailService {
         context.setVariable("name", String.format("%s %s", savedUser.getName(), savedUser.getSurname()));
         emailContext.send("firma4validation@gmail.com", title, "denyRegistration", context);		
 	}
+	
+	public void forgotPassword(String username) {
+		
+        UserInfo user = agentRepository.findOneByUsername(username);
+        if(user == null) {
+        	throw new GeneralException("Invalid username", HttpStatus.BAD_REQUEST);
+        }
+        Date now = new Date();
+        PasswordToken passwordToken = passwordTokenRepository.findOneByUsername(username);
+        if(passwordToken == null){
+            passwordToken = passwordTokenService.createToken(username);
+        }else{
+            if(passwordToken.getExpiryDate().before(now)){
+            	passwordTokenRepository.delete(passwordToken);
+                passwordToken = passwordTokenService.createToken(username);
+            }
+        }
+
+        String title = "Change your password";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
+        context.setVariable("link", String.format("http://localhost:4300/changePassword/%s", passwordToken.getToken()));
+        emailContext.send("firma4validation@gmail.com", title, "forgotPassword", context);
+	}
+	
+	public void passwordlessLogin(String username) {
+		
+		UserInfo user = agentRepository.findOneByUsername(username);
+		if(user == null) {
+        	throw new GeneralException("Invalid username", HttpStatus.BAD_REQUEST);
+        }
+		
+		String jwt = token.generateToken(user);
+
+        String title = "Passwordless login";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", user.getName(), user.getSurname()));
+        context.setVariable("link", String.format("http://localhost:4300/homePage/%s", jwt));
+        emailContext.send("firma4validation@gmail.com", title, "passwordlessLogin", context);
+	}
+
 
 
 }

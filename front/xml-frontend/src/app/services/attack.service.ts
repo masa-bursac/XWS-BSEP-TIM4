@@ -38,4 +38,8 @@ export class AttackService {
   public date(body: any) : Observable<any>{ 
     return this.http.post(attack_url + `/date`, body);
   }
+
+  public comment(body: any) : Observable<any>{ 
+    return this.http.post(attack_url + `/comment`, body);
+  }
 }

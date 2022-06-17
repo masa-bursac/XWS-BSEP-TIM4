@@ -1,0 +1,7 @@
+2022-06-14 13:35:52,261 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 31.842 seconds (JVM running for 34.163)
+2022-06-14 13:36:01,587 INFO org.springframework.boot.StartupInfoLogger [main] Starting PostServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 15624 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\post-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\post-service)
+2022-06-14 13:36:01,604 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-14 13:36:25,379 INFO org.springframework.boot.StartupInfoLogger [main] Started PostServiceApplication in 29.085 seconds (JVM running for 32.197)
+2022-06-14 13:39:09,491 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-5] User bojana123 has successfully logged in
+2022-06-14 13:39:18,543 INFO linkedin.postservice.service.implementation.PostService [http-nio-8080-exec-8] User with id: 24 liked post with id: 3
+2022-06-14 13:40:28,621 INFO linkedin.postservice.service.implementation.PostService [http-nio-8080-exec-8] User with id: 24 disliked post with id: 8

@@ -17,6 +17,7 @@ import linkedin.agentservice.dto.AuthDTO;
 import linkedin.agentservice.dto.RegistrationDTO;
 import linkedin.agentservice.dto.RegistrationRequestDTO;
 import linkedin.agentservice.service.IAgentService;
+import linkedin.agentservice.dto.ChangePasswordDTO;
 
 
 @RestController
@@ -51,16 +52,19 @@ public class AgentController {
         }
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/registration-requests")
     public List<RegistrationRequestDTO> getRegistrationRequests(){
         return agentService.getRegistrationRequests();
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/approve")
     public void approveRegistrationRequest(@RequestBody int id){
         agentService.approveRegistrationRequest(id);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/deny")
     public void denyRegistrationRequest(@RequestBody int id){
         agentService.denyRegistrationRequest(id);
@@ -69,5 +73,30 @@ public class AgentController {
     @PutMapping("/confirm")
     public boolean confirmRegistrationRequest(@RequestBody String token){
         return agentService.confirmRegistrationRequest(token);
+    }
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity forgotPassword(@RequestBody String username){
+    	try{
+    		agentService.forgotPassword(username);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
+        }
+    }
+    
+    @PutMapping("/change-password")
+    public Boolean changePassword(@RequestBody ChangePasswordDTO request){
+    	 return agentService.changePassword(request);
+    }
+    
+    @PostMapping("/passwordless-login")
+    public ResponseEntity passwordlessLogin(@RequestBody String username){
+    	try{
+    		agentService.passwordlessLogin(username);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch(GeneralException e){
+            return new ResponseEntity(e.getMessage(), e.getHttpStatus());
+        }
     }
 }

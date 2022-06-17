@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +43,7 @@ public class AuthService implements IAuthService{
     private final PasswordTokenRepository passwordTokenRepository;
     private final PasswordTokenService passwordTokenService;
     private final AttackService attackService;
+    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
 
 	@Autowired
@@ -89,11 +92,14 @@ public class AuthService implements IAuthService{
 
         if(passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
         	if(dayAfter.before(now)) {
+        		
+        	logger.info("User " + authDTO.getUsername() + " has successfully logged in");
         	user.setLoginCounter(0);
             authRepository.save(user);
         	return userResponse;
         	}else 
         	{
+        		logger.warn("User " + user.getUsername() + " is blocked");
         		 throw new GeneralException("You are blocked!", HttpStatus.BAD_REQUEST);
         	}
         }
@@ -104,9 +110,11 @@ public class AuthService implements IAuthService{
             {
             	user.setBlockDate(now);
             	authRepository.save(user);
-            	throw new GeneralException("You have tried to login more then 3 times!", HttpStatus.BAD_REQUEST);
+            	logger.warn("User " + user.getUsername() + " has entered bad password " + user.getLoginCounter() + " times");
+            	throw new GeneralException("You have tried to login more then 4 times!", HttpStatus.BAD_REQUEST);
             }
 
+            logger.warn("User " + user.getUsername() + " has entered bad credentials");
             throw new GeneralException("Bad credentials.", HttpStatus.BAD_REQUEST);
         }
 	}
@@ -145,6 +153,9 @@ public class AuthService implements IAuthService{
         profile.setPostIds(new ArrayList<Integer>());
         
         profileRepository.save(profile);
+        
+        logger.info("User " + registrationDTO.getUsername() + " has successfully registered");
+        
         return true;
 	}
 	@Override
@@ -163,6 +174,7 @@ public class AuthService implements IAuthService{
 
 	@Override
 	public void forgotPassword(String username) {
+		logger.info("User " + username + " has forgot password");
 		emailService.forgotPassword(username);		
 	}
 
@@ -178,6 +190,8 @@ public class AuthService implements IAuthService{
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         authRepository.save(user);
         passwordTokenRepository.delete(passwordToken);
+        logger.info("User " + user.getUsername() + " has changed password");
+        
         return true;
 		
 	}
@@ -204,7 +218,9 @@ public class AuthService implements IAuthService{
         user.setAccountStatus(AccountStatus.APPROVED);
         UserInfo savedUser = authRepository.save(user);
         passwordTokenService.createToken(user.getUsername());
-        emailService.approveRegistrationMail(savedUser);		
+        emailService.approveRegistrationMail(savedUser);
+        logger.info("Approve registration email has been sent to " + user.getEmail());
+    	
 	}
 
 	@Override
@@ -212,12 +228,13 @@ public class AuthService implements IAuthService{
 		UserInfo user = authRepository.findOneById(id);
         user.setAccountStatus(AccountStatus.DENIED);
         UserInfo savedUser = authRepository.save(user);
-        emailService.denyRegistrationMail(savedUser);		
+        emailService.denyRegistrationMail(savedUser);	
+        logger.info("Deny registration email has been sent to " + user.getEmail());
+		
 	}
 
 	@Override
 	public boolean confirmRegistrationRequest(String token) {
-		System.out.println(passwordTokenRepository.findOneByToken(token));
         String username = passwordTokenRepository.findOneByToken(token).getUsername();
 
         if(username == null){
@@ -233,12 +250,15 @@ public class AuthService implements IAuthService{
             user.setAccountStatus(AccountStatus.ACTIVATED);
             authRepository.save(user);
             passwordTokenRepository.delete(passwordToken);
+            logger.info("User " + user.getUsername() + " has activated his account");
+         
             return true;
         }
 	}
 
 	@Override
 	public void passwordlessLogin(String username) {
+		logger.info("User " + username + " wants to login without password");
 		emailService.passwordlessLogin(username);
 	}
 	

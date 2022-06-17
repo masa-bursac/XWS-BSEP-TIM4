@@ -52,5 +52,10 @@ public class AttackController {
 	public ResponseEntity<?> validateDate(@RequestBody String input){
         return new ResponseEntity<>(attackService.dateValidation(input), HttpStatus.OK);
     }
+	
+	@PostMapping("/comment")
+	public ResponseEntity<?> validateComment(@RequestBody String input){
+        return new ResponseEntity<>(attackService.commentValidation(input), HttpStatus.OK);
+    }
 
 }

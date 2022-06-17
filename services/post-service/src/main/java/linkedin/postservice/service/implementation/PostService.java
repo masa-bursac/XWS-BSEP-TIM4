@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +29,7 @@ public class PostService implements IPostService{
 	private final ProfileClient profileClient;
     private final PictureClient pictureClient;
 	static SequenceGeneratorService sequenceGeneratorService;
+	private final Logger logger = LoggerFactory.getLogger(PostService.class);
 	
 	@Autowired
     public PostService(PostRepository postRepository, ProfileClient profileClient, PictureClient pictureClient, SequenceGeneratorService sequenceGeneratorService){
@@ -79,6 +82,7 @@ public class PostService implements IPostService{
         
 		if(post.getLikeIds() != null) {
 			post.getLikeIds().add(userId);
+			logger.info("User with id: " + userId + " liked post with id: " + postId);
 		}else {
 			List<Integer> likeIds = new ArrayList<>();
 			likeIds.add(userId);
@@ -102,6 +106,7 @@ public class PostService implements IPostService{
         
 		if(post.getDislikeIds() != null) {
 			post.getDislikeIds().add(userId);
+			logger.info("User with id: " + userId + " disliked post with id: " + postId);
 		}else {
 			List<Integer> dislikeIds = new ArrayList<>();
 			dislikeIds.add(userId);
@@ -124,6 +129,7 @@ public class PostService implements IPostService{
 		}
         
         postRepository.save(post);
+        logger.info("User with id: " + commentDTO.getProfileId() + " added comment");
         return true;
 	}
 

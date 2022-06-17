@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AttackService } from 'src/app/services/attack.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,8 +16,9 @@ export class LandingPageComponent implements OnInit {
   search : string ="";
   public allPosts: any[] = [];
   public image: any;
+  usernameBool: boolean = true;
 
-  constructor(private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer) { 
+  constructor(private profileService : ProfileService, private postService : PostService, private sanitizer: DomSanitizer, private attackService: AttackService) { 
     this.searchedProfiles = [];
   }
 
@@ -26,14 +28,19 @@ export class LandingPageComponent implements OnInit {
   }
 
   public Search(): void {
-    this.profileService.searchPublicProfiles(this.search).subscribe(data => {
-      this.searchedProfiles = data;
-      if (this.searchedProfiles.length === 0) {
-        this.empty = true;
+    this.attackService.escaping(this.search).subscribe(data => {
+      this.usernameBool = data.bool
+      if (this.usernameBool) {
+        this.profileService.searchPublicProfiles(this.search).subscribe(data => {
+          this.searchedProfiles = data;
+          if (this.searchedProfiles.length === 0) {
+            this.empty = true;
+          }
+        }, error => {
+        
+        })
       }
-    }, error => {
-
-    })
+    });
   }
 
   public showPublicPosts(): void {

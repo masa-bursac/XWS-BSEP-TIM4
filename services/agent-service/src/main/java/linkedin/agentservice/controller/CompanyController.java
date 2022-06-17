@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 	
+    @PreAuthorize("hasRole('USER')")
 	@PostMapping("/registration")
     public ResponseEntity registrationCompany(@RequestBody CompanyDTO companyDTO){
     	
@@ -45,21 +47,25 @@ public class CompanyController {
         }
     }
 	
+    @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/registration-requests")
     public List<CompanyDTO> getRegistrationRequests(){
         return companyService.getRegistrationRequests();
     }
 	
+    @PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/approve")
     public void approveRegistrationRequest(@RequestBody String companyName){
 		companyService.approveRegistrationRequest(companyName);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/deny")
     public void denyRegistrationRequest(@RequestBody String companyName){
     	companyService.denyRegistrationRequest(companyName);
     }
     
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping("/updateCompany")
     public ResponseEntity update(@RequestBody UpdateCompanyDTO updateCompanyDTO) {
         try {
@@ -72,6 +78,7 @@ public class CompanyController {
         }
     }
     
+    @PreAuthorize("hasRole('OWNER')")
     @PostMapping("/addJobOffer")
     public ResponseEntity addJobOffer(@RequestBody JobOfferDTO jobOfferDTO) {
         try {
@@ -81,6 +88,7 @@ public class CompanyController {
         }
     }
     
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/addComment")
     public ResponseEntity addComment(@RequestBody CommentDTO commentDTO) {
         try {
@@ -90,6 +98,7 @@ public class CompanyController {
         }
     }
     
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/addSalary")
     public ResponseEntity addSalary(@RequestBody SalaryDTO salaryDTO) {
         try {
@@ -99,6 +108,7 @@ public class CompanyController {
         }
     }
     
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/addSelection")
     public ResponseEntity addSelection(@RequestBody SelectionDTO selectionDTO) {
         try {
@@ -108,6 +118,7 @@ public class CompanyController {
         }
     }
     
+    @PreAuthorize("hasRole('OWNER')")
     @GetMapping("/getCompany/{username}")
     public UpdateCompanyDTO getCompany(@PathVariable String username){
         return companyService.getCompany(username);

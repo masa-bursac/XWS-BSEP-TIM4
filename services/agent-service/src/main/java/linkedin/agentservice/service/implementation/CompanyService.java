@@ -3,6 +3,8 @@ package linkedin.agentservice.service.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ public class CompanyService implements ICompanyService {
 	static SequenceGeneratorService sequenceGeneratorService;
 	private final EmailService emailService;
 	private final AgentRepository agentRepository;
+	private final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 	 
 	@Autowired
 	public CompanyService(CompanyRepository companyRepository, SequenceGeneratorService sequenceGeneratorService, EmailService emailService,
@@ -54,6 +57,8 @@ public class CompanyService implements ICompanyService {
         company.setJobOffers(new ArrayList<JobOffer>());
 
         companyRepository.save(company);
+        
+        logger.info("User " + company.getUsername() + " has sent registration request");
 
         return true;
 	}
@@ -81,6 +86,7 @@ public class CompanyService implements ICompanyService {
 		user.setRole(Roles.OWNER);
 		agentRepository.save(user);
 		companyRepository.save(company);
+		logger.info("User " + company.getUsername() + " has registered company");
 		
 	}
 
@@ -89,6 +95,7 @@ public class CompanyService implements ICompanyService {
 		Company company = companyRepository.findOneByCompanyName(companyName);
 		company.setCompanyStatus(CompanyStatus.DENIED);
 		companyRepository.save(company);
+		logger.info("User " + company.getUsername() + " has been denied for registering company");
 		
 	}
 
@@ -99,6 +106,7 @@ public class CompanyService implements ICompanyService {
 		companyForUpdating.setPhone(updateCompanyDTO.getPhone());
 		companyForUpdating.setDescription(updateCompanyDTO.getDescription());
 		companyRepository.save(companyForUpdating);
+		logger.info("User " + updateCompanyDTO.getUsername() + " has updated his company");
         return true;
 
 	}
@@ -116,6 +124,9 @@ public class CompanyService implements ICompanyService {
 		company.getJobOffers().add(jobOffer);
 		
 		companyRepository.save(company);
+		
+		logger.info("User " + company.getUsername() + " has added job offer");
+		
 		return true;
 	}
 
@@ -138,6 +149,8 @@ public class CompanyService implements ICompanyService {
 		
 		companyRepository.save(company);
 		
+		logger.info("User " + company.getUsername() + " has added comment");
+		
 		return true;
 	}
 
@@ -154,6 +167,8 @@ public class CompanyService implements ICompanyService {
 		jobOffer.getSalary().add(salaryDTO.getSalary());
 		
 		companyRepository.save(company);
+		
+		logger.info("User " + company.getUsername() + " has added job salary");
 		
 		return true;
 	}
@@ -177,6 +192,8 @@ public class CompanyService implements ICompanyService {
 		jobOffer.getSelection().add(selection);
 		
 		companyRepository.save(company);
+		
+		logger.info("User " + company.getUsername() + " has added job selection");
 		
 		return true;
 	}

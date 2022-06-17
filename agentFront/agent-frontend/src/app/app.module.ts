@@ -25,6 +25,10 @@ import { RegistrationRequestComponent } from './pages/registration-request/regis
 import { CompanyRegistrationComponent } from './pages/company-registration/company-registration.component';
 import { CompanyComponent } from './pages/company/company.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { JwtInterceptorComponent } from './jwt-interceptor/jwt-interceptor.component';
+import { PasswordlessLoginComponent } from './pages/passwordless-login/passwordless-login.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 
 @NgModule({
@@ -39,7 +43,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RegistrationComponent,
     RegistrationRequestComponent,
     CompanyRegistrationComponent,
-    CompanyComponent
+    CompanyComponent,
+    PasswordlessLoginComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [   
+     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorComponent, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

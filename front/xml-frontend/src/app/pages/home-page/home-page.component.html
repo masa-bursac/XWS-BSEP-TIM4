@@ -40,7 +40,7 @@
         <mat-form-field class="example-full">
           <input matInput placeholder="Comment..." [(ngModel)] = "followingPosts.comment">
         </mat-form-field>
-        <button mat-stroked-button color="accent" class="btn-block" (click)="Comment(followingPosts.id)">Add</button>
+        <button mat-stroked-button color="accent" class="btn-block" (click)="CommentFollowingPosts(followingPosts.id)">Add</button>
         <p *ngIf="followingPosts.dislikeIds != null"><b>Dislikes:</b> {{ followingPosts.dislikeIds.length }} </p>
         <mat-card-content *ngFor="let comment of followingPosts.comments">
           <p><b>Comment:</b> {{ comment.content }} </p>

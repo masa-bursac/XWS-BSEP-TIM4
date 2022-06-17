@@ -1,0 +1,25 @@
+2022-06-10 14:13:17,526 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 127976 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:13:17,543 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:13:42,751 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 27.727 seconds (JVM running for 29.458)
+2022-06-10 14:16:08,070 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] User sandra123 has successfully logged in
+2022-06-10 14:20:51,784 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 106456 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:20:51,795 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:21:11,337 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 22.237 seconds (JVM running for 24.282)
+2022-06-10 14:21:32,303 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] User sandra123 has successfully logged in
+2022-06-10 14:23:54,193 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 128264 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:23:54,238 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:24:21,721 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 30.618 seconds (JVM running for 32.599)
+2022-06-10 14:25:04,469 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-1] User sandra123 has successfully logged in
+2022-06-10 14:34:12,138 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 127852 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:34:12,155 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:34:31,480 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 22.422 seconds (JVM running for 24.613)
+2022-06-10 14:35:15,331 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 129148 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:35:15,342 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:35:34,198 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 21.335 seconds (JVM running for 22.954)
+2022-06-10 14:35:53,172 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] User bojana123 has successfully logged in
+2022-06-10 14:37:00,536 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 129076 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:37:00,550 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-10 14:37:21,291 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 23.407 seconds (JVM running for 25.033)
+2022-06-10 14:37:46,358 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] User zoran123 has successfully logged in
+2022-06-10 14:55:18,558 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 1.8.0_271 on DESKTOP-10NJ3KG with PID 129220 (C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service\target\classes started by Natasa in C:\Users\Natasa\Desktop\XML\XWS-BSEP-TIM4\services\profile-service)
+2022-06-10 14:55:18,569 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
