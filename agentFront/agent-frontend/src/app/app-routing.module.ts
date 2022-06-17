@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'login/:token', component: LoginComponent},
   { path: 'homePage', component: HomePageComponent},
+  { path: 'homePage/:token', component: HomePageComponent},
   { path: 'adminHomePage', component: AdminHomePageComponent},
   { path: 'ownerHomePage', component: OwnerHomePageComponent},
   { path: 'registration', component: RegistrationComponent},

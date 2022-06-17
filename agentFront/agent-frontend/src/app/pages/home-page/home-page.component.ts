@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AttackService } from 'src/app/services/attack.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
+import jwt_decode from 'jwt-decode';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -24,10 +26,14 @@ export class HomePageComponent implements OnInit {
   commentsBoolean: boolean = false;
   durationBoolean: boolean = false;
   markBoolean: boolean = false;
+  
+  public decodedToken: any;
+  public token: any;
 
-  constructor(private companyService: CompanyService, private authService: AuthService, private attackService : AttackService) { }
+  constructor(private companyService: CompanyService, private authService: AuthService, private attackService : AttackService, private router : Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getToken();
     this.getAllJobOffers();
   }
 
@@ -41,6 +47,35 @@ export class HomePageComponent implements OnInit {
     }, error => {
 
     })
+  }
+  private getToken(): void {
+    if(this.route.snapshot.params['token'] === undefined){
+      this.token = JSON.parse(localStorage.getItem('token') || '{}');
+    }else{
+      this.token = this.route.snapshot.params['token'];
+    }
+    this.decodedToken = this.getDecodedAccessToken(this.token);
+    if (this.decodedToken === null || this.decodedToken === undefined) {
+      alert("Nije dozvoljen pristup ovde");
+      this.router.navigate(['landingPage']);
+    }else {
+      localStorage.setItem('token', JSON.stringify(this.token));
+      if(this.decodedToken.user_role === 'ADMIN'){
+        alert("Nije dozvoljen pristup");
+        this.router.navigate(['adminHomePage']);
+      }else {
+        this.router.navigate(['homePage']);
+      }
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    }
+    catch (Error) {
+      return null;
+    }
   }
 
   public addComment(companyName:string, id:number, index:number): void {

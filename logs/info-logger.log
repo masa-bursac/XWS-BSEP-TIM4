@@ -7,3 +7,33 @@
 2022-06-17 09:52:43,038 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplicationTests using Java 14.0.2 on DESKTOP-RD35RTH with PID 19804 (started by masa in C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\profile-service)
 2022-06-17 09:52:43,043 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
 2022-06-17 09:52:52,992 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplicationTests in 12.257 seconds (JVM running for 14.333)
+2022-06-17 10:19:58,297 INFO org.springframework.boot.StartupInfoLogger [main] Starting AgentServiceApplication using Java 14.0.2 on DESKTOP-RD35RTH with PID 2496 (C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\agent-service\target\classes started by masa in C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\agent-service)
+2022-06-17 10:19:58,311 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-17 10:20:11,611 INFO org.springframework.boot.StartupInfoLogger [main] Started AgentServiceApplication in 15.353 seconds (JVM running for 27.223)
+2022-06-17 10:24:22,245 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has successfully logged in
+2022-06-17 10:29:45,129 INFO org.springframework.boot.StartupInfoLogger [main] Starting PostServiceApplication using Java 14.0.2 on DESKTOP-RD35RTH with PID 15852 (C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\post-service\target\classes started by masa in C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\post-service)
+2022-06-17 10:29:45,139 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-17 10:30:12,275 INFO org.springframework.boot.StartupInfoLogger [main] Starting ProfileServiceApplication using Java 14.0.2 on DESKTOP-RD35RTH with PID 13808 (C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\profile-service\target\classes started by masa in C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\profile-service)
+2022-06-17 10:30:12,288 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-17 10:30:34,283 INFO org.springframework.boot.StartupInfoLogger [main] Started ProfileServiceApplication in 24.935 seconds (JVM running for 26.817)
+2022-06-17 10:31:21,389 INFO org.springframework.boot.StartupInfoLogger [main] Starting PostServiceApplication using Java 14.0.2 on DESKTOP-RD35RTH with PID 8492 (C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\post-service\target\classes started by masa in C:\Users\masa\Documents\GitHub\XWS-BSEP-TIM4\services\post-service)
+2022-06-17 10:31:21,398 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-06-17 10:31:33,421 INFO org.springframework.boot.StartupInfoLogger [main] Started PostServiceApplication in 14.638 seconds (JVM running for 16.106)
+2022-06-17 10:31:59,695 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-7] User bojana123 has successfully logged in
+2022-06-17 10:33:27,144 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-4] User stefan123 has successfully registered
+2022-06-17 10:34:21,042 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-5] User maja12 has successfully logged in
+2022-06-17 10:34:34,227 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-2] Approve registration email has been sent to stefan@gmail.com
+2022-06-17 10:34:43,251 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-7] User stefan123 has activated his account
+2022-06-17 10:34:50,319 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-1] User stefan123 has successfully logged in
+2022-06-17 10:35:08,971 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-3] User stefan123 wants to login without password
+2022-06-17 10:35:42,057 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-4] User stefan123 has forgot password
+2022-06-17 10:36:11,794 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-6] User stefan123 has changed password
+2022-06-17 10:36:19,718 INFO linkedin.profileservice.service.Implementation.AuthService [http-nio-8140-exec-10] User stefan123 has successfully logged in
+2022-06-17 10:36:42,686 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-9] User milos123 has successfully logged in
+2022-06-17 10:36:53,666 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-2] User milos123 wants to login without password
+2022-06-17 10:36:57,538 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-5] User milos123 wants to login without password
+2022-06-17 10:43:02,603 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-10] User milos123 wants to login without password
+2022-06-17 10:43:24,947 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-5] User milos123 has forgot password
+2022-06-17 10:44:06,254 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-9] User milos123 has forgot password
+2022-06-17 10:44:31,697 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-4] User milos123 has changed password
+2022-06-17 10:44:45,185 INFO linkedin.agentservice.service.implementation.AgentService [http-nio-8180-exec-5] User milos123 has successfully logged in

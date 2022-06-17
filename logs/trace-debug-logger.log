@@ -1,3 +1,12 @@
 2022-06-17 09:46:20,726 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
 2022-06-17 09:51:20,272 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
 2022-06-17 09:52:43,041 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-17 10:19:58,309 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-17 10:20:09,490 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtRequestFilter' configured for use
+2022-06-17 10:29:45,137 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-17 10:30:12,285 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-17 10:30:25,845 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtRequestFilter' configured for use
+2022-06-17 10:31:21,396 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.6.7, Spring v5.3.19
+2022-06-17 10:33:19,863 DEBUG linkedin.profileservice.service.Implementation.AttackService [http-nio-8140-exec-7] Format not adequate, status:400 Bad Request
+2022-06-17 10:36:07,844 DEBUG linkedin.profileservice.service.Implementation.AttackService [http-nio-8140-exec-9] Format not adequate, status:400 Bad Request
+2022-06-17 10:44:27,751 DEBUG linkedin.agentservice.service.implementation.AttackService [http-nio-8180-exec-10] Format not adequate, status:400 Bad Request
